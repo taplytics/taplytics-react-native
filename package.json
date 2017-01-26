@@ -15,5 +15,8 @@
   "license": "",
   "peerDependencies": {
     "react-native": "^0.29.0"
+  },
+  "dependencies": {
+    "lodash": "*"
   }
 }

@@ -34,17 +34,7 @@
       compile project(':react-native-taplytics-react')
   	```
 
-#### Windows
-[Read it! :D](https://github.com/ReactWindows/react-native)
-
-1. In Visual Studio add the `RNTaplyticsReact.sln` in `node_modules/react-native-taplytics-react/windows/RNTaplyticsReact.sln` folder to their solution, reference from their app.
-2. Open up your `MainPage.cs` app
-  - Add `using Cl.Json.RNTaplyticsReact;` to the usings at the top of the file
-  - Add `new RNTaplyticsReactPackage()` to the `List<IReactPackage>` returned by the `Packages` method
-
-
-## Usage
-```javascript
+# Usage in Javascript
 import RNTaplyticsReact from 'react-native-taplytics-react';
 
 // TODO: What do with the module?
