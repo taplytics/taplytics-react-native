@@ -1,0 +1,46 @@
+[
+    {
+        "merged": "/Users/Adam/Code/AwesomeProject/node_modules/taplytics-react-native/android/build/intermediates/res/merged/release/color/abc_primary_text_material_dark.xml",
+        "source": "/Users/Adam/.android/build-cache/e5e5d5fc59981d3ffc9c7a475c8259b10267a63d/output/res/color/abc_primary_text_material_dark.xml"
+    },
+    {
+        "merged": "/Users/Adam/Code/AwesomeProject/node_modules/taplytics-react-native/android/build/intermediates/res/merged/release/color/abc_primary_text_disable_only_material_light.xml",
+        "source": "/Users/Adam/.android/build-cache/e5e5d5fc59981d3ffc9c7a475c8259b10267a63d/output/res/color/abc_primary_text_disable_only_material_light.xml"
+    },
+    {
+        "merged": "/Users/Adam/Code/AwesomeProject/node_modules/taplytics-react-native/android/build/intermediates/res/merged/release/color/switch_thumb_material_light.xml",
+        "source": "/Users/Adam/.android/build-cache/e5e5d5fc59981d3ffc9c7a475c8259b10267a63d/output/res/color/switch_thumb_material_light.xml"
+    },
+    {
+        "merged": "/Users/Adam/Code/AwesomeProject/node_modules/taplytics-react-native/android/build/intermediates/res/merged/release/color/abc_secondary_text_material_light.xml",
+        "source": "/Users/Adam/.android/build-cache/e5e5d5fc59981d3ffc9c7a475c8259b10267a63d/output/res/color/abc_secondary_text_material_light.xml"
+    },
+    {
+        "merged": "/Users/Adam/Code/AwesomeProject/node_modules/taplytics-react-native/android/build/intermediates/res/merged/release/color/abc_secondary_text_material_dark.xml",
+        "source": "/Users/Adam/.android/build-cache/e5e5d5fc59981d3ffc9c7a475c8259b10267a63d/output/res/color/abc_secondary_text_material_dark.xml"
+    },
+    {
+        "merged": "/Users/Adam/Code/AwesomeProject/node_modules/taplytics-react-native/android/build/intermediates/res/merged/release/color/switch_thumb_material_dark.xml",
+        "source": "/Users/Adam/.android/build-cache/e5e5d5fc59981d3ffc9c7a475c8259b10267a63d/output/res/color/switch_thumb_material_dark.xml"
+    },
+    {
+        "merged": "/Users/Adam/Code/AwesomeProject/node_modules/taplytics-react-native/android/build/intermediates/res/merged/release/color/abc_primary_text_material_light.xml",
+        "source": "/Users/Adam/.android/build-cache/e5e5d5fc59981d3ffc9c7a475c8259b10267a63d/output/res/color/abc_primary_text_material_light.xml"
+    },
+    {
+        "merged": "/Users/Adam/Code/AwesomeProject/node_modules/taplytics-react-native/android/build/intermediates/res/merged/release/color/abc_search_url_text.xml",
+        "source": "/Users/Adam/.android/build-cache/e5e5d5fc59981d3ffc9c7a475c8259b10267a63d/output/res/color/abc_search_url_text.xml"
+    },
+    {
+        "merged": "/Users/Adam/Code/AwesomeProject/node_modules/taplytics-react-native/android/build/intermediates/res/merged/release/color/common_google_signin_btn_text_light.xml",
+        "source": "/Users/Adam/.android/build-cache/3775b4e0f72444865e26719ef835788b7513ad84/output/res/color/common_google_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "/Users/Adam/Code/AwesomeProject/node_modules/taplytics-react-native/android/build/intermediates/res/merged/release/color/abc_primary_text_disable_only_material_dark.xml",
+        "source": "/Users/Adam/.android/build-cache/e5e5d5fc59981d3ffc9c7a475c8259b10267a63d/output/res/color/abc_primary_text_disable_only_material_dark.xml"
+    },
+    {
+        "merged": "/Users/Adam/Code/AwesomeProject/node_modules/taplytics-react-native/android/build/intermediates/res/merged/release/color/common_google_signin_btn_text_dark.xml",
+        "source": "/Users/Adam/.android/build-cache/3775b4e0f72444865e26719ef835788b7513ad84/output/res/color/common_google_signin_btn_text_dark.xml"
+    }
+]

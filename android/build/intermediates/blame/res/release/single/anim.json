@@ -1,0 +1,50 @@
+[
+    {
+        "merged": "/Users/Adam/Code/AwesomeProject/node_modules/taplytics-react-native/android/build/intermediates/res/merged/release/anim/abc_slide_out_top.xml",
+        "source": "/Users/Adam/.android/build-cache/e5e5d5fc59981d3ffc9c7a475c8259b10267a63d/output/res/anim/abc_slide_out_top.xml"
+    },
+    {
+        "merged": "/Users/Adam/Code/AwesomeProject/node_modules/taplytics-react-native/android/build/intermediates/res/merged/release/anim/abc_slide_out_bottom.xml",
+        "source": "/Users/Adam/.android/build-cache/e5e5d5fc59981d3ffc9c7a475c8259b10267a63d/output/res/anim/abc_slide_out_bottom.xml"
+    },
+    {
+        "merged": "/Users/Adam/Code/AwesomeProject/node_modules/taplytics-react-native/android/build/intermediates/res/merged/release/anim/abc_fade_in.xml",
+        "source": "/Users/Adam/.android/build-cache/e5e5d5fc59981d3ffc9c7a475c8259b10267a63d/output/res/anim/abc_fade_in.xml"
+    },
+    {
+        "merged": "/Users/Adam/Code/AwesomeProject/node_modules/taplytics-react-native/android/build/intermediates/res/merged/release/anim/catalyst_push_up_in.xml",
+        "source": "/Users/Adam/.android/build-cache/facbc9aafd887c514183de8d6fc0f962a873180d/output/res/anim/catalyst_push_up_in.xml"
+    },
+    {
+        "merged": "/Users/Adam/Code/AwesomeProject/node_modules/taplytics-react-native/android/build/intermediates/res/merged/release/anim/abc_shrink_fade_out_from_bottom.xml",
+        "source": "/Users/Adam/.android/build-cache/e5e5d5fc59981d3ffc9c7a475c8259b10267a63d/output/res/anim/abc_shrink_fade_out_from_bottom.xml"
+    },
+    {
+        "merged": "/Users/Adam/Code/AwesomeProject/node_modules/taplytics-react-native/android/build/intermediates/res/merged/release/anim/abc_popup_enter.xml",
+        "source": "/Users/Adam/.android/build-cache/e5e5d5fc59981d3ffc9c7a475c8259b10267a63d/output/res/anim/abc_popup_enter.xml"
+    },
+    {
+        "merged": "/Users/Adam/Code/AwesomeProject/node_modules/taplytics-react-native/android/build/intermediates/res/merged/release/anim/abc_grow_fade_in_from_bottom.xml",
+        "source": "/Users/Adam/.android/build-cache/e5e5d5fc59981d3ffc9c7a475c8259b10267a63d/output/res/anim/abc_grow_fade_in_from_bottom.xml"
+    },
+    {
+        "merged": "/Users/Adam/Code/AwesomeProject/node_modules/taplytics-react-native/android/build/intermediates/res/merged/release/anim/abc_slide_in_top.xml",
+        "source": "/Users/Adam/.android/build-cache/e5e5d5fc59981d3ffc9c7a475c8259b10267a63d/output/res/anim/abc_slide_in_top.xml"
+    },
+    {
+        "merged": "/Users/Adam/Code/AwesomeProject/node_modules/taplytics-react-native/android/build/intermediates/res/merged/release/anim/catalyst_push_up_out.xml",
+        "source": "/Users/Adam/.android/build-cache/facbc9aafd887c514183de8d6fc0f962a873180d/output/res/anim/catalyst_push_up_out.xml"
+    },
+    {
+        "merged": "/Users/Adam/Code/AwesomeProject/node_modules/taplytics-react-native/android/build/intermediates/res/merged/release/anim/abc_popup_exit.xml",
+        "source": "/Users/Adam/.android/build-cache/e5e5d5fc59981d3ffc9c7a475c8259b10267a63d/output/res/anim/abc_popup_exit.xml"
+    },
+    {
+        "merged": "/Users/Adam/Code/AwesomeProject/node_modules/taplytics-react-native/android/build/intermediates/res/merged/release/anim/abc_slide_in_bottom.xml",
+        "source": "/Users/Adam/.android/build-cache/e5e5d5fc59981d3ffc9c7a475c8259b10267a63d/output/res/anim/abc_slide_in_bottom.xml"
+    },
+    {
+        "merged": "/Users/Adam/Code/AwesomeProject/node_modules/taplytics-react-native/android/build/intermediates/res/merged/release/anim/abc_fade_out.xml",
+        "source": "/Users/Adam/.android/build-cache/e5e5d5fc59981d3ffc9c7a475c8259b10267a63d/output/res/anim/abc_fade_out.xml"
+    }
+]

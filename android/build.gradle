@@ -1,0 +1,47 @@
+apply plugin: 'com.android.library'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.2'
+    }
+
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "25.0.0"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+        ndk {
+            abiFilters "armeabi-v7a", "x86"
+        }
+    }
+    lintOptions {
+       warning 'InvalidPackage'
+    }
+}
+
+dependencies {
+    compile 'com.facebook.react:react-native:0.20.+'
+    compile 'com.taplytics.sdk:taplytics:+@aar'
+
+    compile 'com.android.volley:volley:+'
+    debugCompile ('io.socket:socket.io-client:+') {
+        exclude group: 'org.json', module: 'json'
+    }
+    compile("com.google.android.gms:play-services-gcm:9.+")
+
+}
+
+repositories {
+    maven { url "https://github.com/taplytics/Taplytics-Android-SDK/raw/master/AndroidStudio/" }
+    mavenCentral()
+    jcenter()
+}
