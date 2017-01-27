@@ -16,7 +16,7 @@
     [self.bridge.eventDispatcher sendAppEventWithName:name body:@{@"value": value} ];
 }
 
-RCT_EXPORT_MODULE("Taplytics");
+RCT_EXPORT_MODULE(Taplytics);
 
 RCT_EXPORT_METHOD(_newSyncBool:(NSString *)name defaultValue:(BOOL)defaultValue resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
