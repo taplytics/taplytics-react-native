@@ -1,5 +1,5 @@
 
-# react-native-taplytics-react
+# Taplytics React Natvie
 
 ## Getting started
 
@@ -34,7 +34,7 @@
       compile project(':taplytics-react-native')
   	```
 
-# Usage in Javascript
+### Usage in Javascript
 ```
 ...
 
@@ -44,7 +44,7 @@ import Taplytics from 'taplytics-react-native';
 
 ```
 
-### Taplytics Setup
+## Taplytics Setup
 To use this wrapper, the Taplytics SDK must be setup in your React native application by following the instructions from the [Taplytics Setup Guide](https://taplytics.com/docs/guides/install-sdk)
 
 The SDK must be initialized in the standard way, using 
@@ -53,13 +53,13 @@ Taplytics.startTaplytics(context, "YOUR SDK KEY");
 ```
 in your application's native code.
 
-### Usage
+## Usage
 This module wraps most native SDK methods in Javascript, allowing you to access features such as dynamic variables, code blocks and event logging in the React Native environment.
 
-## Code Variables
+### Code Variables
 You can use both sync and async variables from within Javascript. However, because React Native uses an asynchronous communication link to native code, both these types of variables require a callback to retrieve their value. 
 
-# Sync Variables
+#### Sync Variables
 To create a synchronous variable, simply call:
 ```
 Taplytics.newSyncVariable(name, defaultValue)
@@ -81,7 +81,7 @@ Taplytics.propertiesLoadedCallback().then(() => {
 })
 ```
 
-# Async variables
+#### Async variables
 In the Taplytics SDK, an asynchronous variable is one which only takes on a value once the client properties have been loaded from the server. Additionally, its value can change mid-session based on updates to experiments.
 
 To create an async variable:
@@ -91,7 +91,7 @@ Taplytics.newAsyncVariable(name, defaultValue, variableChangedCallback)
 
 The third parameter is a function which will be called any time the value of the variable is changed. It is passed the current value of the variable. 
 
-# Get all variables
+#### Get all variables
 To make it easier to keep track of your variables, this module also provides a method to retrieve an object map of their names and values:
 ```
 Taplytics.getVariables() 
@@ -112,14 +112,14 @@ Taplytics.registerVariablesChangedListener(callback)
 ```
 The callback will be passed the same object map as above. Only one callback function can be registered at a time. Calling this method again will overwrite the old callback.
 
-## Code Blocks
+### Code Blocks
 You can register Javascript functions as code blocks to be run or not depending on your experiment variation:
 ```
 Taplytics.runCodeBlock(name, someFunction)
 ```
 The code block must be enabled in the dashboard for your current variation before it will be run. 
 
-## Events
+### Events
 There are methods available for logging events:
 ```
 Taplytics.logEvent(name, value)
@@ -130,7 +130,7 @@ Taplytics.logRevenue(name, value)
 ```
 In both cases, the value that is passed to the event must be a number.
 
-## Sessions
+### Sessions
 You can force the creation of a new Taplytics user session if something happens in your app, such as a login or logout action:
 ```
 Taplytics.startNewSession()
@@ -148,7 +148,7 @@ If a user logs out of your app, their user attributes become invalid. You should
 ```
 which returns a promise that resolves when the attributes have been successfully reset.
 
-## User Attributes
+### User Attributes
 To set custom user attributes, call:
 ```
 Taplytics.setUserAttributes(attributes)
