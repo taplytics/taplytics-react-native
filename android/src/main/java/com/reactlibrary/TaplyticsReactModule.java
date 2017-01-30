@@ -15,6 +15,8 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.taplytics.sdk.CodeBlockListener;
 import com.taplytics.sdk.Taplytics;
 import com.taplytics.sdk.TaplyticsNewSessionListener;
+import com.taplytics.sdk.TaplyticsPushTokenListener;
+import com.taplytics.sdk.TaplyticsResetUserListener;
 import com.taplytics.sdk.TaplyticsRunningExperimentsListener;
 import com.taplytics.sdk.TaplyticsVar;
 import com.taplytics.sdk.TaplyticsVarListener;
@@ -27,10 +29,12 @@ import java.util.Map;
 public class TaplyticsReactModule extends ReactContextBaseJavaModule {
 
     private final ReactApplicationContext reactContext;
+    private static TaplyticsReactModule instance;
 
     public TaplyticsReactModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
+        TaplyticsReactModule.instance = this;
     }
 
     @Override
@@ -38,8 +42,12 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
         return "Taplytics";
     }
 
-    private void sendEvent(String eventName, @Nullable WritableMap params) {
+    void sendEvent(String eventName, @Nullable WritableMap params) {
         this.reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
+    }
+
+    static TaplyticsReactModule getInstance() {
+        return TaplyticsReactModule.instance;
     }
 
     @ReactMethod
@@ -161,11 +169,43 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void resetAppUser(final Promise callback) {
+        TaplyticsResetUserListener listener = new TaplyticsResetUserListener() {
+            @Override
+            public void finishedResettingUser() {
+                callback.resolve(null);
+            }
+        };
+
+        Taplytics.resetAppUser(listener);
+    }
+
+    @ReactMethod
+    public void setTaplyticsPushTokenListener(final Promise callback) {
+        Taplytics.setTaplyticsPushTokenListener(new TaplyticsPushTokenListener() {
+            @Override
+            public void pushTokenReceived(String s) {
+                callback.resolve(s);
+            }
+        });
+    }
+
+    @ReactMethod
     public void taplyticsLoadedListener(final Promise callback) {
         Taplytics.getRunningExperimentsAndVariations(new TaplyticsRunningExperimentsListener() {
             @Override
             public void runningExperimentsAndVariation(Map<String, String> map) {
                 callback.resolve(null);
+            }
+        });
+    }
+
+    @ReactMethod
+    public void getRunningExperimentsAndVariations(final Promise callback) {
+        Taplytics.getRunningExperimentsAndVariations(new TaplyticsRunningExperimentsListener() {
+            @Override
+            public void runningExperimentsAndVariation(Map<String, String> map) {
+                callback.resolve(map);
             }
         });
     }

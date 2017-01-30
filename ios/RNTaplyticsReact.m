@@ -103,9 +103,31 @@ RCT_EXPORT_METHOD(_newAsyncObject:(NSString *)name defaultValue:(NSString *)defa
     }
 }
 
+RCT_EXPORT_METHOD(runCodeBlock:(NSString *)name codeBlock:(RCTResponseSenderBlock)codeBlock)
+{
+    codeBlock(@[[NSNull null]]);
+}
+
 RCT_EXPORT_METHOD(taplyticsLoadedListener:resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
     [Taplytics propertiesLoadedCallback:^(BOOL loaded) {
+        resolve(@(loaded));
+    }];
+}
+
+RCT_EXPORT_METHOD(registerPushNotifications)
+{
+    [Taplytics registerPushNotifications];
+}
+
+RCT_EXPORT_METHOD(registerLocationAccess)
+{
+    [Taplytics registerLocationAccess];
+}
+
+RCT_EXPORT_METHOD(resetUser:resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+    [Taplytics resetUser:^{
         resolve(nil);
     }];
 }

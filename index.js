@@ -1,10 +1,20 @@
 
-import { NativeModules, DeviceEventEmitter } from 'react-native';
+import { NativeModules, DeviceEventEmitter, Platform } from 'react-native';
 import _ from 'lodash';
 
 const { Taplytics } = NativeModules;
 
 let variables = {}
+let variableChangedListener = () => {}
+
+Taplytics.registerVariablesChangedListener = (listener) => {
+  variableChangedListener = listener;
+}
+
+function setVariable(name, value) {
+  variables[name] = value;
+  variableChangedListener && variableChangedListener(Taplytics.getVariables())
+}
 
 Taplytics.newSyncVariable = (name, defaultValue) => {
   let func = null;
@@ -18,10 +28,10 @@ Taplytics.newSyncVariable = (name, defaultValue) => {
     defaultValue = JSON.stringify(defaultValue)
     func = Taplytics._newSyncObject(name, defaultValue).then(value => JSON.parse(value))
   } else {
-    return console.error("INVALID TYPE PASSED TO ASYNC VARIABLE")
+    return console.error("INVALID TYPE PASSED TO SYNC VARIABLE CONSTRUCTOR")
   }
   return func.then(value => {
-    variables[name] = value
+    setVariable(name, value)
   })
 }
 
@@ -36,7 +46,7 @@ Taplytics.newAsyncVariable = (name, defaultValue, callback) => {
     value = JSON.stringify(defaultValue)
     Taplytics._newAsyncObject(name, value)
   } else {
-    return console.error("INVALID TYPE PASSED TO ASYNC VARIABLE")
+    return console.error("INVALID TYPE PASSED TO ASYNC VARIABLE CONSTRUCTOR")
   }
 
   DeviceEventEmitter.addListener(name, (event) => {
@@ -44,10 +54,51 @@ Taplytics.newAsyncVariable = (name, defaultValue, callback) => {
     if (_.isPlainObject(defaultValue)) {
       value = JSON.parse(event.value)
     }
-    variables[name] = value
+    setVariable(name, value)
+    console.log(variables)
     callback && callback(value)
   })
 }
+
+let pushOpenedListeners = []
+let pushDismissedListeners = []
+let pushReceivedListeners = []
+
+Taplytics.registerPushOpenedListener = (listener) => {
+  console.log("Registering push open")
+  pushOpenedListeners.push(listener)
+}
+
+Taplytics.registerPushDismissedListener = (listener) => {
+  pushDismissedListeners.push(listener)
+}
+
+Taplytics.registerPushReceivedListener = (listener) => {
+  pushReceivedListeners.push(listener)
+}
+
+function platformCheck() {
+    if (Platform.OS == 'ios') console.warn("Push event listeners are not available on iOS. Use built-in React Native push handling instead!")
+}
+
+DeviceEventEmitter.addListener("pushOpened", (event) => {
+  platformCheck()
+  value = JSON.parse(event.value)
+  _.each(pushOpenedListeners, listener => _.isFunction(listener) && listener(value))
+})
+
+DeviceEventEmitter.addListener("pushDismissed", (event) => {
+  platformCheck()
+  value = JSON.parse(event.value)
+  _.each(pushDismissedListeners, listener => _.isFunction(listener) && listener(value))
+})
+
+DeviceEventEmitter.addListener("pushReceived", (event) => {
+  platformCheck()
+  value = JSON.parse(event.value)
+  _.each(pushReceivedListeners, listener => _.isFunction(listener) && listener(value))
+})
+
 
 Taplytics.getVariables = () => _.cloneDeep(variables);
 
