@@ -60,6 +60,10 @@ Taplytics.newAsyncVariable = (name, defaultValue, callback) => {
   })
 }
 
+Taplytics.setUserAttributes = (attributes) => {
+  Taplytics._setUserAttributes(JSON.stringify(attributes))
+}
+
 let pushOpenedListeners = []
 let pushDismissedListeners = []
 let pushReceivedListeners = []

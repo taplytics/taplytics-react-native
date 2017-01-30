@@ -30,7 +30,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
 
     private final ReactApplicationContext reactContext;
     private static TaplyticsReactModule instance;
-
+    private final String tagName = "TaplyticsReact";
     public TaplyticsReactModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
@@ -69,7 +69,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
             TaplyticsVar var = new TaplyticsVar<>(name, object);
             callback.resolve(((JSONObject) var.get()).toString());
         } catch (JSONException e) {
-            callback.reject("Taplytics", e.getMessage());
+            callback.reject(tagName, e.getMessage());
         }
     }
 
@@ -128,7 +128,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
                 }
             });
         } catch (JSONException e) {
-            Log.e("Taplytics", e.getMessage());
+            Log.e(tagName, e.getMessage());
         }
     }
 
@@ -191,7 +191,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void taplyticsLoadedListener(final Promise callback) {
+    public void propertiesLoadedCallback(final Promise callback) {
         Taplytics.getRunningExperimentsAndVariations(new TaplyticsRunningExperimentsListener() {
             @Override
             public void runningExperimentsAndVariation(Map<String, String> map) {
@@ -221,12 +221,22 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setTaplyticsNewSessionListener(final Promise callback) {
+    public void setTaplyticsNewSessionListener(final Callback callback) {
         Taplytics.setTaplyticsNewSessionListener(new TaplyticsNewSessionListener() {
             @Override
             public void onNewSession() {
-                callback.resolve(null);
+                callback.invoke();
             }
         });
+    }
+
+    @ReactMethod
+    public void _setUserAttributes(final String attributes) {
+        try {
+            JSONObject jsonAttributes = new JSONObject(attributes);
+            Taplytics.setUserAttributes(jsonAttributes);
+        } catch (JSONException e) {
+            Log.e(tagName, e.getMessage());
+        }
     }
 }

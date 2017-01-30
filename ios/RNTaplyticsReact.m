@@ -108,7 +108,7 @@ RCT_EXPORT_METHOD(runCodeBlock:(NSString *)name codeBlock:(RCTResponseSenderBloc
     codeBlock(@[[NSNull null]]);
 }
 
-RCT_EXPORT_METHOD(taplyticsLoadedListener:resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(propertiesLoadedCallback:resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
     [Taplytics propertiesLoadedCallback:^(BOOL loaded) {
         resolve(@(loaded));
@@ -132,6 +132,20 @@ RCT_EXPORT_METHOD(resetUser:resolver:(RCTPromiseResolveBlock)resolve rejecter:(R
     }];
 }
 
+RCT_EXPORT_METHOD(_setUserAttributes:(NSString*)attributes)
+{
+    NSData* data = [attributes dataUsingEncoding:NSUTF8StringEncoding];
+    NSError* err;
+    @try {
+        id object = [NSJSONSerialization JSONObjectWithData:data options:0 error:&err];
+        [Taplytics setUserAttributes:object];
+    } @catch (NSException* e) {
+        NSLog(e.reason);
+    }
+    if (err) {
+        NSLog(err.description);
+    }
+}
 
 @end
   
