@@ -125,7 +125,7 @@ RCT_EXPORT_METHOD(registerLocationAccess)
     [Taplytics registerLocationAccess];
 }
 
-RCT_EXPORT_METHOD(resetUser:resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(resetAppUser:resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
     [Taplytics resetUser:^{
         resolve(nil);
