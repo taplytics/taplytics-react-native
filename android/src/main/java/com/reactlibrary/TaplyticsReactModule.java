@@ -181,21 +181,21 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setTaplyticsPushTokenListener(final Promise callback) {
+    public void setTaplyticsPushTokenListener(final Callback callback) {
         Taplytics.setTaplyticsPushTokenListener(new TaplyticsPushTokenListener() {
             @Override
             public void pushTokenReceived(String s) {
-                callback.resolve(s);
+                callback.invoke(s);
             }
         });
     }
 
     @ReactMethod
-    public void propertiesLoadedCallback(final Promise callback) {
+    public void propertiesLoadedCallback(final Callback callback) {
         Taplytics.getRunningExperimentsAndVariations(new TaplyticsRunningExperimentsListener() {
             @Override
             public void runningExperimentsAndVariation(Map<String, String> map) {
-                callback.resolve(null);
+                callback.invoke();
             }
         });
     }
