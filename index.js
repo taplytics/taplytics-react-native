@@ -32,6 +32,7 @@ Taplytics.newSyncVariable = (name, defaultValue) => {
   }
   return func.then(value => {
     setVariable(name, value)
+    return value
   })
 }
 
@@ -55,7 +56,6 @@ Taplytics.newAsyncVariable = (name, defaultValue, callback) => {
       value = JSON.parse(event.value)
     }
     setVariable(name, value)
-    console.log(variables)
     callback && callback(value)
   })
 }
