@@ -3,21 +3,45 @@
 
 _Taplytics is a native mobile A/B testing and push notification platform that helps you optimize your React Native app!_
 
- **[Commercial License / Terms](http://taplytics.com/terms)**
+ [Commercial License / Terms](http://taplytics.com/terms)
  
 ### **Current Version: [1.0.0](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.0)**
 
-Install it in the root of your React Native project:
-
-`$ npm install taplytics-react-native --save`
-
 ## Getting Started
-_How do I, as a developer, start using Taplytics?_
+
+**If you haven't yet set up a React-Native project, do the following:**
+
+First install node and react.
+
+1. `brew install node`
+2. `brew install watchman`
+3. `npm install -g react-native-cli`
+
+Then, initialize a new project.
+
+1.  `react-native init projectname`
+2. `cd projectname`
+3. `npm install`
+
+#### **To install the taplytics-react-native package:**
+
+* `npm install taplytics-react-native --save`
+
+Then
+
+* `react-native link taplytics-react-native`
 
 
-1. _Sign up for a free account at [Taplytics.com](https://taplytics.com?utm_source=github&utm_campaign=documentation&utm_medium=content)._
-2. _Install the SDK. Steps [here](/START.md)._
-3. Create [Experiments](/EXPERIMENTS.md) or send [Push Notifications](/PUSH.md) to your users!
+## iOS Setup
+
+To first 
+
+
+[Android Setup](/ANDROIDSTART.md)
+
+
+Create [Experiments](/EXPERIMENTS.md) or send [Push Notifications](/PUSH.md) to your users!
+
 
 ## Changelog
 

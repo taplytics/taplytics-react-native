@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		66D55DF41E3BDE64008B116A /* Taplytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66D55DF31E3BDE64008B116A /* Taplytics.framework */; };
 		B3E7B58A1CC2AC0600A0062D /* RNTaplyticsReact.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNTaplyticsReact.m */; };
+		D713D2B31E4A4FEF00431D71 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D713D2B21E4A4FEF00431D71 /* JavaScriptCore.framework */; };
+		D713D2BC1E4A516F00431D71 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D713D2BB1E4A516F00431D71 /* CoreTelephony.framework */; };
+		D713D2BE1E4A517500431D71 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D713D2BD1E4A517500431D71 /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,10 +27,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		134814201AA4EA6300B7C361 /* libRNTaplyticsReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNTaplyticsReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		66D55DF31E3BDE64008B116A /* Taplytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Taplytics.framework; sourceTree = "<group>"; };
 		B3E7B5881CC2AC0600A0062D /* RNTaplyticsReact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNTaplyticsReact.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNTaplyticsReact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNTaplyticsReact.m; sourceTree = "<group>"; };
+		D713D2B21E4A4FEF00431D71 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		D713D2B81E4A509900431D71 /* Taplytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Taplytics.framework; sourceTree = "<group>"; };
+		D713D2BB1E4A516F00431D71 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		D713D2BD1E4A517500431D71 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		D713D2C21E4A53AE00431D71 /* libRNTaplyticsReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNTaplyticsReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,29 +41,34 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66D55DF41E3BDE64008B116A /* Taplytics.framework in Frameworks */,
+				D713D2BE1E4A517500431D71 /* SystemConfiguration.framework in Frameworks */,
+				D713D2BC1E4A516F00431D71 /* CoreTelephony.framework in Frameworks */,
+				D713D2B31E4A4FEF00431D71 /* JavaScriptCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		134814211AA4EA7D00B7C361 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				134814201AA4EA6300B7C361 /* libRNTaplyticsReact.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-				66D55DF31E3BDE64008B116A /* Taplytics.framework */,
 				B3E7B5881CC2AC0600A0062D /* RNTaplyticsReact.h */,
 				B3E7B5891CC2AC0600A0062D /* RNTaplyticsReact.m */,
-				134814211AA4EA7D00B7C361 /* Products */,
+				D713D2B11E4A4FEF00431D71 /* Frameworks */,
+				D713D2C21E4A53AE00431D71 /* libRNTaplyticsReact.a */,
 			);
+			sourceTree = "<group>";
+		};
+		D713D2B11E4A4FEF00431D71 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D713D2BD1E4A517500431D71 /* SystemConfiguration.framework */,
+				D713D2BB1E4A516F00431D71 /* CoreTelephony.framework */,
+				D713D2B81E4A509900431D71 /* Taplytics.framework */,
+				D713D2B21E4A4FEF00431D71 /* JavaScriptCore.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -78,7 +88,7 @@
 			);
 			name = RNTaplyticsReact;
 			productName = RCTDataManager;
-			productReference = 134814201AA4EA6300B7C361 /* libRNTaplyticsReact.a */;
+			productReference = D713D2C21E4A53AE00431D71 /* libRNTaplyticsReact.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -201,9 +211,12 @@
 		58B511F01A9E6C8500147676 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_MODULES_AUTOLINK = NO;
+				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.gch *.xcode* *.xcassets (*) .DS_Store CVS .svn .git .hg *.pbproj *.pbxproj";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/../**",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -211,8 +224,14 @@
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
 				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				OTHER_LDFLAGS = "-ObjC";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/**",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"$(inherited)",
+				);
 				PRODUCT_NAME = RNTaplyticsReact;
 				SKIP_INSTALL = YES;
 			};
@@ -221,9 +240,12 @@
 		58B511F11A9E6C8500147676 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_MODULES_AUTOLINK = NO;
+				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.gch *.xcode* *.xcassets (*) .DS_Store CVS .svn .git .hg *.pbproj *.pbxproj";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/../**",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -231,8 +253,14 @@
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
 				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				OTHER_LDFLAGS = "-ObjC";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/**",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"$(inherited)",
+				);
 				PRODUCT_NAME = RNTaplyticsReact;
 				SKIP_INSTALL = YES;
 			};
