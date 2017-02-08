@@ -1,42 +1,32 @@
 
-# Taplytics React Natvie
+# Taplytics React Native SDK
 
-## Getting started
+_Taplytics is a native mobile A/B testing and push notification platform that helps you optimize your React Native app!_
 
-This package requires React Native >0.4
+ **[Commercial License / Terms](http://taplytics.com/terms)**
+ 
+### **Current Version: [1.0.0](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.0)**
 
 Install it in the root of your React Native project:
 
 `$ npm install taplytics-react-native --save`
 
-### Mostly automatic installation
-
-`$ react-native link taplytics-react-native`
-
-### Manual installation
+## Getting Started
+_How do I, as a developer, start using Taplytics?_
 
 
-#### iOS
+1. _Sign up for a free account at [Taplytics.com](https://taplytics.com?utm_source=github&utm_campaign=documentation&utm_medium=content)._
+2. _Install the SDK. Steps [here](/START.md)._
+3. Create [Experiments](/EXPERIMENTS.md) or send [Push Notifications](/PUSH.md) to your users!
 
-1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
-2. Go to `node_modules` ➜ `taplytics-react-native` and add `RNTaplyticsReact.xcodeproj`
-3. In XCode, in the project navigator, select your project. Add `libRNTaplyticsReact.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
-4. Run your project (`Cmd+R`)<
+## Changelog
 
-#### Android
+**Current Version: [1.0.0](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.0)**
 
-1. Open up `android/app/src/main/java/[...]/MainActivity.java`
-  - Add `import com.reactlibrary.TaplyticsReactPackage;` to the imports at the top of the file
-  - Add `new TaplyticsReactPackage()` to the list returned by the `getPackages()` method
-2. Append the following lines to `android/settings.gradle`:
-  	```
-  	include ':taplytics-react-native'
-  	project(':taplytics-react-native').projectDir = new File(rootProject.projectDir, 	'../node_modules/taplytics-react-native/android')
-  	```
-3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
-  	```
-      compile project(':taplytics-react-native')
-  	```
+1. Initial version of React Native SDK. Please contact us with any questions or use git issues. 
+
+
+
 
 ### Usage in Javascript
 ```javascript
