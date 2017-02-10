@@ -105,7 +105,9 @@ RCT_EXPORT_METHOD(_newAsyncObject:(NSString *)name defaultValue:(NSString *)defa
 
 RCT_EXPORT_METHOD(runCodeBlock:(NSString *)name codeBlock:(RCTResponseSenderBlock)codeBlock)
 {
-    codeBlock(@[[NSNull null]]);
+    [Taplytics runCodeBlock:name forBlock:^{
+        codeBlock(@[[NSNull null]]);
+    };
 }
 
 RCT_EXPORT_METHOD(propertiesLoadedCallback:resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
@@ -118,6 +120,11 @@ RCT_EXPORT_METHOD(propertiesLoadedCallback:resolver:(RCTPromiseResolveBlock)reso
 RCT_EXPORT_METHOD(registerPushNotifications)
 {
     [Taplytics registerPushNotifications];
+}
+
+RCT_EXPORT_METHOD(registerPushNotificationsWithTypes:(NSInteger)types)
+{
+    [Taplytics registerPushNotificationsWithTypes:types]
 }
 
 RCT_EXPORT_METHOD(registerLocationAccess)
@@ -145,6 +152,47 @@ RCT_EXPORT_METHOD(_setUserAttributes:(NSString*)attributes)
     if (err) {
         NSLog(err.description);
     }
+}
+
+RCT_EXPORT_METHOD(logEvent:(NSString *)eventName value:(NSNumber*)value metaData:(NSDictionary*)metaData)
+{
+    [Taplytics logEvent:eventName value:value metaData:metaData];
+}
+
+RCT_EXPORT_METHOD(logRevenue:(NSString *)eventName value:(NSNumber*)value metaData:(NSDictionary*)metaData)
+{
+    [Taplytics logRevenue:eventName value:value metaData:metaData];
+}
+
+RCT_EXPORT_METHOD(getUserAttributes:resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+    [Taplytics getUserAttributes:^void((NSDictionary*)attributes){
+        resolve(attributes);
+    }]
+}
+
+RCT_EXPORT_METHOD(isUserRegisteredForPushNotifications:resolver:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+{
+    resolve([Taplytics isUserRegisteredForPushNotifications])
+}
+
+RCT_EXPORT_METHOD(isLoadingPropertiesFromServer:resolver:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+{
+    resolve([Taplytics isLoadingPropertiesFromServer]);
+}
+
+RCT_EXPORT_METHOD(getRunningExperimentsAndVariations:resolver:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+{
+    [Taplytics getRunningExperimentsAndVariations:^void((NSDictionary*)expVars) {
+        resolve(expVars);
+    }]
+}
+
+RCT_EXPORT_METHOD(performBackgroundFetch:resolver:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+{
+    [Taplytics performBackgroundFetch:^{
+        resolve(nil);
+    }]
 }
 
 @end

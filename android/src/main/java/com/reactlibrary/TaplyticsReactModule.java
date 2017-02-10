@@ -13,8 +13,11 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.taplytics.sdk.CodeBlockListener;
+import com.taplytics.sdk.SessionInfoRetrievedListener;
 import com.taplytics.sdk.Taplytics;
+import com.taplytics.sdk.TaplyticsExperimentsUpdatedListener;
 import com.taplytics.sdk.TaplyticsNewSessionListener;
+import com.taplytics.sdk.TaplyticsPushSubscriptionChangedListener;
 import com.taplytics.sdk.TaplyticsPushTokenListener;
 import com.taplytics.sdk.TaplyticsResetUserListener;
 import com.taplytics.sdk.TaplyticsRunningExperimentsListener;
@@ -24,6 +27,7 @@ import com.taplytics.sdk.TaplyticsVarListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class TaplyticsReactModule extends ReactContextBaseJavaModule {
@@ -169,6 +173,16 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void runCodeBlockSync(String name, final Callback callback) {
+        Taplytics.runCodeBlockSync(name, new CodeBlockListener() {
+            @Override
+            public void run() {
+                callback.invoke();
+            }
+        });
+    }
+
+    @ReactMethod
     public void resetAppUser(final Promise callback) {
         TaplyticsResetUserListener listener = new TaplyticsResetUserListener() {
             @Override
@@ -221,11 +235,25 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setTaplyticsNewSessionListener(final Callback callback) {
+    public void _setTaplyticsNewSessionListener() {
         Taplytics.setTaplyticsNewSessionListener(new TaplyticsNewSessionListener() {
             @Override
             public void onNewSession() {
-                callback.invoke();
+                WritableMap params = Arguments.createMap();
+                params.putBoolean("value", true);
+                sendEvent("newSession", params);
+            }
+        });
+    }
+
+    @ReactMethod
+    public void _setTaplyticsExperimentsUpdatedListener() {
+        Taplytics.setTaplyticsExperimentsUpdatedListener(new TaplyticsExperimentsUpdatedListener() {
+            @Override
+            public void onExperimentUpdate() {
+                WritableMap params = Arguments.createMap();
+                params.putBoolean("value", true);
+                sendEvent("experimentsUpdated", params);
             }
         });
     }
@@ -238,5 +266,40 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
         } catch (JSONException e) {
             Log.e(tagName, e.getMessage());
         }
+    }
+
+    @ReactMethod
+    public void getSessionInfo(final Promise callback) {
+        Taplytics.getSessionInfo(new SessionInfoRetrievedListener() {
+            @Override
+            public void sessionInfoRetrieved(HashMap hashMap) {
+                callback.resolve(hashMap);
+            }
+        });
+    }
+
+    @ReactMethod
+    public void deviceLink(final String link) {
+        Taplytics.deviceLink(link);
+    }
+
+    @ReactMethod
+    public void showMenu() {
+        Taplytics.showMenu();
+    }
+
+    @ReactMethod
+    public void setPushSubscriptionEnabled(final boolean enabled, final Promise callback) {
+        Taplytics.setPushSubscriptionEnabled(enabled, new TaplyticsPushSubscriptionChangedListener() {
+            @Override
+            public void success() {
+                callback.resolve(null);
+            }
+
+            @Override
+            public void failure() {
+                callback.reject("Taplytics", "Failed to set push subscription enabled status");
+            }
+        });
     }
 }
