@@ -21,6 +21,7 @@ coverage
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 
+*/.DS_Store
 .DS_Store
 
 # Bower dependency directory (https://bower.io/)
@@ -54,4 +55,4 @@ jspm_packages/
 # dotenv environment variables file
 .env
 
-.xcuserdatad
+*.xcuserdatad
