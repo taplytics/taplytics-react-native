@@ -252,13 +252,16 @@ Taplytics.propertiesLoadedCallback(() => {
 
 ### StartNewSession
 
-To manually force a new user session (ex: A user has logged in / out), there exists ```javascript
+To manually force a new user session (ex: A user has logged in / out), there exists 
+
+```javascript
 Taplytics.startNewSession()
 ```
 
 This method returns a promise that resolves when the session has been created
 
 You can also register a callback to be run when Taplytics creates a new session:
+
 ```javascript
 Taplytics.setTaplyticsNewSessionListener(callback)
 ```
