@@ -7,7 +7,7 @@ You can get started with using Taplytics React-Native in minutes. Just follow th
 |3  | [Dynamic Variables & Code Blocks](#3-dynamic-variables--code-blocks)|         
 |4  | [Currently Running Experiments and Vars](#4-currently-running-experiments-and-variables)                         |      
 |4  | [Sessions](#5-sessions)                          |
-|5  | [Push](#6-Push)                          |
+|5  | [Push](#5-Push)                          |
 
 
 ## 1. Setting User Attributes
