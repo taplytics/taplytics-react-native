@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		660E90EB1E4E1533007217C2 /* Taplytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 660E90EA1E4E1533007217C2 /* Taplytics.framework */; };
 		B3E7B58A1CC2AC0600A0062D /* RNTaplyticsReact.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNTaplyticsReact.m */; };
 		D713D2B31E4A4FEF00431D71 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D713D2B21E4A4FEF00431D71 /* JavaScriptCore.framework */; };
 		D713D2BC1E4A516F00431D71 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D713D2BB1E4A516F00431D71 /* CoreTelephony.framework */; };
@@ -27,10 +28,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		660E90EA1E4E1533007217C2 /* Taplytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Taplytics.framework; path = ../../../AwesomeProject/ios/Pods/Taplytics/Taplytics.framework; sourceTree = "<group>"; };
 		B3E7B5881CC2AC0600A0062D /* RNTaplyticsReact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNTaplyticsReact.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNTaplyticsReact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNTaplyticsReact.m; sourceTree = "<group>"; };
 		D713D2B21E4A4FEF00431D71 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		D713D2B81E4A509900431D71 /* Taplytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Taplytics.framework; sourceTree = "<group>"; };
 		D713D2BB1E4A516F00431D71 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		D713D2BD1E4A517500431D71 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D713D2C21E4A53AE00431D71 /* libRNTaplyticsReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNTaplyticsReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,6 +45,7 @@
 				D713D2BE1E4A517500431D71 /* SystemConfiguration.framework in Frameworks */,
 				D713D2BC1E4A516F00431D71 /* CoreTelephony.framework in Frameworks */,
 				D713D2B31E4A4FEF00431D71 /* JavaScriptCore.framework in Frameworks */,
+				660E90EB1E4E1533007217C2 /* Taplytics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,9 +65,9 @@
 		D713D2B11E4A4FEF00431D71 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				660E90EA1E4E1533007217C2 /* Taplytics.framework */,
 				D713D2BD1E4A517500431D71 /* SystemConfiguration.framework */,
 				D713D2BB1E4A516F00431D71 /* CoreTelephony.framework */,
-				D713D2B81E4A509900431D71 /* Taplytics.framework */,
 				D713D2B21E4A4FEF00431D71 /* JavaScriptCore.framework */,
 			);
 			name = Frameworks;
@@ -227,6 +229,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/**",
+					"/Users/Adam/Code/AwesomeProject/ios/Pods/Taplytics/**",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -256,6 +259,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/**",
+					"/Users/Adam/Code/AwesomeProject/ios/Pods/Taplytics/**",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
