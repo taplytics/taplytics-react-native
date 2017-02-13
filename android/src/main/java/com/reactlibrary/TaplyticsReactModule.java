@@ -221,6 +221,16 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void getSessionInfo(final Promise callback) {
+         Taplytics.getSessionInfo(new SessionInfoRetrievedListener() {
+              @Override
+              public void sessionInfoRetrieved(HashMap hashMap) {
+                    callback.resolve(hashMap);
+              }
+          });
+    }
+
+    @ReactMethod
     public void setTaplyticsNewSessionListener(final Callback callback) {
         Taplytics.setTaplyticsNewSessionListener(new TaplyticsNewSessionListener() {
             @Override
