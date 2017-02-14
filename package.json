@@ -1,6 +1,6 @@
 {
   "name": "@taplytics/taplytics-react-native",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "_Taplytics is a native mobile A/B testing and push notification platform that helps you optimize your React Native app!_",
   "main": "index.js",
   "scripts": {
@@ -10,10 +10,10 @@
     "react-native",
     "taplytics"
   ],
-  "author": "taplytics",
+  "author": "Taplytics",
   "license": "ISC",
   "peerDependencies": {
-    "react-native": "^0.29.0"
+    "react-native": "^0.40.0"
   },
   "dependencies": {
     "lodash": "*"

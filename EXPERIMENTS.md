@@ -79,22 +79,20 @@ Currently the react SDK does **not** support automatic tracking of page changes.
 
 ####Custom Events
 
-To log your own events, simply call:    
+To log your own events, simply call `Taplytics.logEvent`.
+
+Due to the nature of React Native, you must supply all three parameters of Name, value, and custom attributes. 
+
+If you do not wish to pass these in, simply do the following:
 
 ```javascript
-Taplytics.logEvent("event name", value)
+Taplytics.logEvent("event name", 0, {});
 ```
 
-You can also log revenue events specifically:
+Otherwise
 
 ```javascript
-Taplytics.logRevenue("event name", value)
-```
-
-And with custom object data:
-
-```javascript
-num = 0
+num = 5
 attributes = {"custom attribute":"something"}
 Taplytics.logEvent("eventName", num, attributes)
 ```
@@ -107,7 +105,7 @@ Revenue logging is the same as event logging, only call `logRevenue`:
 
 ```javascript
 someRevenue = 10000000;  
-Taplytics.logRevenue("Revenue Name", someRevenue);
+Taplytics.logRevenue("Revenue Name", someRevenue, {});
 ```
 
 And similarly, with custom object data:
@@ -140,12 +138,7 @@ Synchronous variables take two parameters in its constructor:
 
 1. Variable name
 2. Default Value
-
-For example create a synchronous variable, simply call:
-
-```javascript
-Taplytics.newSyncVariable(name, defaultValue)
-```
+3. Promise
 
 The type of the variable will be inferred from the type of value passed in as the default. This method returns a promise which resolves with the value of the synchronous variable:
 
