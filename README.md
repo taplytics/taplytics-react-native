@@ -25,7 +25,7 @@ Then, initialize a new project.
 
 #### **To install the taplytics-react-native package:**
 
-* `npm install taplytics-react-native --save`
+* `npm install @taplytics/taplytics-react-native --save`
 
 Then
 
