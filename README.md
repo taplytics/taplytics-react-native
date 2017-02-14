@@ -96,8 +96,8 @@ Then follow the [Experiment](/EXPERIMENTS.md) guide and the [Push Notification](
 
 **Current Version: [1.0.3](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.3)**
 
-1. iOS code cleanup and fixing npm.
-
+1. Fixed npm references not pointing to the right project.
+2. Cleaned up many iOS functions.
 
 **Current Version: [1.0.1](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.1)**
 
