@@ -98,7 +98,7 @@ Then follow the [Experiment](/EXPERIMENTS.md) guide and the [Push Notification](
 
 1. Updated search paths
 
-** [1.0.3](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.3)**
+**[1.0.3](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.3)**
 
 1. Fixed npm references not pointing to the right project.
 2. Cleaned up many iOS functions.
