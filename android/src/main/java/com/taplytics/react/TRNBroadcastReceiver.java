@@ -1,4 +1,4 @@
-package com.reactlibrary;
+package com.taplytics.react;
 
 import android.content.Context;
 import android.content.Intent;

@@ -1,5 +1,5 @@
 
-package com.reactlibrary;
+package com.taplytics.react;
 
 import android.support.annotation.Nullable;
 import android.util.Log;
