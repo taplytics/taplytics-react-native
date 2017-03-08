@@ -4,5 +4,7 @@
 
 @interface RNTaplyticsReact : NSObject <RCTBridgeModule>
 
+- (void)sendPushEvent:(NSString *)name;
+
 @end
   

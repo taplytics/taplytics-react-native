@@ -16,6 +16,15 @@
     [self.bridge.eventDispatcher sendAppEventWithName:name body:@{@"value": value} ];
 }
 
+- (void)sendPushEvent:(id)name withData:(NSDictionary *)userInfo
+{
+    if ([name isEqualToString:@"pushReceived"] || [name isEqualToString:@"pushOpened"]) {
+        [self.bridge.eventDispatcher sendAppEventWithName:name body:userInfo ];
+    } else {
+        NSLog(@"Invalid push event sent to React Native");
+    }
+}
+
 RCT_EXPORT_MODULE(Taplytics);
 
 RCT_EXPORT_METHOD(_newSyncBool:(NSString *)name defaultValue:(BOOL)defaultValue resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
@@ -107,7 +116,7 @@ RCT_EXPORT_METHOD(runCodeBlock:(NSString *)name codeBlock:(RCTResponseSenderBloc
 {
     [Taplytics runCodeBlock:name forBlock:^{
         codeBlock(@[[NSNull null]]);
-    };
+    }];
 }
 
 RCT_EXPORT_METHOD(propertiesLoadedCallback:resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
@@ -194,6 +203,9 @@ RCT_EXPORT_METHOD(performBackgroundFetch:resolver:(RCTPromiseResolveBlock)resolv
         resolve(nil);
     }]
 }
+
+
+
 
 @end
   
