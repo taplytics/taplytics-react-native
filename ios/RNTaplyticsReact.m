@@ -27,25 +27,25 @@
 
 RCT_EXPORT_MODULE(Taplytics);
 
-RCT_EXPORT_METHOD(_newSyncBool:(NSString *)name defaultValue:(BOOL)defaultValue resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+RCT_REMAP_METHOD(_newSyncBool, name:(NSString *)name defaultBoolValue:(BOOL)defaultValue resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
     TaplyticsVar* variable = [TaplyticsVar taplyticsSyncVarWithName:name defaultValue:@(defaultValue)];
     resolve((NSNumber *)variable.value);
 }
 
-RCT_EXPORT_METHOD(_newSyncString:(NSString *)name defaultValue:(NSString *)defaultValue resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+RCT_REMAP_METHOD(_newSyncString, name:(NSString *)name defaultStringValue:(NSString *)defaultValue resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
     TaplyticsVar* variable = [TaplyticsVar taplyticsSyncVarWithName:name defaultValue:defaultValue];
     resolve((NSString *)variable.value);
 }
 
-RCT_EXPORT_METHOD(_newSyncNumber:(NSString *)name defaultValue:(NSNumber *)defaultValue resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+RCT_REMAP_METHOD(_newSyncNumber, name:(NSString *)name defaultNumValue:(nonnull NSNumber *)defaultValue resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
     TaplyticsVar* variable = [TaplyticsVar taplyticsSyncVarWithName:name defaultValue:defaultValue];
     resolve((NSNumber *)variable.value);
 }
 
-RCT_EXPORT_METHOD(_newSyncObject:(NSString *)name defaultValue:(NSString *)defaultValue resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+RCT_REMAP_METHOD(_newSyncObject, name:(NSString *)name defaultValue:(NSString *)defaultValue resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
     NSData* data = [defaultValue dataUsingEncoding:NSUTF8StringEncoding];
     NSError* err;
@@ -68,21 +68,21 @@ RCT_EXPORT_METHOD(_newSyncObject:(NSString *)name defaultValue:(NSString *)defau
 
 RCT_EXPORT_METHOD(_newAsyncBool:(NSString *)name defaultValue:(BOOL)defaultValue)
 {
-    TaplyticsVar* variable = [TaplyticsVar taplyticsVarWithName:name defaultValue:@(defaultValue) updatedBlock:^(NSObject* value) {
+    [TaplyticsVar taplyticsVarWithName:name defaultValue:@(defaultValue) updatedBlock:^(NSObject* value) {
         [self sendEvent:name withValue:value];
     }];
 }
 
 RCT_EXPORT_METHOD(_newAsyncString:(NSString *)name defaultValue:(NSString *)defaultValue)
 {
-    TaplyticsVar* variable = [TaplyticsVar taplyticsVarWithName:name defaultValue:defaultValue updatedBlock:^(NSObject* value) {
+    [TaplyticsVar taplyticsVarWithName:name defaultValue:defaultValue updatedBlock:^(NSObject* value) {
         [self sendEvent:name withValue:value];
     }];
 }
 
-RCT_EXPORT_METHOD(_newAsyncNumber:(NSString *)name defaultValue:(NSNumber *)defaultValue)
+RCT_EXPORT_METHOD(_newAsyncNumber:(NSString *)name defaultValue:(nonnull NSNumber *)defaultValue)
 {
-    TaplyticsVar* variable = [TaplyticsVar taplyticsVarWithName:name defaultValue:defaultValue updatedBlock:^(NSObject* value) {
+    [TaplyticsVar taplyticsVarWithName:name defaultValue:defaultValue updatedBlock:^(NSObject* value) {
         [self sendEvent:name withValue:value];
     }];
 }
@@ -98,17 +98,16 @@ RCT_EXPORT_METHOD(_newAsyncObject:(NSString *)name defaultValue:(NSString *)defa
                 NSError* err;
                 NSData* jsonData = [NSJSONSerialization dataWithJSONObject:variable.value options:0 error:&err];
                 if (err) {
-                    NSLog(err.description);
+                    NSLog(@"%@", err.description);
                 }
                 [self sendEvent:name withValue:(jsonData ? [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding] : nil)];
             }
         }];
-       
     } @catch (NSException* e) {
-        NSLog(e.reason);
+        NSLog(@"%@", e.reason);
     }
     if (err) {
-        NSLog(err.description);
+        NSLog(@"%@", err.description);
     }
 }
 
@@ -119,7 +118,7 @@ RCT_EXPORT_METHOD(runCodeBlock:(NSString *)name codeBlock:(RCTResponseSenderBloc
     }];
 }
 
-RCT_EXPORT_METHOD(propertiesLoadedCallback:resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+RCT_REMAP_METHOD(propertiesLoadedCallback, propertiesLoadedCallbackResolver:(RCTPromiseResolveBlock)resolve propertiesLoadedCallbackRejecter:(RCTPromiseRejectBlock)reject)
 {
     [Taplytics propertiesLoadedCallback:^(BOOL loaded) {
         resolve(@(loaded));
@@ -133,7 +132,7 @@ RCT_EXPORT_METHOD(registerPushNotifications)
 
 RCT_EXPORT_METHOD(registerPushNotificationsWithTypes:(NSInteger)types)
 {
-    [Taplytics registerPushNotificationsWithTypes:types]
+  [Taplytics registerPushNotificationsWithTypes:types];
 }
 
 RCT_EXPORT_METHOD(registerLocationAccess)
@@ -141,7 +140,7 @@ RCT_EXPORT_METHOD(registerLocationAccess)
     [Taplytics registerLocationAccess];
 }
 
-RCT_EXPORT_METHOD(resetAppUser:resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+RCT_REMAP_METHOD(resetAppUser, resetAppUserResolver:(RCTPromiseResolveBlock)resolve resetAppUserRejecter:(RCTPromiseRejectBlock)reject)
 {
     [Taplytics resetUser:^{
         resolve(nil);
@@ -156,52 +155,62 @@ RCT_EXPORT_METHOD(_setUserAttributes:(NSString*)attributes)
         id object = [NSJSONSerialization JSONObjectWithData:data options:0 error:&err];
         [Taplytics setUserAttributes:object];
     } @catch (NSException* e) {
-        NSLog(e.reason);
+        NSLog(@"%@", e.reason);
     }
     if (err) {
-        NSLog(err.description);
+        NSLog(@"%@", err.description);
     }
 }
 
-RCT_EXPORT_METHOD(logEvent:(NSString *)eventName value:(NSNumber*)value metaData:(NSDictionary*)metaData)
+RCT_EXPORT_METHOD(logEvent:(NSString *)eventName value:(nonnull NSNumber*)value metaData:(NSDictionary*)metaData)
 {
     [Taplytics logEvent:eventName value:value metaData:metaData];
 }
 
-RCT_EXPORT_METHOD(logRevenue:(NSString *)eventName value:(NSNumber*)value metaData:(NSDictionary*)metaData)
+
+RCT_EXPORT_METHOD(logRevenue:(NSString *)eventName value:(nonnull NSNumber*)value metaData:(NSDictionary*)metaData)
 {
-    [Taplytics logRevenue:eventName value:value metaData:metaData];
+    [Taplytics logRevenue:eventName revenue:value metaData:metaData];
 }
 
-RCT_EXPORT_METHOD(getUserAttributes:resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_REMAP_METHOD(isUserRegisteredForPushNotifications, isUserRegisteredForPushNotificationsResolver:(RCTPromiseResolveBlock)resolve rejectIsUserRegisteredForPushNotifications:(RCTPromiseRejectBlock)reject)
 {
-    [Taplytics getUserAttributes:^void((NSDictionary*)attributes){
-        resolve(attributes);
-    }]
+  resolve([NSNumber numberWithBool:[Taplytics isUserRegisteredForPushNotifications]]);
 }
 
-RCT_EXPORT_METHOD(isUserRegisteredForPushNotifications:resolver:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+RCT_REMAP_METHOD(isLoadingPropertiesFromServer, propertiesLoadingResolver:(RCTPromiseResolveBlock)resolve rejectPropertiesLoading:(RCTPromiseRejectBlock)reject)
 {
-    resolve([Taplytics isUserRegisteredForPushNotifications])
+  resolve([NSNumber numberWithBool:[Taplytics isLoadingPropertiesFromServer]]);
 }
 
-RCT_EXPORT_METHOD(isLoadingPropertiesFromServer:resolver:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+RCT_REMAP_METHOD(getRunningExperimentsAndVariations, experimentsAndVariationsResolver:(RCTPromiseResolveBlock)resolve rejectExperimentsAndVariations:(RCTPromiseRejectBlock)reject)
 {
-    resolve([Taplytics isLoadingPropertiesFromServer]);
+  [Taplytics getRunningExperimentsAndVariations:^(NSDictionary * _Nullable experimentsAndVariations) {
+    resolve(experimentsAndVariations);
+
+  }];
+}
+     
+RCT_REMAP_METHOD(startNewSession, startNewSessionResolver:(RCTPromiseResolveBlock)resolve rejectStartNewSession:(RCTPromiseRejectBlock)reject)
+{
+  [Taplytics startNewSession:^(BOOL success) {
+    resolve([NSNumber numberWithBool:success]);
+  }];
 }
 
-RCT_EXPORT_METHOD(getRunningExperimentsAndVariations:resolver:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+RCT_REMAP_METHOD(getSessionInfo, resolveSessionInfo:(RCTPromiseResolveBlock)resolve resolveGetSessionInfo:(RCTPromiseRejectBlock)reject)
 {
-    [Taplytics getRunningExperimentsAndVariations:^void((NSDictionary*)expVars) {
-        resolve(expVars);
-    }]
+    [Taplytics getSessionInfo:^(NSDictionary * _Nullable sessionInfo) {
+      resolve(sessionInfo);
+    }];
 }
 
-RCT_EXPORT_METHOD(performBackgroundFetch:resolver:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+RCT_REMAP_METHOD(performBackgroundFetch, resolveFetch:(RCTPromiseResolveBlock)resolve rejectFetch:(RCTPromiseRejectBlock)reject)
 {
-    [Taplytics performBackgroundFetch:^{
-        resolve(nil);
-    }]
+   [Taplytics performBackgroundFetch:^(UIBackgroundFetchResult result) {
+     resolve([NSNumber numberWithUnsignedInteger:result]);
+   }];
 }
 
 

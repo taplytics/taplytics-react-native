@@ -5,7 +5,7 @@ _Taplytics is a native mobile A/B testing and push notification platform that he
 
  [Commercial License / Terms](http://taplytics.com/terms)
  
-### **Current Version: [1.0.0](changelog)**
+### **Current Version: [1.0.5](#changelog)**
 
 ## 1. Getting Started
 
@@ -25,7 +25,7 @@ Then, initialize a new project.
 
 #### **To install the taplytics-react-native package:**
 
-* `npm install taplytics-react-native --save`
+* `npm install  taplytics-react-native --save`
 
 Then
 
@@ -94,7 +94,24 @@ Then follow the [Experiment](/EXPERIMENTS.md) guide and the [Push Notification](
 
 ## Changelog
 
-**Current Version: [1.0.0](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.0)**
+**Current Version: [1.0.5](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.3)**
+
+1. Updated android package name from com.react to com.taplytics.react
+
+**[1.0.4](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.3)**
+
+1. Updated search paths
+
+**[1.0.3](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.3)**
+
+1. Fixed npm references not pointing to the right project.
+2. Cleaned up many iOS functions.
+
+**[1.0.1](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.1)**
+
+1. Fixed react native minimum version number. 
+
+**[1.0.0](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.0)**
 
 1. Initial version of React Native SDK. Please contact us with any questions or use git issues. 
 

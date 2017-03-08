@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		660E90EB1E4E1533007217C2 /* Taplytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 660E90EA1E4E1533007217C2 /* Taplytics.framework */; };
 		B3E7B58A1CC2AC0600A0062D /* RNTaplyticsReact.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNTaplyticsReact.m */; };
 		D713D2B31E4A4FEF00431D71 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D713D2B21E4A4FEF00431D71 /* JavaScriptCore.framework */; };
 		D713D2BC1E4A516F00431D71 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D713D2BB1E4A516F00431D71 /* CoreTelephony.framework */; };
@@ -28,7 +27,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		660E90EA1E4E1533007217C2 /* Taplytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Taplytics.framework; path = ../../../AwesomeProject/ios/Pods/Taplytics/Taplytics.framework; sourceTree = "<group>"; };
 		B3E7B5881CC2AC0600A0062D /* RNTaplyticsReact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNTaplyticsReact.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNTaplyticsReact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNTaplyticsReact.m; sourceTree = "<group>"; };
 		D713D2B21E4A4FEF00431D71 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -45,7 +43,6 @@
 				D713D2BE1E4A517500431D71 /* SystemConfiguration.framework in Frameworks */,
 				D713D2BC1E4A516F00431D71 /* CoreTelephony.framework in Frameworks */,
 				D713D2B31E4A4FEF00431D71 /* JavaScriptCore.framework in Frameworks */,
-				660E90EB1E4E1533007217C2 /* Taplytics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,7 +62,6 @@
 		D713D2B11E4A4FEF00431D71 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				660E90EA1E4E1533007217C2 /* Taplytics.framework */,
 				D713D2BD1E4A517500431D71 /* SystemConfiguration.framework */,
 				D713D2BB1E4A516F00431D71 /* CoreTelephony.framework */,
 				D713D2B21E4A4FEF00431D71 /* JavaScriptCore.framework */,
@@ -155,6 +151,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -196,6 +193,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -218,7 +216,7 @@
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.gch *.xcode* *.xcassets (*) .DS_Store CVS .svn .git .hg *.pbproj *.pbxproj";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../**",
+					"$(PODS_ROOT)/**",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -226,15 +224,12 @@
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/**",
-					"/Users/Adam/Code/AwesomeProject/ios/Pods/Taplytics/**",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
 				);
+				PODS_ROOT = "$(SRCROOT)/../../../ios/Pods";
 				PRODUCT_NAME = RNTaplyticsReact;
 				SKIP_INSTALL = YES;
 			};
@@ -248,7 +243,7 @@
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.gch *.xcode* *.xcassets (*) .DS_Store CVS .svn .git .hg *.pbproj *.pbxproj";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/../**",
+					"$(PODS_ROOT)/**",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -256,15 +251,12 @@
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/**",
-					"/Users/Adam/Code/AwesomeProject/ios/Pods/Taplytics/**",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
 				);
+				PODS_ROOT = "$(SRCROOT)/../../../ios/Pods";
 				PRODUCT_NAME = RNTaplyticsReact;
 				SKIP_INSTALL = YES;
 			};

@@ -1,6 +1,6 @@
 {
-  "name": "@taplytics/taplytics-react-native",
-  "version": "1.0.1",
+  "name": "taplytics-react-native",
+  "version": "1.0.5",
   "description": "_Taplytics is a native mobile A/B testing and push notification platform that helps you optimize your React Native app!_",
   "main": "index.js",
   "scripts": {
@@ -18,13 +18,12 @@
   "dependencies": {
     "lodash": "*"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/taplytics/Taplytics-React.git"
+    "url": "git+https://github.com/taplytics/Taplytics-React-Native.git"
   },
   "bugs": {
-    "url": "https://github.com/taplytics/Taplytics-React/issues"
+    "url": "https://github.com/taplytics/Taplytics-React-Native/issues"
   },
-  "homepage": "https://github.com/taplytics/Taplytics-React#readme"
+  "homepage": "https://github.com/taplytics/Taplytics-React-Native#readme"
 }
