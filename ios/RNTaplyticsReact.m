@@ -213,8 +213,5 @@ RCT_REMAP_METHOD(performBackgroundFetch, resolveFetch:(RCTPromiseResolveBlock)re
    }];
 }
 
-
-
-
 @end
   
