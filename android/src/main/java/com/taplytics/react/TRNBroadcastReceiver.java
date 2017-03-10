@@ -26,7 +26,7 @@ public class TRNBroadcastReceiver extends TLGcmBroadcastReceiver {
         WritableMap data = Arguments.createMap();
         data.putString("value", intent.getExtras().getString("custom_keys"));
         if (TaplyticsReactModule.getInstance() != null) {
-            TaplyticsReactModule.getInstance().sendEvent("pushOpened", data);
+            TaplyticsReactModule.getInstance().sendEvent("pushDismissed", data);
         }
     }
     @Override
@@ -34,7 +34,7 @@ public class TRNBroadcastReceiver extends TLGcmBroadcastReceiver {
         WritableMap data = Arguments.createMap();
         data.putString("value", intent.getExtras().getString("custom_keys"));
         if (TaplyticsReactModule.getInstance() != null) {
-            TaplyticsReactModule.getInstance().sendEvent("pushOpened", data);
+            TaplyticsReactModule.getInstance().sendEvent("pushReceived", data);
         }
     }
 }
