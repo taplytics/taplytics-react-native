@@ -77,7 +77,7 @@ compile project(':taplytics-react-native')
    }
 ```
 
-5. **[Simply follow part 1. Install and part 2. Setup from the Android SDK docs here.](https://github.com/taplytics/taplytics-ios-sdk/blob/master/START.md#1-install)**
+5. **[Simply follow part 1. Install and part 2. Setup from the Android SDK docs here.](https://github.com/taplytics/taplytics-android-sdk/blob/master/START.md#1-installation)**
 
 
 ## 4. Start making Experiments and sending Push Notifications to your users.
