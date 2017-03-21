@@ -28,9 +28,15 @@ To set up push notifications on Android, please follow the documentation here:
 
 On Android, it's possible to attach listeners to the three push notification events handled by the Taplytics SDK. These are push received, push dismissed and push opened. Use the following three methods:
 ```javascript
-Taplytics.registerPushOpenedListener(callback)
-Taplytics.registerPushReceivedListener(callback)
-Taplytics.registerPushDismissedListener(callback)
+Taplytics.registerPushOpenedListener((value) => {
+   // Do something
+})
+Taplytics.registerPushReceivedListener((value) => {
+  // Do something
+})
+Taplytics.registerPushDismissedListener((value) => {
+  // Do something
+})
 ```
 You can register multiple callbacks for the same event, and all will be executed.
 IMPORTANT: For this functionality to work, you must register the Broadcast receiver in your Android manifest, inside the application tag:
