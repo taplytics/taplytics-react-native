@@ -94,7 +94,12 @@ Then follow the [Experiment](/EXPERIMENTS.md) guide and the [Push Notification](
 
 ## Changelog
 
-**Current Version: [1.0.7](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.7)**
+**Current Version: [1.0.8](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.8)**
+
+1. Added push ID to value sent to BroadcastReceiver
+
+
+**[1.0.7](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.7)**
 
 1. Added safety in broadcastReceiver
 
