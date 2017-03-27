@@ -138,7 +138,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void logEvent(String name, Float number, String object) {
+    public void _logEvent(String name, Float number, String object) {
         try {
             JSONObject data = new JSONObject(object);
             Taplytics.logEvent(name, number, data);
@@ -148,7 +148,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void logRevenue(String name, Float number, String object) {
+    public void _logRevenue(String name, Float number, String object) {
         try {
             JSONObject data = new JSONObject(object);
             Taplytics.logRevenue(name, number, data);
