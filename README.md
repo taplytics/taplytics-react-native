@@ -5,7 +5,7 @@ _Taplytics is a native mobile A/B testing and push notification platform that he
 
  [Commercial License / Terms](http://taplytics.com/terms)
  
-### **Current Version: [1.0.8](#changelog)**
+### **Current Version: [1.0.9](#changelog)**
 
 ## 1. Getting Started
 
@@ -94,7 +94,11 @@ Then follow the [Experiment](/EXPERIMENTS.md) guide and the [Push Notification](
 
 ## Changelog
 
-**Current Version: [1.0.8](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.8)**
+**Current Version: [1.0.9](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.9)**
+
+1. Fixed getSessionInfo crash
+
+**[1.0.8](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.8)**
 
 1. Added push ID to value sent to BroadcastReceiver
 
