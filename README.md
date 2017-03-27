@@ -5,7 +5,7 @@ _Taplytics is a native mobile A/B testing and push notification platform that he
 
  [Commercial License / Terms](http://taplytics.com/terms)
  
-### **Current Version: [1.0.10](#changelog)**
+### **Current Version: [1.0.11](#changelog)**
 
 ## 1. Getting Started
 
@@ -94,7 +94,12 @@ Then follow the [Experiment](/EXPERIMENTS.md) guide and the [Push Notification](
 
 ## Changelog
 
-**Current Version: [1.0.10](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.10)**
+
+**Current Version: [1.0.11](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.11)**
+
+1. Fixed json attributes passed into logEvent and logRevenue causing crash.
+
+**[1.0.10](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.10)**
 
 1. Fixed search paths for non-cocoapods import
 
