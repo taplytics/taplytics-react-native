@@ -125,7 +125,7 @@ if (Platform.OS == 'android') {
     if (_.isPlainObject(params)) params = JSON.stringify(params);
     Taplytics._logEvent(name, value, params);
   }
-  
+
   Taplytics.logRevenue = (name, value, params) => {
     if (_.isPlainObject(params)) params = JSON.stringify(params);
     Taplytics._logRevenue(name, value, params);
