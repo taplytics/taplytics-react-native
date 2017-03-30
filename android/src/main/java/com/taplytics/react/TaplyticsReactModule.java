@@ -11,6 +11,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.WritableNativeMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.taplytics.sdk.CodeBlockListener;
 import com.taplytics.sdk.SessionInfoRetrievedListener;
@@ -137,7 +138,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void logEvent(String name, Float number, String object) {
+    public void _logEvent(String name, Float number, String object) {
         try {
             JSONObject data = new JSONObject(object);
             Taplytics.logEvent(name, number, data);
@@ -147,7 +148,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void logRevenue(String name, Float number, String object) {
+    public void _logRevenue(String name, Float number, String object) {
         try {
             JSONObject data = new JSONObject(object);
             Taplytics.logRevenue(name, number, data);
@@ -272,7 +273,15 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
         Taplytics.getSessionInfo(new SessionInfoRetrievedListener() {
             @Override
             public void sessionInfoRetrieved(HashMap hashMap) {
-                callback.resolve(hashMap);
+                WritableMap resultData = new WritableNativeMap();
+                if(hashMap.containsKey("session_id")){
+                    resultData.putString("session_id", (String) hashMap.get("session_id"));
+                }
+                if(hashMap.containsKey("appUser_id")){
+                    resultData.putString("appUser_id", (String) hashMap.get("appUser_id"));
+                }
+
+                callback.resolve(resultData);
             }
         });
     }

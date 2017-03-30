@@ -5,7 +5,7 @@ _Taplytics is a native mobile A/B testing and push notification platform that he
 
  [Commercial License / Terms](http://taplytics.com/terms)
  
-### **Current Version: [1.0.6](#changelog)**
+### **Current Version: [1.0.11](#changelog)**
 
 ## 1. Getting Started
 
@@ -77,7 +77,7 @@ compile project(':taplytics-react-native')
    }
 ```
 
-5. **[Simply follow part 1. Install and part 2. Setup from the Android SDK docs here.](https://github.com/taplytics/taplytics-ios-sdk/blob/master/START.md#1-install)**
+5. **[Simply follow part 1. Install and part 2. Setup from the Android SDK docs here.](https://github.com/taplytics/taplytics-android-sdk/blob/master/START.md#1-installation)**
 
 
 ## 4. Start making Experiments and sending Push Notifications to your users.
@@ -94,7 +94,29 @@ Then follow the [Experiment](/EXPERIMENTS.md) guide and the [Push Notification](
 
 ## Changelog
 
-**Current Version: [1.0.6](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.6)**
+
+**Current Version: [1.0.11](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.11)**
+
+1. Fixed json attributes passed into logEvent and logRevenue causing crash.
+
+**[1.0.10](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.10)**
+
+1. Fixed search paths for non-cocoapods import
+
+**[1.0.9](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.9)**
+
+1. Fixed getSessionInfo crash
+
+**[1.0.8](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.8)**
+
+1. Added push ID to value sent to BroadcastReceiver
+
+
+**[1.0.7](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.7)**
+
+1. Added safety in broadcastReceiver
+
+**[1.0.6](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.6)**
 
 1. Fixed broadcastreceiver sending wrong push event types.
 

@@ -113,6 +113,18 @@ DeviceEventEmitter.addListener("pushReceived", (event) => {
   _.each(pushReceivedListeners, listener => _.isFunction(listener) && listener(value))
 })
 
+if (Platform.OS == 'android') {
+  Taplytics.logEvent = (name, value, params) => {
+    if (_.isPlainObject(params)) params = JSON.stringify(params);
+    Taplytics._logEvent(name, value, params);
+  }
+
+  Taplytics.logRevenue = (name, value, params) => {
+    if (_.isPlainObject(params)) params = JSON.stringify(params);
+    Taplytics._logRevenue(name, value, params);
+  }
+}
+
 Taplytics.getVariables = () => _.cloneDeep(variables);
 
 export default Taplytics;
