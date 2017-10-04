@@ -58,6 +58,14 @@ Then, initialize a new project.
 	```      
 	compile project(':taplytics-react-native')
 	```
+	
+	**Note that React Native is packaged with an older version of OkHttp, so an older version of socketio is required:**
+	
+	```
+	debugCompile ('io.socket:socket.io-client:0.8.0') {
+        exclude group: 'org.json', module: 'json'
+    }
+    ```
 
 4. In your app-level `build.gradle`, add this the taplytics url to your repositories:
 
@@ -79,7 +87,7 @@ Then, initialize a new project.
 	}
 	```
 
-6. **[Simply follow part 1. Install and part 2. Setup from the Android SDK docs here.](https://github.com/taplytics/taplytics-android-sdk/blob/master/START.md#1-installation)**
+6. **[Follow part 1. Install and part 2. Setup from the Android SDK docs here.](https://github.com/taplytics/taplytics-android-sdk/blob/master/START.md#1-installation)**
 
 
 ## 4. Start making Experiments and sending Push Notifications to your users.
