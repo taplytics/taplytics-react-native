@@ -121,9 +121,9 @@ RCT_EXPORT_METHOD(registerPushNotifications)
     [Taplytics registerPushNotifications];
 }
 
-RCT_EXPORT_METHOD(registerPushNotificationsWithTypes:(NSInteger)types)
+RCT_EXPORT_METHOD(registerPushNotificationsWithTypes:(NSInteger)types categories:(nullable NSSet*)categories)
 {
-  [Taplytics registerPushNotificationsWithTypes:types];
+    [Taplytics registerPushNotificationsWithTypes:types categories:categories];
 }
 
 RCT_EXPORT_METHOD(registerLocationAccess)
