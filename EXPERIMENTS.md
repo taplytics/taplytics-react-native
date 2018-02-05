@@ -32,14 +32,16 @@ An example with custom data:
 
 ```javascript				
 Taplytics.setUserAttributes({
-	"email": "johnDoe@taplytics.com",		
-	"name": "John Doe",
-	"age": 25,
-	"gender": "male",
-	"avatarurl": "https://someurl.com/someavatar.png",
-	"someCustomAttribute": 50,
-	"paidSubscriber": true,
-	"subscriptionPlan": "yearly",
+    "email": "johnDoe@taplytics.com",		
+    "name": "John Doe",
+    "age": 25,
+    "gender": "male",
+    "avatarurl": "https://someurl.com/someavatar.png",
+    "customData": {
+        "someCustomAttribute": 50,
+        "paidSubscriber": true,
+        "subscriptionPlan": "yearly"
+    }
 });
 ```
 #### User Attributes on First Launch
