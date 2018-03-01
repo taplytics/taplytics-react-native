@@ -232,6 +232,9 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
             public void onNewSession() {
                 callback.resolve(null);
             }
+            public void onError() {
+                callback.resolve(null);
+            }
         });
     }
 
@@ -282,6 +285,9 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
                 }
 
                 callback.resolve(resultData);
+            }
+            public void onError(HashMap hashMap) {
+                callback.resolve(null);
             }
         });
     }
