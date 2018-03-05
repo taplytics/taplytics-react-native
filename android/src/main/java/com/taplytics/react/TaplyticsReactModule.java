@@ -239,21 +239,19 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
         });
     }
 
-    public void _setTaplyticsNewSessionListener(final Promise callback) {
+    public void _setTaplyticsNewSessionListener() {
         Taplytics.setTaplyticsNewSessionListener(new TaplyticsNewSessionListener() {
             @Override
             public void onNewSession() {
                 WritableMap params = Arguments.createMap();
                 params.putBoolean("value", true);
                 sendEvent("newSession", params);
-                callback.resolve(null);
             }
             @Override
             public void onError() {
                 WritableMap params = Arguments.createMap();
                 params.putBoolean("value", false);
                 sendEvent("newSession", params);
-                callback.resolve("Setting New Session");
             }
         });
     }
