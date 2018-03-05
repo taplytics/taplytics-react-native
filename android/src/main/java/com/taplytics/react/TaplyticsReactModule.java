@@ -232,22 +232,28 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
             public void onNewSession() {
                 callback.resolve(null);
             }
+            @Override
             public void onError() {
-                callback.resolve(null);
+                callback.reject("Starting New Session");
             }
         });
     }
 
-    public void _setTaplyticsNewSessionListener() {
+    public void _setTaplyticsNewSessionListener(final Promise callback) {
         Taplytics.setTaplyticsNewSessionListener(new TaplyticsNewSessionListener() {
             @Override
             public void onNewSession() {
                 WritableMap params = Arguments.createMap();
                 params.putBoolean("value", true);
                 sendEvent("newSession", params);
+                callback.resolve(null);
             }
+            @Override
             public void onError() {
-                
+                WritableMap params = Arguments.createMap();
+                params.putBoolean("value", false);
+                sendEvent("newSession", params);
+                callback.resolve("Setting New Session");
             }
         });
     }
@@ -289,8 +295,9 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
 
                 callback.resolve(resultData);
             }
+            @Override
             public void onError(HashMap hashMap) {
-                callback.resolve(null);
+                callback.reject("Getting Session Info");
             }
         });
     }
