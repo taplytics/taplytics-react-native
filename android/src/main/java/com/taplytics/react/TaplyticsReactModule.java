@@ -246,6 +246,9 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
                 params.putBoolean("value", true);
                 sendEvent("newSession", params);
             }
+            public void onError() {
+                
+            }
         });
     }
 
