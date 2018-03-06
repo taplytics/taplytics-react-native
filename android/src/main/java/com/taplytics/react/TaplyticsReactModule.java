@@ -253,7 +253,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
                 WritableMap params = Arguments.createMap();
                 params.putBoolean("value", false);
                 sendEvent("newSession", params);
-                callback.resolve("Setting New Session");
+                callback.reject("Setting New Session");
             }
         });
     }
