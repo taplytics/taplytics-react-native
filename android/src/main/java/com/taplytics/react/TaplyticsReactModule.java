@@ -249,11 +249,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
                 sendEvent("newSession", params);
             }
             @Override
-            public void onError() {
-                WritableMap params = Arguments.createMap();
-                params.putBoolean("value", false);
-                sendEvent("newSession", params);
-            }
+            public void onError() { }
         });
     }
 
