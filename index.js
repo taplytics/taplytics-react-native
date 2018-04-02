@@ -68,7 +68,7 @@ Taplytics.setTaplyticsExperimentsUpdatedListener = (listener) => {
   Taplytics._setTaplyticsExperimentsUpdatedListener()
 
   DeviceEventEmitter.addListener("experimentsUpdated", (event) => {
-    listener && listener(value)
+    listener && listener(event.value)
   })
 }
 
@@ -77,7 +77,7 @@ Taplytics.setTaplyticsNewSessionListener = (listener) => {
   Taplytics._setTaplyticsNewSessionListener()
 
   DeviceEventEmitter.addListener("newSession", (event) => {
-    listener && listener(value)
+    listener && listener(event.value)
   })
 }
 
