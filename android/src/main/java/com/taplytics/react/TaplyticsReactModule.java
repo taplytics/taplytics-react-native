@@ -232,9 +232,14 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
             public void onNewSession() {
                 callback.resolve(null);
             }
+            @Override
+            public void onError() {
+                callback.reject(tagName,"Starting New Session");
+            }
         });
     }
 
+    @ReactMethod
     public void _setTaplyticsNewSessionListener() {
         Taplytics.setTaplyticsNewSessionListener(new TaplyticsNewSessionListener() {
             @Override
@@ -243,6 +248,8 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
                 params.putBoolean("value", true);
                 sendEvent("newSession", params);
             }
+            @Override
+            public void onError() { }
         });
     }
 
@@ -283,6 +290,10 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
 
                 callback.resolve(resultData);
             }
+            @Override
+            public void onError(HashMap hashMap) {
+                callback.reject(tagName,"Getting Session Info");
+            }
         });
     }
 
@@ -306,7 +317,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
 
             @Override
             public void failure() {
-                callback.reject("Taplytics", "Failed to set push subscription enabled status");
+                callback.reject(tagName, "Failed to set push subscription enabled status");
             }
         });
     }
