@@ -5,7 +5,7 @@ _Taplytics is a native mobile A/B testing and push notification platform that he
 
  [Commercial License / Terms](http://taplytics.com/terms)
  
-### **Current Version: [1.1.3](#changelog)**
+### **Current Version: [1.1.4](#changelog)**
 
 ## 1. Getting Started
 
@@ -104,18 +104,21 @@ Then follow the [Experiment](/EXPERIMENTS.md) guide and the [Push Notification](
 
 ## Changelog
 
+**Current Version: [1.1.4](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.1.4)**
 
-**Current Version: [1.1.3](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.12)**
+1. Add error states for various async calls
+
+**[1.1.3](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.1.3)**
 
 1. RN 0.47+ Support
 
 
-**Current Version: [1.0.12](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.12)**
+**[1.0.12](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.12)**
 
 1. Update reference to iOS push register method.
 
 
-**Current Version: [1.0.11](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.11)**
+**[1.0.11](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.11)**
 
 1. Fixed json attributes passed into logEvent and logRevenue causing crash.
 
