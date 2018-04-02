@@ -234,7 +234,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
             }
             @Override
             public void onError() {
-                callback.reject("Starting New Session");
+                callback.reject(tagName,"Starting New Session");
             }
         });
     }
@@ -292,7 +292,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
             }
             @Override
             public void onError(HashMap hashMap) {
-                callback.reject("Getting Session Info");
+                callback.reject(tagName,"Getting Session Info");
             }
         });
     }
@@ -317,7 +317,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
 
             @Override
             public void failure() {
-                callback.reject("Taplytics", "Failed to set push subscription enabled status");
+                callback.reject(tagName, "Failed to set push subscription enabled status");
             }
         });
     }
