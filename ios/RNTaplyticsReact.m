@@ -163,6 +163,11 @@ RCT_EXPORT_METHOD(registerLocationAccess)
     [Taplytics registerLocationAccess];
 }
 
+RCT_EXPORT_METHOD(featureFlagEnabled:(NSString *)key)
+{
+    [Taplytics featureFlagEnabled:key];
+}
+
 RCT_REMAP_METHOD(resetAppUser, resetAppUserResolver:(RCTPromiseResolveBlock)resolve resetAppUserRejecter:(RCTPromiseRejectBlock)reject)
 {
     [Taplytics resetUser:^{
