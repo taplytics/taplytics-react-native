@@ -98,24 +98,17 @@ Taplytics.registerPushReceivedListener = (listener) => {
   pushReceivedListeners.push(listener)
 }
 
-function platformCheck() {
-    if (Platform.OS == 'ios') console.warn("Push event listeners are not available on iOS. Use built-in React Native push handling instead!")
-}
-
 DeviceEventEmitter.addListener("pushOpened", (event) => {
-  platformCheck()
   value = JSON.parse(event.value)
   _.each(pushOpenedListeners, listener => _.isFunction(listener) && listener(value))
 })
 
 DeviceEventEmitter.addListener("pushDismissed", (event) => {
-  platformCheck()
   value = JSON.parse(event.value)
   _.each(pushDismissedListeners, listener => _.isFunction(listener) && listener(value))
 })
 
 DeviceEventEmitter.addListener("pushReceived", (event) => {
-  platformCheck()
   value = JSON.parse(event.value)
   _.each(pushReceivedListeners, listener => _.isFunction(listener) && listener(value))
 })
@@ -131,7 +124,6 @@ if (Platform.OS == 'android') {
     Taplytics._logRevenue(name, value, params);
   }
 }
-
 
 Taplytics.getVariables = () => _.cloneDeep(variables);
 
