@@ -52,7 +52,7 @@ And you must add the following receiver and service under your application tag:
 
 ```xml
 <receiver
-    android:name="com.taplytics.sdk.TRNBroadcastReceiver"
+    android:name="com.taplytics.react.TRNBroadcastReceiver"
     android:permission="com.google.android.c2dm.permission.SEND" >
     <intent-filter>
         <action android:name="com.google.android.c2dm.intent.RECEIVE" />
