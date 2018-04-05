@@ -184,6 +184,11 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public boolean featureFlagEnabled(String key) {
+        return Taplytics.featureFlagEnabled(key);
+    }
+
+    @ReactMethod
     public void resetAppUser(final Promise callback) {
         TaplyticsResetUserListener listener = new TaplyticsResetUserListener() {
             @Override
