@@ -1,5 +1,5 @@
 
-import { NativeModules, DeviceEventEmitter, Platform } from 'react-native';
+import { NativeEventEmitter, NativeModules, DeviceEventEmitter, Platform } from 'react-native';
 import _ from 'lodash';
 
 const { Taplytics } = NativeModules;
@@ -88,6 +88,9 @@ let pushReceivedListeners = []
 Taplytics.registerPushOpenedListener = (listener) => {
   console.log("Registering push open")
   pushOpenedListeners.push(listener)
+  if(Platform.OS == 'ios'){
+    Taplytics._registerPushOpenedListener()
+  }
 }
 
 Taplytics.registerPushDismissedListener = (listener) => {
@@ -96,21 +99,36 @@ Taplytics.registerPushDismissedListener = (listener) => {
 
 Taplytics.registerPushReceivedListener = (listener) => {
   pushReceivedListeners.push(listener)
+  if(Platform.OS == 'ios'){
+    Taplytics._registerPushReceivedListener()
+  }
 }
 
-DeviceEventEmitter.addListener("pushOpened", (event) => {
-  value = JSON.parse(event.value)
-  _.each(pushOpenedListeners, listener => _.isFunction(listener) && listener(value))
-})
+if (Platform.OS == 'ios') {
+  new NativeEventEmitter(Taplytics).addListener("pushOpened", (event) => {
+    _.each(pushOpenedListeners, listener => _.isFunction(listener) && listener(event))
+  }) 
+} else {
+  DeviceEventEmitter.addListener("pushOpened", (event) => {
+    value = JSON.parse(event.value)
+    _.each(pushOpenedListeners, listener => _.isFunction(listener) && listener(value))
+  })
+}
+
+if (Platform.OS == 'ios') {
+  new NativeEventEmitter(Taplytics).addListener("pushReceived", (event) => {
+    _.each(pushReceivedListeners, listener => _.isFunction(listener) && listener(event))
+  }) 
+} else {
+  DeviceEventEmitter.addListener("pushReceived", (event) => {
+    value = JSON.parse(event.value)
+    _.each(pushReceivedListenrs, listener => _.isFunction(listener) && listener(value))
+  })
+}
 
 DeviceEventEmitter.addListener("pushDismissed", (event) => {
   value = JSON.parse(event.value)
   _.each(pushDismissedListeners, listener => _.isFunction(listener) && listener(value))
-})
-
-DeviceEventEmitter.addListener("pushReceived", (event) => {
-  value = JSON.parse(event.value)
-  _.each(pushReceivedListeners, listener => _.isFunction(listener) && listener(value))
 })
 
 if (Platform.OS == 'android') {

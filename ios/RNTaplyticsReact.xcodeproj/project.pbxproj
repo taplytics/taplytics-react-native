@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1CA0069B208108B4007250C9 /* Taplytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CA0069C208108B4007250C9 /* Taplytics.framework */; };
 		B3E7B58A1CC2AC0600A0062D /* RNTaplyticsReact.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNTaplyticsReact.m */; };
 		D713D2B31E4A4FEF00431D71 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D713D2B21E4A4FEF00431D71 /* JavaScriptCore.framework */; };
 		D713D2BC1E4A516F00431D71 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D713D2BB1E4A516F00431D71 /* CoreTelephony.framework */; };
@@ -27,6 +28,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1CA0069C208108B4007250C9 /* Taplytics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Taplytics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3E7B5881CC2AC0600A0062D /* RNTaplyticsReact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNTaplyticsReact.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNTaplyticsReact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNTaplyticsReact.m; sourceTree = "<group>"; };
 		D713D2B21E4A4FEF00431D71 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -40,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CA0069B208108B4007250C9 /* Taplytics.framework in Frameworks */,
 				D713D2BE1E4A517500431D71 /* SystemConfiguration.framework in Frameworks */,
 				D713D2BC1E4A516F00431D71 /* CoreTelephony.framework in Frameworks */,
 				D713D2B31E4A4FEF00431D71 /* JavaScriptCore.framework in Frameworks */,
@@ -62,6 +65,7 @@
 		D713D2B11E4A4FEF00431D71 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1CA0069C208108B4007250C9 /* Taplytics.framework */,
 				D713D2BD1E4A517500431D71 /* SystemConfiguration.framework */,
 				D713D2BB1E4A516F00431D71 /* CoreTelephony.framework */,
 				D713D2B21E4A4FEF00431D71 /* JavaScriptCore.framework */,

@@ -66,6 +66,7 @@ RCT_REMAP_METHOD(_newSyncObject, name:(NSString *)name defaultValue:(NSString *)
     }
 }
 
+
 RCT_EXPORT_METHOD(_newAsyncBool:(NSString *)name defaultValue:(BOOL)defaultValue)
 {
     [TaplyticsVar taplyticsVarWithName:name defaultValue:@(defaultValue) updatedBlock:^(NSObject* value) {
@@ -127,6 +128,8 @@ RCT_REMAP_METHOD(propertiesLoadedCallback, propertiesLoadedCallbackResolver:(RCT
 
 RCT_EXPORT_METHOD(registerPushNotifications)
 {
+    NSLog("aaaaaa taplytics");
+
     [Taplytics registerPushNotifications];
 }
 
