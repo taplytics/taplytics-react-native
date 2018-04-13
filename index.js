@@ -122,7 +122,7 @@ if (Platform.OS == 'ios') {
 } else {
   DeviceEventEmitter.addListener("pushReceived", (event) => {
     value = JSON.parse(event.value)
-    _.each(pushReceivedListenrs, listener => _.isFunction(listener) && listener(value))
+    _.each(pushReceivedListeners, listener => _.isFunction(listener) && listener(value))
   })
 }
 
