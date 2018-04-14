@@ -5,7 +5,7 @@ _Taplytics is a native mobile A/B testing and push notification platform that he
 
  [Commercial License / Terms](http://taplytics.com/terms)
  
-### **Current Version: [1.1.7](#changelog)**
+### **Current Version: [1.1.8](#changelog)**
 
 ## 1. Getting Started
 
@@ -104,7 +104,11 @@ Then follow the [Experiment](/EXPERIMENTS.md) guide and the [Push Notification](
 
 ## Changelog
 
-**Current: [1.1.7](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.1.7)**
+**Current: [1.1.8](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.1.8)**
+
+1. Remove erroneous log
+
+**[1.1.7](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.1.7)**
 
 1. Fix registering for push on iOS 
 
