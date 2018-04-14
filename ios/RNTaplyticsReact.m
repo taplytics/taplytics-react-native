@@ -128,8 +128,6 @@ RCT_REMAP_METHOD(propertiesLoadedCallback, propertiesLoadedCallbackResolver:(RCT
 
 RCT_EXPORT_METHOD(registerPushNotifications)
 {
-    NSLog("aaaaaa taplytics");
-
     [Taplytics registerPushNotifications];
 }
 
