@@ -46,7 +46,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void _registerPushOpenedListener() {
-      if(TLRNEventEmitter.getInstance().getAwaitingData() != null){
+      if(TLRNEventEmitter.getInstance().getAwaitingData() != null && this.reactContext != null){
           TLRNEventEmitter.getInstance().emit("pushOpened", this.reactContext);
       }
   }
