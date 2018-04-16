@@ -1,4 +1,3 @@
-
 #import "RNTaplyticsReact.h"
 #import <Taplytics/Taplytics.h>
 
@@ -11,15 +10,20 @@
     return dispatch_get_main_queue();
 }
 
+- (NSArray<NSString *> *)supportedEvents
+{
+    return @[@"pushOpened",@"pushReceived"];
+}
+
 - (void)sendEvent:(NSString *)name withValue:(id)value
 {
-    [self.bridge.eventDispatcher sendAppEventWithName:name body:@{@"value": value} ];
+    [self sendEventWithName:name body:value];
 }
 
 - (void)sendPushEvent:(id)name withData:(NSDictionary *)userInfo
 {
     if ([name isEqualToString:@"pushReceived"] || [name isEqualToString:@"pushOpened"]) {
-        [self.bridge.eventDispatcher sendAppEventWithName:name body:userInfo ];
+        [self sendEvent:name withValue:userInfo];
     } else {
         NSLog(@"Invalid push event sent to React Native");
     }
@@ -126,6 +130,24 @@ RCT_REMAP_METHOD(propertiesLoadedCallback, propertiesLoadedCallbackResolver:(RCT
     }];
 }
 
+RCT_EXPORT_METHOD(_registerPushOpenedListener)
+{
+    if ([[Taplytics class] respondsToSelector:@selector(registerPushOpenedListener:)]) {
+        [[Taplytics class] performSelector:@selector(registerPushOpenedListener:) withObject:^(NSDictionary* userInfo) {
+            [self sendPushEvent:@"pushOpened" withData:userInfo];
+        }];
+    }
+}
+
+RCT_EXPORT_METHOD(_registerPushReceivedListener)
+{
+    if ([[Taplytics class] respondsToSelector:@selector(registerPushReceivedListener:)]) {
+        [[Taplytics class] performSelector:@selector(registerPushReceivedListener:) withObject:^(NSDictionary* userInfo) {
+            [self sendPushEvent:@"pushReceived" withData:userInfo];
+        }];
+    }
+}
+
 RCT_EXPORT_METHOD(registerPushNotifications)
 {
     [Taplytics registerPushNotifications];
@@ -177,42 +199,41 @@ RCT_EXPORT_METHOD(logRevenue:(NSString *)eventName value:(nonnull NSNumber*)valu
 
 RCT_REMAP_METHOD(isUserRegisteredForPushNotifications, isUserRegisteredForPushNotificationsResolver:(RCTPromiseResolveBlock)resolve rejectIsUserRegisteredForPushNotifications:(RCTPromiseRejectBlock)reject)
 {
-  resolve([NSNumber numberWithBool:[Taplytics isUserRegisteredForPushNotifications]]);
+    resolve([NSNumber numberWithBool:[Taplytics isUserRegisteredForPushNotifications]]);
 }
 
 RCT_REMAP_METHOD(isLoadingPropertiesFromServer, propertiesLoadingResolver:(RCTPromiseResolveBlock)resolve rejectPropertiesLoading:(RCTPromiseRejectBlock)reject)
 {
-  resolve([NSNumber numberWithBool:[Taplytics isLoadingPropertiesFromServer]]);
+    resolve([NSNumber numberWithBool:[Taplytics isLoadingPropertiesFromServer]]);
 }
 
 RCT_REMAP_METHOD(getRunningExperimentsAndVariations, experimentsAndVariationsResolver:(RCTPromiseResolveBlock)resolve rejectExperimentsAndVariations:(RCTPromiseRejectBlock)reject)
 {
-  [Taplytics getRunningExperimentsAndVariations:^(NSDictionary * _Nullable experimentsAndVariations) {
-    resolve(experimentsAndVariations);
-
-  }];
+    [Taplytics getRunningExperimentsAndVariations:^(NSDictionary * _Nullable experimentsAndVariations) {
+        resolve(experimentsAndVariations);
+        
+    }];
 }
-     
+
 RCT_REMAP_METHOD(startNewSession, startNewSessionResolver:(RCTPromiseResolveBlock)resolve rejectStartNewSession:(RCTPromiseRejectBlock)reject)
 {
-  [Taplytics startNewSession:^(BOOL success) {
-    resolve([NSNumber numberWithBool:success]);
-  }];
+    [Taplytics startNewSession:^(BOOL success) {
+        resolve([NSNumber numberWithBool:success]);
+    }];
 }
 
 RCT_REMAP_METHOD(getSessionInfo, resolveSessionInfo:(RCTPromiseResolveBlock)resolve resolveGetSessionInfo:(RCTPromiseRejectBlock)reject)
 {
     [Taplytics getSessionInfo:^(NSDictionary * _Nullable sessionInfo) {
-      resolve(sessionInfo);
+        resolve(sessionInfo);
     }];
 }
 
 RCT_REMAP_METHOD(performBackgroundFetch, resolveFetch:(RCTPromiseResolveBlock)resolve rejectFetch:(RCTPromiseRejectBlock)reject)
 {
-   [Taplytics performBackgroundFetch:^(UIBackgroundFetchResult result) {
-     resolve([NSNumber numberWithUnsignedInteger:result]);
-   }];
+    [Taplytics performBackgroundFetch:^(UIBackgroundFetchResult result) {
+        resolve([NSNumber numberWithUnsignedInteger:result]);
+    }];
 }
 
 @end
-  

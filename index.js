@@ -105,9 +105,17 @@ Taplytics.registerPushReceivedListener = (listener) => {
 }
 
 if (Platform.OS == 'ios') {
-  new NativeEventEmitter(Taplytics).addListener("pushOpened", (event) => {
-    _.each(pushOpenedListeners, listener => _.isFunction(listener) && listener(event))
-  }) 
+  try {
+    new NativeEventEmitter(Taplytics).addListener("pushOpened", (event) => {
+      _.each(pushOpenedListeners, listener => _.isFunction(listener) && listener(event))
+    }) 
+  }
+  catch(err) {
+    //Fallback for old react native versions
+    DeviceEventEmitter.addListener("pushOpened", (event) => {
+      _.each(pushOpenedListeners, listener => _.isFunction(listener) && listener(event))
+    })
+  }
 } else {
   DeviceEventEmitter.addListener("pushOpened", (event) => {
     value = JSON.parse(event.value)
@@ -116,9 +124,16 @@ if (Platform.OS == 'ios') {
 }
 
 if (Platform.OS == 'ios') {
-  new NativeEventEmitter(Taplytics).addListener("pushReceived", (event) => {
-    _.each(pushReceivedListeners, listener => _.isFunction(listener) && listener(event))
-  }) 
+  try {
+    new NativeEventEmitter(Taplytics).addListener("pushReceived", (event) => {
+      _.each(pushReceivedListeners, listener => _.isFunction(listener) && listener(event))
+    }) 
+  } catch (err) {
+    //Fallback for old react native versions
+    DeviceEventEmitter.addListener("pushReceived", (event) => {
+        _.each(pushReceivedListeners, listener => _.isFunction(listener) && listener(event))
+    })
+  }
 } else {
   DeviceEventEmitter.addListener("pushReceived", (event) => {
     value = JSON.parse(event.value)
