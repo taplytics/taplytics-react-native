@@ -36,11 +36,20 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
     private final ReactApplicationContext reactContext;
     private static TaplyticsReactModule instance;
     private final String tagName = "TaplyticsReact";
+
     public TaplyticsReactModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
         TaplyticsReactModule.instance = this;
     }
+
+
+  @ReactMethod
+  public void _registerPushOpenedListener() {
+      if(TLRNEventEmitter.getInstance().getAwaitingData() != null && this.reactContext != null){
+          TLRNEventEmitter.getInstance().emit("pushOpened", this.reactContext);
+      }
+  }
 
     @Override
     public String getName() {
