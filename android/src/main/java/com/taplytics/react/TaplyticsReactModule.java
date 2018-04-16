@@ -37,7 +37,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
     private static TaplyticsReactModule instance;
     private final String tagName = "TaplyticsReact";
 
-    TaplyticsReactModule(ReactApplicationContext reactContext) {
+    public TaplyticsReactModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
         TaplyticsReactModule.instance = this;
