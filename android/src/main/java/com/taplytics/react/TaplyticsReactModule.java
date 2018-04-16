@@ -8,7 +8,6 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.WritableMap;
@@ -29,7 +28,6 @@ import com.taplytics.sdk.TaplyticsVarListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,8 +46,8 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void _registerPushOpenedListener() {
-      if(TLRNColdOpenStateEmitter.getInstance().getAwaitingData() != null){
-          TLRNColdOpenStateEmitter.getInstance().emit("pushOpened", this.reactContext);
+      if(TLRNEventEmitter.getInstance().getAwaitingData() != null){
+          TLRNEventEmitter.getInstance().emit("pushOpened", this.reactContext);
       }
   }
 
