@@ -18,6 +18,8 @@ public class TRNBroadcastReceiver extends TLGcmBroadcastReceiver {
     public void pushOpened(Context context, Intent intent) {
         if (TaplyticsReactModule.getInstance() != null) {
             TaplyticsReactModule.getInstance().sendEvent("pushOpened", getIntentData(intent));
+        } else {
+            TLRNColdOpenStateEmitter.getInstance().setAwaitingData(getIntentData(intent));
         }
         super.pushOpened(context, intent);
     }

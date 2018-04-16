@@ -8,6 +8,7 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.WritableMap;
@@ -28,6 +29,7 @@ import com.taplytics.sdk.TaplyticsVarListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,11 +38,20 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
     private final ReactApplicationContext reactContext;
     private static TaplyticsReactModule instance;
     private final String tagName = "TaplyticsReact";
-    public TaplyticsReactModule(ReactApplicationContext reactContext) {
+
+    TaplyticsReactModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
         TaplyticsReactModule.instance = this;
     }
+
+
+  @ReactMethod
+  public void _registerPushOpenedListener() {
+      if(TLRNColdOpenStateEmitter.getInstance().getAwaitingData() != null){
+          TLRNColdOpenStateEmitter.getInstance().emit("pushOpened", this.reactContext);
+      }
+  }
 
     @Override
     public String getName() {
