@@ -1,10 +1,11 @@
 
 #import "React/RCTBridgeModule.h"
 #import "React/RCTEventDispatcher.h"
+#import <React/RCTEventEmitter.h>
 
-@interface RNTaplyticsReact : NSObject <RCTBridgeModule>
+@interface RNTaplyticsReact : RCTEventEmitter <RCTBridgeModule>
 
-- (void)sendPushEvent:(NSString *)name;
+- (void)sendPushEvent:(NSString *)name withData:(NSDictionary *)userInfo;
 
 @end
   
