@@ -150,7 +150,7 @@ Taplytics.newSyncVariable("My Variable", "default").then(value => {
 IMPORTANT: The value of these variables will be determined immediately, ie. the SDK will not wait for properties to be loaded from the server. Thus, if you want to ensure that the variables have their correct variables based on your experiment segmentation, you must initialize them after the properties have been loaded from the server. This module provides a callback to achieve this:
 
 ```javascript
-Taplytics.propertiesLoadedCallback(() => {
+Taplytics.propertiesLoadedCallback().then(() => {
   // load variables here
 });
 ```
