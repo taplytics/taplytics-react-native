@@ -60,6 +60,14 @@ Taplytics.newAsyncVariable = (name, defaultValue, callback) => {
   })
 }
 
+Taplytics.featureFlagEnabled = (key) => {
+  if (_.isString(key)) {
+    return Taplytics._featureFlagEnabled(key);
+  } else {
+    return console.error("INVALID TYPE PASSED TO FEATURE FLAG ENABLED")
+  }
+}
+
 Taplytics.setUserAttributes = (attributes) => {
   Taplytics._setUserAttributes(JSON.stringify(attributes))
 }

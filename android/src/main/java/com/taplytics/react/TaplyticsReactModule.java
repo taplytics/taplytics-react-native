@@ -168,6 +168,13 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void _featureFlagEnabled(String key, Promise callback) {
+        boolean isEnabled = Taplytics.featureFlagEnabled(key);
+        callback.resolve(isEnabled);
+    }
+
+
+    @ReactMethod
     public void codeBlock(String name, final Callback callback) {
         Taplytics.runCodeBlock(name, new CodeBlockListener() {
             @Override
@@ -190,11 +197,6 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
                 callback.invoke();
             }
         });
-    }
-
-    @ReactMethod
-    public boolean featureFlagEnabled(String key) {
-        return Taplytics.featureFlagEnabled(key);
     }
 
     @ReactMethod
