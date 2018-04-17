@@ -111,6 +111,12 @@ RCT_EXPORT_METHOD(_newAsyncObject:(NSString *)name defaultValue:(NSString *)defa
     }
 }
 
+RCT_REMAP_METHOD(_featureFlagEnabled, key:(NSString *)key resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+    BOOL isEnabled = [Taplytics featureFlagEnabled];
+    resolve(isEnabled);
+}
+
 RCT_EXPORT_METHOD(runCodeBlock:(NSString *)name codeBlock:(RCTResponseSenderBlock)codeBlock)
 {
     [Taplytics runCodeBlock:name forBlock:^{
