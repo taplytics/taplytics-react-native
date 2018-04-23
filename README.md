@@ -108,7 +108,7 @@ Then follow the [Experiment](/EXPERIMENTS.md) guide and the [Push Notification](
 
 1. Added getRunningFeatureFlags and featureFlagEnabled methods.
 
-**Current: [1.1.11](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.1.11)**
+**[1.1.11](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.1.11)**
 
 1. Add push open listener compatability for cold open after force close on Android.
 
