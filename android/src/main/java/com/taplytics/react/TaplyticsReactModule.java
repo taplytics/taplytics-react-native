@@ -22,6 +22,7 @@ import com.taplytics.sdk.TaplyticsPushSubscriptionChangedListener;
 import com.taplytics.sdk.TaplyticsPushTokenListener;
 import com.taplytics.sdk.TaplyticsResetUserListener;
 import com.taplytics.sdk.TaplyticsRunningExperimentsListener;
+import com.taplytics.sdk.TaplyticsRunningFeatureFlagsListener;
 import com.taplytics.sdk.TaplyticsVar;
 import com.taplytics.sdk.TaplyticsVarListener;
 
@@ -30,6 +31,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Iterator;
+
 
 public class TaplyticsReactModule extends ReactContextBaseJavaModule {
 
@@ -40,6 +43,17 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
         super(reactContext);
         this.reactContext = reactContext;
         TaplyticsReactModule.instance = this;
+    }
+
+    public WritableMap getWritableMap(Map<String, String> map) {
+        WritableMap writeMap = Arguments.createMap();
+        Iterator it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            writeMap.putString((String) pair.getKey(), (String) pair.getValue());
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+        return writeMap;
     }
 
     @Override
@@ -227,7 +241,19 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
         Taplytics.getRunningExperimentsAndVariations(new TaplyticsRunningExperimentsListener() {
             @Override
             public void runningExperimentsAndVariation(Map<String, String> map) {
-                callback.resolve(map);
+                WritableMap resultData = getWritableMap(map);
+                callback.resolve(resultData);
+            }
+        });
+    }
+
+    @ReactMethod
+    public void getRunningFeatureFlags(final Promise callback) {
+        Taplytics.getRunningFeatureFlags(new TaplyticsRunningFeatureFlagsListener() {
+            @Override
+            public void runningFeatureFlags(Map<String, String> map) {
+                WritableMap resultData = getWritableMap(map);
+                callback.resolve(resultData);
             }
         });
     }
