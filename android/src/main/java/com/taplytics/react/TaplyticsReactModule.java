@@ -55,12 +55,17 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
     
     public WritableMap getWritableMap(Map<String, String> map) {
         WritableMap writeMap = Arguments.createMap();
-        Iterator it = map.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
-            writeMap.putString((String) pair.getKey(), (String) pair.getValue());
-            it.remove(); // avoids a ConcurrentModificationException
+        try {
+            Iterator it = map.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry) it.next();
+                writeMap.putString((String) pair.getKey(), (String) pair.getValue());
+                it.remove(); // avoids a ConcurrentModificationException
+            }
+        } catch (Throwable e) {
+            return null;
         }
+
         return writeMap;
     }
 

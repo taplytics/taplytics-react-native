@@ -64,7 +64,7 @@ Taplytics.featureFlagEnabled = (key) => {
   if (_.isString(key)) {
     return Taplytics._featureFlagEnabled(key);
   } else {
-    return console.error("INVALID TYPE PASSED TO FEATURE FLAG ENABLED")
+    return console.error("INVALID KEY. FEATURE FLAG KEY MUST BE A STRING")
   }
 }
 

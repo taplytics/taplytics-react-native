@@ -227,13 +227,6 @@ RCT_REMAP_METHOD(getRunningFeatureFlags, featureFlagsResolver:(RCTPromiseResolve
     resolve(featureFlags);
   }];
 }
-
-RCT_REMAP_METHOD(getRunningFeatureFlags, featureFlagsResolver:(RCTPromiseResolveBlock)resolve rejectFeatureFlags:(RCTPromiseRejectBlock)reject)
-{
-  [Taplytics getRunningFeatureFlags:^(NSDictionary * _Nullable featureFlags) {
-    resolve(featureFlags);
-  }];
-}
      
 RCT_REMAP_METHOD(startNewSession, startNewSessionResolver:(RCTPromiseResolveBlock)resolve rejectStartNewSession:(RCTPromiseRejectBlock)reject)
 {

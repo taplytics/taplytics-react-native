@@ -189,7 +189,6 @@ Taplytics.runCodeBlock(name, someFunction);
 By default, a code block will _not_ run unless enabled on the Taplytics Dashboard. It must be enabled for a Variation before it will run.
 
 ## 4. Feature Flags
-<<<<<<< HEAD
 
 Taplytics feature flags operate in synchronous mode.
 
@@ -230,7 +229,7 @@ Taplytics.getRunningExperimentsAndVariations().then((results) => {
 
 NOTE: The block can return asynchronously once Taplytics properties have loaded. The block will return a `NSDictionary` with feature flag name as the key value, and feature flag key as the value.
 
-=======
+
 
 Taplytics feature flags operate in synchronous mode.
 
@@ -271,7 +270,6 @@ Taplytics.getRunningExperimentsAndVariations().then((results) => {
 
 NOTE: The block can return asynchronously once Taplytics properties have loaded. The block will return a `NSDictionary` with feature flag name as the key value, and feature flag key as the value.
 
->>>>>>> e57e4160e2a068fdc48c5a76b586531dce474801
 ## 5. Currently Running Experiments and Variables
 
 ### Variables
