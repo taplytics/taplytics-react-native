@@ -22,6 +22,7 @@ import com.taplytics.sdk.TaplyticsPushSubscriptionChangedListener;
 import com.taplytics.sdk.TaplyticsPushTokenListener;
 import com.taplytics.sdk.TaplyticsResetUserListener;
 import com.taplytics.sdk.TaplyticsRunningExperimentsListener;
+import com.taplytics.sdk.TaplyticsRunningFeatureFlagsListener;
 import com.taplytics.sdk.TaplyticsVar;
 import com.taplytics.sdk.TaplyticsVarListener;
 
@@ -30,6 +31,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Iterator;
+
 
 public class TaplyticsReactModule extends ReactContextBaseJavaModule {
 
@@ -42,14 +45,31 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
         this.reactContext = reactContext;
         TaplyticsReactModule.instance = this;
     }
-
-
-  @ReactMethod
-  public void _registerPushOpenedListener() {
-      if(TLRNEventEmitter.getInstance().getAwaitingData() != null && this.reactContext != null){
-          TLRNEventEmitter.getInstance().emit("pushOpened", this.reactContext);
-      }
-  }
+    
+    @ReactMethod
+    public void _registerPushOpenedListener() {
+        if(TLRNEventEmitter.getInstance().getAwaitingData() != null && this.reactContext != null){
+            TLRNEventEmitter.getInstance().emit("pushOpened", this.reactContext);
+        }
+    }
+    
+    public WritableMap getWritableMap(Map<String, String> map) {
+        WritableMap writeMap = Arguments.createMap();
+        if (map.isEmpty()) {
+            return writeMap;
+        }
+        try {
+            Iterator it = map.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry) it.next();
+                writeMap.putString((String) pair.getKey(), (String) pair.getValue());
+                it.remove(); // avoids a ConcurrentModificationException
+            }
+        } catch (Throwable e) {
+            writeMap = Arguments.createMap();
+        }
+        return writeMap;
+    }
 
     @Override
     public String getName() {
@@ -168,6 +188,13 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void _featureFlagEnabled(String key, Promise callback) {
+        boolean isEnabled = Taplytics.featureFlagEnabled(key);
+        callback.resolve(isEnabled);
+    }
+
+
+    @ReactMethod
     public void codeBlock(String name, final Callback callback) {
         Taplytics.runCodeBlock(name, new CodeBlockListener() {
             @Override
@@ -229,7 +256,19 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
         Taplytics.getRunningExperimentsAndVariations(new TaplyticsRunningExperimentsListener() {
             @Override
             public void runningExperimentsAndVariation(Map<String, String> map) {
-                callback.resolve(map);
+                WritableMap resultData = getWritableMap(map);
+                callback.resolve(resultData);
+            }
+        });
+    }
+
+    @ReactMethod
+    public void getRunningFeatureFlags(final Promise callback) {
+        Taplytics.getRunningFeatureFlags(new TaplyticsRunningFeatureFlagsListener() {
+            @Override
+            public void runningFeatureFlags(Map<String, String> map) {
+                WritableMap resultData = getWritableMap(map);
+                callback.resolve(resultData);
             }
         });
     }

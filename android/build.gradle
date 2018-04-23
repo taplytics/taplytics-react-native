@@ -30,7 +30,7 @@ android {
 
 dependencies {
     compile 'com.facebook.react:react-native:+'
-    compile 'com.taplytics.sdk:taplytics:1.22.2@aar'
+    compile 'com.taplytics.sdk:taplytics:1.24.1@aar'
 }
 
 repositories {

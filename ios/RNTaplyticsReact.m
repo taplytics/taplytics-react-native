@@ -116,6 +116,12 @@ RCT_EXPORT_METHOD(_newAsyncObject:(NSString *)name defaultValue:(NSString *)defa
     }
 }
 
+RCT_REMAP_METHOD(_featureFlagEnabled, key:(NSString *)key resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+    BOOL isEnabled = [Taplytics featureFlagEnabled:key];
+    resolve([NSNumber numberWithBool:isEnabled]);
+}
+
 RCT_EXPORT_METHOD(runCodeBlock:(NSString *)name codeBlock:(RCTResponseSenderBlock)codeBlock)
 {
     [Taplytics runCodeBlock:name forBlock:^{
@@ -215,6 +221,13 @@ RCT_REMAP_METHOD(getRunningExperimentsAndVariations, experimentsAndVariationsRes
     }];
 }
 
+RCT_REMAP_METHOD(getRunningFeatureFlags, featureFlagsResolver:(RCTPromiseResolveBlock)resolve rejectFeatureFlags:(RCTPromiseRejectBlock)reject)
+{
+  [Taplytics getRunningFeatureFlags:^(NSDictionary * _Nullable featureFlags) {
+    resolve(featureFlags);
+  }];
+}
+     
 RCT_REMAP_METHOD(startNewSession, startNewSessionResolver:(RCTPromiseResolveBlock)resolve rejectStartNewSession:(RCTPromiseRejectBlock)reject)
 {
     [Taplytics startNewSession:^(BOOL success) {
