@@ -55,6 +55,9 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
     
     public WritableMap getWritableMap(Map<String, String> map) {
         WritableMap writeMap = Arguments.createMap();
+        if (map.isEmpty()) {
+            return writeMap;
+        }
         try {
             Iterator it = map.entrySet().iterator();
             while (it.hasNext()) {
@@ -63,9 +66,8 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
                 it.remove(); // avoids a ConcurrentModificationException
             }
         } catch (Throwable e) {
-            return null;
+            writeMap = Arguments.createMap();
         }
-
         return writeMap;
     }
 
