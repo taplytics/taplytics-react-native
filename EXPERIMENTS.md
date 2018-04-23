@@ -188,8 +188,48 @@ Taplytics.runCodeBlock(name, someFunction);
 
 By default, a code block will _not_ run unless enabled on the Taplytics Dashboard. It must be enabled for a Variation before it will run.
 
+## 4. Feature Flags
 
-## 4. Currently Running Experiments and Variables
+Taplytics feature flags operate in synchronous mode.
+
+### Synchronous
+
+Synchronous feature flags are guaranteed to have the same value for the entire session and will have that value immediately after construction.
+
+```javascript
+Taplytics featureFlagEnabled("featureFlagKey").then(isEnabled => {
+    if (isEnabled) {
+      // Put feature code here, or launch feature from here
+    }
+  });
+```
+
+IMPORTANT: The value of featureFlagEnabled will be determined immediately, ie. the SDK will not wait for properties to be loaded from the server. Thus, if you want to ensure that the variables have their correct variables based on your experiment segmentation, you must initialize them after the properties have been loaded from the server. This module provides a callback to achieve this:
+
+```javascript
+Taplytics.propertiesLoadedCallback(() => {
+  Taplytics featureFlagEnabled("featureFlagKey").then(isEnabled => {
+      if (isEnabled) {
+        // Put feature code here, or launch feature from here
+      }
+    });
+});
+```
+
+
+## Running Feature Flags
+
+If you would like to see which feature flags are running on a given device, there exists a `getRunningFeatureFlags()` function which provides a callback with the current feature flags' names and their associated key. An example:
+
+```javascript
+Taplytics.getRunningExperimentsAndVariations().then((results) => {
+    // use results map
+});
+```
+
+NOTE: The block can return asynchronously once Taplytics properties have loaded. The block will return a `NSDictionary` with feature flag name as the key value, and feature flag key as the value.
+
+## 5. Currently Running Experiments and Variables
 
 ### Variables
 
@@ -241,7 +281,7 @@ Taplytics.propertiesLoadedCallback(() => {
 });
 ```
 
-## 5. Sessions
+## 6. Sessions
 
 ### StartNewSession
 
@@ -269,6 +309,6 @@ Taplytics.getSessionInfo().then((results) => {
 });
 ```
 
-## 5. Push
+## 7. Push
 
 [Please view the push docs](https://github.com/taplytics/taplytics-teact-tative/blob/master/PUSH.md)
