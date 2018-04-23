@@ -5,7 +5,7 @@ _Taplytics is a native mobile A/B testing and push notification platform that he
 
  [Commercial License / Terms](http://taplytics.com/terms)
  
-### **Current Version: [1.1.11](#changelog)**
+### **Current Version: [1.1.12](#changelog)**
 
 ## 1. Getting Started
 
@@ -104,6 +104,9 @@ Then follow the [Experiment](/EXPERIMENTS.md) guide and the [Push Notification](
 
 ## Changelog
 
+**Current: [1.1.12](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.1.12)**
+
+1. Added getRunningFeatureFlags and featureFlagEnabled methods.
 
 **Current: [1.1.11](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.1.11)**
 
