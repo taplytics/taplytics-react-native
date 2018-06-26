@@ -69,7 +69,7 @@ Taplytics.featureFlagEnabled = (key) => {
 }
 
 Taplytics.setUserAttributes = (attributes) => {
-  Taplytics._setUserAttributes(JSON.stringify(attributes))
+  return Taplytics._setUserAttributes(JSON.stringify(attributes))
 }
 
 Taplytics.setTaplyticsExperimentsUpdatedListener = (listener) => {
