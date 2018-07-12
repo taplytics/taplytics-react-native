@@ -25,6 +25,7 @@ import com.taplytics.sdk.TaplyticsRunningExperimentsListener;
 import com.taplytics.sdk.TaplyticsRunningFeatureFlagsListener;
 import com.taplytics.sdk.TaplyticsVar;
 import com.taplytics.sdk.TaplyticsVarListener;
+import com.taplytics.sdk.TaplyticsSetUserAttributesListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -318,6 +319,21 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
         try {
             JSONObject jsonAttributes = new JSONObject(attributes);
             Taplytics.setUserAttributes(jsonAttributes);
+        } catch (JSONException e) {
+            Log.e(tagName, e.getMessage());
+        }
+    }
+
+    @ReactMethod
+    public void _setUserAttributes(final String attributes, final Promise promise) {
+        try {
+            JSONObject jsonAttributes = new JSONObject(attributes);
+            Taplytics.setUserAttributes(jsonAttributes, new TaplyticsSetUserAttributesListener() {
+                @Override
+                public void finishedSettingUserAttributes() {
+                    promise.resolve(null);
+                }
+            });
         } catch (JSONException e) {
             Log.e(tagName, e.getMessage());
         }

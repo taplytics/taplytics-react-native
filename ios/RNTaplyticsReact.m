@@ -176,13 +176,15 @@ RCT_REMAP_METHOD(resetAppUser, resetAppUserResolver:(RCTPromiseResolveBlock)reso
     }];
 }
 
-RCT_EXPORT_METHOD(_setUserAttributes:(NSString*)attributes)
+RCT_EXPORT_METHOD(_setUserAttributes:(NSString*)attributes resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
     NSData* data = [attributes dataUsingEncoding:NSUTF8StringEncoding];
     NSError* err;
     @try {
         id object = [NSJSONSerialization JSONObjectWithData:data options:0 error:&err];
-        [Taplytics setUserAttributes:object];
+        [Taplytics setUserAttributes:object withCallback:^{
+            resolve(nil);
+        }];
     } @catch (NSException* e) {
         NSLog(@"%@", e.reason);
     }
