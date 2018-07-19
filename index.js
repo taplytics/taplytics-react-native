@@ -93,6 +93,12 @@ let pushOpenedListeners = []
 let pushDismissedListeners = []
 let pushReceivedListeners = []
 
+Taplytics.registerPushNotifications = () => {
+  if (Platform.OS == 'ios') {
+    Taplytics._registerPushNotifications()
+  }
+}
+
 Taplytics.registerPushOpenedListener = (listener) => {
   console.log("Registering push open")
   pushOpenedListeners.push(listener)
