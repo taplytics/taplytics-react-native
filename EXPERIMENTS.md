@@ -311,4 +311,4 @@ Taplytics.getSessionInfo().then((results) => {
 
 ## 7. Push
 
-[Please view the push docs](https://github.com/taplytics/taplytics-teact-tative/blob/master/PUSH.md)
+[Please view the push docs](https://github.com/taplytics/taplytics-react-native/blob/master/PUSH.md)

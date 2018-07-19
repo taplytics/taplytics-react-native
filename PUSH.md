@@ -29,7 +29,14 @@ Before these event listeners trigger, push notifications must be set up fully on
 
 ## iOS
 
-To set up push notifications on iOS, please follow the documentation here:
+To register for push notifications, it is possible to do so by calling:
+
+```
+// iOS available only
+Taplytics.registerPushNotifications()
+```
+
+To set up push notifications on iOS natively, please follow the documentation here:
 
 #### [iOS SDK - Push Notifications](https://taplytics.com/docs/ios-sdk/push-notifications)
 
