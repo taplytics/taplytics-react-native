@@ -154,7 +154,7 @@ RCT_EXPORT_METHOD(_registerPushReceivedListener)
     }
 }
 
-RCT_EXPORT_METHOD(registerPushNotifications)
+RCT_EXPORT_METHOD(_registerPushNotifications)
 {
     [Taplytics registerPushNotifications];
 }
