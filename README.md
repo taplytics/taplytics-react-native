@@ -104,7 +104,7 @@ Then follow the [Experiment](/EXPERIMENTS.md) guide and the [Push Notification](
 
 ## Changelog
 
-**Current: [1.4.1](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.4.0)**
+**Current: [1.4.1](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.4.1)**
 
 1. Added types
 
