@@ -131,8 +131,12 @@ RCT_EXPORT_METHOD(runCodeBlock:(NSString *)name codeBlock:(RCTResponseSenderBloc
 
 RCT_REMAP_METHOD(propertiesLoadedCallback, propertiesLoadedCallbackResolver:(RCTPromiseResolveBlock)resolve propertiesLoadedCallbackRejecter:(RCTPromiseRejectBlock)reject)
 {
+    BOOL __block calledBack = NO;
     [Taplytics propertiesLoadedCallback:^(BOOL loaded) {
-        resolve(@(loaded));
+        if (!calledBack) {
+            resolve(@(loaded));
+            calledBack = YES;
+        }
     }];
 }
 
