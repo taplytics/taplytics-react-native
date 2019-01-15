@@ -4,10 +4,13 @@ package com.taplytics.react;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.facebook.react.ReactApplication;
+import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.WritableMap;
@@ -35,7 +38,7 @@ import java.util.Map;
 import java.util.Iterator;
 
 
-public class TaplyticsReactModule extends ReactContextBaseJavaModule {
+public class TaplyticsReactModule extends ReactContextBaseJavaModule implements ReactInstanceManager.ReactInstanceEventListener {
 
     private final ReactApplicationContext reactContext;
     private static TaplyticsReactModule instance;
@@ -45,14 +48,20 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
         super(reactContext);
         this.reactContext = reactContext;
         TaplyticsReactModule.instance = this;
+        setupReactListener(reactContext);
     }
-    
-    @ReactMethod
-    public void _registerPushOpenedListener() {
-        if(TLRNEventEmitter.getInstance().getAwaitingData() != null && this.reactContext != null){
-            TLRNEventEmitter.getInstance().emit("pushOpened", this.reactContext);
+
+    private void setupReactListener(ReactApplicationContext reactContext) {
+        try {
+            if (reactContext.getApplicationContext() instanceof ReactApplication) {
+                ((ReactApplication) reactContext.getApplicationContext()).getReactNativeHost().getReactInstanceManager().addReactInstanceEventListener(this);
+            }
+        } catch (Throwable t){
+            //For reasons unknown this is being used in a non-react app?
+            Log.w("Taplytics", "Cannot access ReactNativeHost or ReactInstanceManager");
         }
     }
+
     
     public WritableMap getWritableMap(Map<String, String> map) {
         WritableMap writeMap = Arguments.createMap();
@@ -384,5 +393,11 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule {
                 callback.reject(tagName, "Failed to set push subscription enabled status");
             }
         });
+    }
+
+    @Override
+    public void onReactContextInitialized(ReactContext context) {
+        //Flush queue te moment react context is initialized
+        TaplyticsReactEventQueueManager.getInstance().flushQueue();
     }
 }
