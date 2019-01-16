@@ -19,12 +19,8 @@ public class TRNBroadcastReceiver extends TLGcmBroadcastReceiver {
         if (TaplyticsReactModule.getInstance() != null) {
             TaplyticsReactModule.getInstance().sendEvent("pushOpened", getIntentData(intent));
         } else {
-            /*
-                In the event the react context is unavailable, this could only mean that the app is
-                force-closed and this is a cold open. Set this intent's data to be sent to react
-                when the app fully opens.
-            */
-            TLRNEventEmitter.getInstance().setAwaitingData(getIntentData(intent));
+            //Add to the queue to be sent off right when the react context is available.
+            TaplyticsReactEventQueueManager.getInstance().addToQueue(new TaplyticsReactEvent("pushOpened", getIntentData(intent)));
         }
         super.pushOpened(context, intent);
     }
