@@ -50,8 +50,6 @@ Taplytics.newAsyncVariable = (name, defaultValue, callback) => {
     args.push(cb)
   }
 
-  console.log('args', args)
-
   if (_.isBoolean(defaultValue)) {
     Taplytics._newAsyncBool(...args)
   } else if (_.isString(defaultValue)) {
