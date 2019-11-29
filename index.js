@@ -37,26 +37,38 @@ Taplytics.newSyncVariable = (name, defaultValue) => {
 }
 
 Taplytics.newAsyncVariable = (name, defaultValue, callback) => {
+  const cb = (err, value) => {
+    if (_.isPlainObject(value)) {
+      value = JSON.parse(value)
+    }
+    setVariable(name, value)
+    callback && callback(value)
+  }
+
+  let args = [name, defaultValue]
+  if (Platform.OS === 'ios') {
+    args.push(cb)
+  }
+
+  console.log('args', args)
+
   if (_.isBoolean(defaultValue)) {
-    Taplytics._newAsyncBool(name, defaultValue)
+    Taplytics._newAsyncBool(...args)
   } else if (_.isString(defaultValue)) {
-    Taplytics._newAsyncString(name, defaultValue)
+    Taplytics._newAsyncString(...args)
   } else if (_.isNumber(defaultValue)) {
-    Taplytics._newAsyncNumber(name, defaultValue)
+    Taplytics._newAsyncNumber(...args)
   } else if (_.isPlainObject(defaultValue)) {
     value = JSON.stringify(defaultValue)
-    Taplytics._newAsyncObject(name, value)
+    args[1] = value
+    Taplytics._newAsyncObject(...args)
   } else {
     return console.error("INVALID TYPE PASSED TO ASYNC VARIABLE CONSTRUCTOR")
   }
 
   DeviceEventEmitter.addListener(name, (event) => {
     let value = event.value
-    if (_.isPlainObject(defaultValue)) {
-      value = JSON.parse(event.value)
-    }
-    setVariable(name, value)
-    callback && callback(value)
+    cb(null, value)
   })
 }
 

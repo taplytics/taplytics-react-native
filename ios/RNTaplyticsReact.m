@@ -71,28 +71,28 @@ RCT_REMAP_METHOD(_newSyncObject, name:(NSString *)name defaultValue:(NSString *)
 }
 
 
-RCT_EXPORT_METHOD(_newAsyncBool:(NSString *)name defaultValue:(BOOL)defaultValue)
+RCT_EXPORT_METHOD(_newAsyncBool:(NSString *)name defaultValue:(BOOL)defaultValue callback:(RCTResponseSenderBlock)callback)
 {
     [TaplyticsVar taplyticsVarWithName:name defaultValue:@(defaultValue) updatedBlock:^(NSObject* value) {
-        [self sendEvent:name withValue:value];
+        callback(@[[NSNull null], value]);
     }];
 }
 
-RCT_EXPORT_METHOD(_newAsyncString:(NSString *)name defaultValue:(NSString *)defaultValue)
+RCT_EXPORT_METHOD(_newAsyncString:(NSString *)name defaultValue:(NSString *)defaultValue callback:(RCTResponseSenderBlock)callback)
 {
     [TaplyticsVar taplyticsVarWithName:name defaultValue:defaultValue updatedBlock:^(NSObject* value) {
-        [self sendEvent:name withValue:value];
+        callback(@[[NSNull null], value]);
     }];
 }
 
-RCT_EXPORT_METHOD(_newAsyncNumber:(NSString *)name defaultValue:(nonnull NSNumber *)defaultValue)
+RCT_EXPORT_METHOD(_newAsyncNumber:(NSString *)name defaultValue:(nonnull NSNumber *)defaultValue callback:(RCTResponseSenderBlock)callback)
 {
     [TaplyticsVar taplyticsVarWithName:name defaultValue:defaultValue updatedBlock:^(NSObject* value) {
-        [self sendEvent:name withValue:value];
+        callback(@[[NSNull null], value]);
     }];
 }
 
-RCT_EXPORT_METHOD(_newAsyncObject:(NSString *)name defaultValue:(NSString *)defaultValue)
+RCT_EXPORT_METHOD(_newAsyncObject:(NSString *)name defaultValue:(NSString *)defaultValue callback:(RCTResponseSenderBlock)callback)
 {
     NSData* data = [defaultValue dataUsingEncoding:NSUTF8StringEncoding];
     NSError* err;
@@ -105,7 +105,8 @@ RCT_EXPORT_METHOD(_newAsyncObject:(NSString *)name defaultValue:(NSString *)defa
                 if (err) {
                     NSLog(@"%@", err.description);
                 }
-                [self sendEvent:name withValue:(jsonData ? [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding] : nil)];
+                NSString *stringifiedJSON = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+                callback(@[[NSNull null], stringifiedJSON]);
             }
         }];
     } @catch (NSException* e) {
