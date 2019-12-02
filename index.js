@@ -39,8 +39,8 @@ Taplytics.newSyncVariable = (name, defaultValue) => {
 Taplytics.newAsyncVariable = (name, defaultValue, callback) => {
   const cb = (err, value) => {
     if (err) {
-      console.error('Error getting async variable ', err)
-      return callback && callback()
+      console.log('Error getting async variable ', err)
+      return callback && callback(defaultValue)
     }
     if (_.isPlainObject(value)) {
       value = JSON.parse(value)
