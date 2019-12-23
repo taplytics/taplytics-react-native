@@ -5,90 +5,35 @@ _Taplytics is a native mobile A/B testing and push notification platform that he
 
  [Commercial License / Terms](http://taplytics.com/terms)
  
-### **Current Version: [1.4.1](#changelog)**
+### **Current Version: [2.0.0](#changelog)**
 
 ## 1. Getting Started
 
-**If you haven't yet set up a React-Native project, do the following:**
-
-First install node and react.
-
-1. `brew install node`
-2. `brew install watchman`
-3. `npm install -g react-native-cli`
-
-Then, initialize a new project.
-
-1. `react-native init projectname`
-2. `cd projectname`
-3. `npm install`
+Visit https://facebook.github.io/react-native/docs/getting-started to get started with a React Native project.
 
 **Install the taplytics-react-native package:**
 
-1. Install `taplytics-react-native` npm package:
-	* `npm install taplytics-react-native --save`
-2. Then link the `taplytics-react-native` native module. (for iOS you will need to manually link the module to your XCode project as described below)
-	* `react-native link taplytics-react-native`
+As of 2.0.0, Taplytics now supports 0.60.0 React Native projects and above! To get started, just do:
+
+```
+# yarn add taplytics-react-native --save
+```
+
+If you previously have installed Taplytics, you may be shown a warning if you haven't unlinked your previously linked projects. To fix this, simply run the commmand:
+
+```
+yarn unlink taplytics-react-native
+```
 
 ## 2. iOS Setup
 
-1. Follow the react-native [manual linking native library instructions](https://facebook.github.io/react-native/docs/linking-libraries-ios.html#manual-linking)
-	* project to import is located in `/node_modules/taplytics-react-native/ios/RNTaplyticsReact.xcodeproj`
-	* you can skip step 3 of the instructions.
+1. Navigate to your `/ios` folder and execute the command `pod install`. 
 
-2. Simply follow part 1 of the install instructions to install the Native Taplytics iOS SDK. Use CocoaPods if you use it for your project or the manual install instructions. [iOS SDK installation docs here](https://github.com/taplytics/taplytics-ios-sdk/blob/master/START.md#1-install).
+2. Taplytics will install along with the React dependencies. We still require you to start Taplytics through the iOS app: (https://github.com/taplytics/taplytics-ios-sdk/blob/master/START.md#1-install).
 
 ## 3. Android Setup
 
-1. Append the `taplytics-react-native` project `settings.gradle` include line:
-
-	```gradle
-	include 'app:', ':taplytics-react-native'
-	```
-
-2. add the following line to `settings.gradle`
-  	
-  	
-	```gradle
-	project(':taplytics-react-native').projectDir = new File(rootProject.projectDir, 	'../node_modules/taplytics-react-native/android')
-	```
-
-3. In your app-level `build.gradle` add the following your dependencies:
-
-	```      
-	compile project(':taplytics-react-native')
-	```
-	
-	**Note that React Native is packaged with an older version of OkHttp, so an older version of socketio is required:**
-	
-	```
-	debugCompile ('io.socket:socket.io-client:0.8.0') {
-        exclude group: 'org.json', module: 'json'
-    }
-    ```
-
-4. In your app-level `build.gradle`, add this the taplytics url to your repositories:
-
-	```
-	repositories {                                                                                              
-		maven { url "https://github.com/taplytics/Taplytics-Android-SDK/raw/master/AndroidStudio/" }
-	}
-	```
-
-5. In your Application Class (default is `MainApplication`), add Taplytics to your app's packages:
-
-	```java
-	@Override
-	protected List<ReactPackage> getPackages() {
-	  return Arrays.asList(
-	      new MainReactPackage(),
-	      new TaplyticsReactPackage()
-	  );
-	}
-	```
-
-6. **[Follow part 1. Install and part 2. Setup from the Android SDK docs here.](https://github.com/taplytics/taplytics-android-sdk/blob/master/START.md#1-installation)**
-
+With autolinking, everything should be taken care of! We still require you to start Taplytics in the Android app: (https://github.com/taplytics/taplytics-android-sdk/blob/master/START.md#1-installation)
 
 ## 4. Start making Experiments and sending Push Notifications to your users.
 
@@ -104,11 +49,15 @@ Then follow the [Experiment](/EXPERIMENTS.md) guide and the [Push Notification](
 
 ## Changelog
 
-**Current: [1.4.1](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.4.1)**
+**[2.0.0](https://github.com/taplytics/Taplytics-React-Native/releases/tag/2.0.0)**
+
+1. Added support for React Native 0.60.0 and autolinking
+
+**[1.4.1](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.4.1)**
 
 1. Added types
 
-Current: [1.4.0](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.4.0)
+**[1.4.0](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.4.0)**
 
 1. Added call `registerPushNotifications` for iOS
 
