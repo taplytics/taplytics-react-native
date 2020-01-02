@@ -5,7 +5,7 @@ _Taplytics is a native mobile A/B testing and push notification platform that he
 
  [Commercial License / Terms](http://taplytics.com/terms)
  
-### **Current Version: [2.0.0](#changelog)**
+### **Current Version: [2.1.0](#changelog)**
 
 ## 1. Getting Started
 
@@ -13,7 +13,7 @@ Visit https://facebook.github.io/react-native/docs/getting-started to get starte
 
 **Install the taplytics-react-native package:**
 
-As of 2.0.0, Taplytics now supports 0.60.0 React Native projects and above! To get started, just do:
+As of 2.1.0, Taplytics now supports 0.60.0 React Native projects and above! To get started, just do:
 
 ```
 # yarn add taplytics-react-native --save
@@ -49,7 +49,7 @@ Then follow the [Experiment](/EXPERIMENTS.md) guide and the [Push Notification](
 
 ## Changelog
 
-**[2.0.0](https://github.com/taplytics/Taplytics-React-Native/releases/tag/2.0.0)**
+**[2.1.0](https://github.com/taplytics/Taplytics-React-Native/releases/tag/2.1.0)**
 
 1. Added support for React Native 0.60.0 and autolinking
 
