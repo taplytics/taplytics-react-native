@@ -130,10 +130,10 @@ RCT_EXPORT_METHOD(runCodeBlock:(NSString *)name codeBlock:(RCTResponseSenderBloc
     }];
 }
 
-RCT_REMAP_METHOD(propertiesLoadedCallback, propertiesLoadedCallbackResolver:(RCTPromiseResolveBlock)resolve propertiesLoadedCallbackRejecter:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(_propertiesLoadedCallback)
 {
     [Taplytics propertiesLoadedCallback:^(BOOL loaded) {
-        resolve(@(loaded));
+        [self sendEvent:@"propertiesLoadedCallback" withValue:@(loaded)];
     }];
 }
 

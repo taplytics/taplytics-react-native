@@ -1,6 +1,6 @@
 declare module 'taplytics-react-native' {
   namespace Taplytics {
-    export interface TaplyticsUserAttributes extends object {
+    export interface TaplyticsUserAttributes extends Object {
       email?: string;
       name?: string;
       age?: number;
@@ -53,7 +53,7 @@ declare module 'taplytics-react-native' {
      * properties have been loaded from the server. This module provides a callback to
      * achieve this:
      */
-    export function propertiesLoadedCallback(): Promise<void>;
+    export function propertiesLoadedCallback(callback: (loaded: boolean) => void): void;
 
     /**
      * Asynchronous variables take care of insuring that the experiments have been loaded

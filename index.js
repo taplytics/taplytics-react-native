@@ -4,6 +4,8 @@ import _ from 'lodash';
 
 const { Taplytics } = NativeModules;
 
+Taplytics.nativeEventEmitter = new NativeEventEmitter(Taplytics);
+
 let variables = {}
 let variableChangedListener = () => {}
 
@@ -94,7 +96,6 @@ Taplytics.setTaplyticsExperimentsUpdatedListener = (listener) => {
   })
 }
 
-
 Taplytics.setTaplyticsNewSessionListener = (listener) => {
   Taplytics._setTaplyticsNewSessionListener()
 
@@ -132,9 +133,16 @@ Taplytics.registerPushReceivedListener = (listener) => {
   }
 }
 
+Taplytics.propertiesLoadedCallback = (callback) => {
+  Taplytics.nativeEventEmitter.addListener('propertiesLoadedCallback', (loaded) => {
+    callback(loaded)
+  })
+  Taplytics._propertiesLoadedCallback()
+}
+
 if (Platform.OS == 'ios') {
   try {
-    new NativeEventEmitter(Taplytics).addListener("pushOpened", (event) => {
+    Taplytics.nativeEventEmitter.addListener("pushOpened", (event) => {
       _.each(pushOpenedListeners, listener => _.isFunction(listener) && listener(event))
     }) 
   }
@@ -153,7 +161,7 @@ if (Platform.OS == 'ios') {
 
 if (Platform.OS == 'ios') {
   try {
-    new NativeEventEmitter(Taplytics).addListener("pushReceived", (event) => {
+    Taplytics.nativeEventEmitter.addListener("pushReceived", (event) => {
       _.each(pushReceivedListeners, listener => _.isFunction(listener) && listener(event))
     }) 
   } catch (err) {
