@@ -12,7 +12,7 @@
 
 - (NSArray<NSString *> *)supportedEvents
 {
-    return @[@"pushOpened",@"pushReceived"];
+    return @[@"propertiesLoadedCallback",@"pushOpened",@"pushReceived"];
 }
 
 - (void)sendEvent:(NSString *)name withValue:(id)value
