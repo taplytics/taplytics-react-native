@@ -3,7 +3,14 @@
 
 @implementation RNTaplyticsReact
 
-@synthesize bridge = _bridge;
++ (id)allocWithZone:(NSZone *)zone {
+    static RNTaplyticsReact *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [super allocWithZone:zone];
+    });
+    return sharedInstance;
+}
 
 - (dispatch_queue_t)methodQueue
 {
