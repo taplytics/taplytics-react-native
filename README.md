@@ -49,6 +49,10 @@ Then follow the [Experiment](/EXPERIMENTS.md) guide and the [Push Notification](
 
 ## Changelog
 
+**[2.1.1](https://github.com/taplytics/Taplytics-React-Native/releases/tag/2.1.1)**
+
+1. Fixed `propertiesLoadedCallback` crashing the app when called more than once
+
 **[2.1.0](https://github.com/taplytics/Taplytics-React-Native/releases/tag/2.1.0)**
 
 1. Added support for React Native 0.60.0 and autolinking
