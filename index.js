@@ -134,10 +134,14 @@ Taplytics.registerPushReceivedListener = (listener) => {
 }
 
 Taplytics.propertiesLoadedCallback = (callback) => {
-  Taplytics.nativeEventEmitter.addListener('propertiesLoadedCallback', (loaded) => {
-    callback(loaded)
-  })
-  Taplytics._propertiesLoadedCallback()
+  if (Platform.OS == 'ios') {
+    Taplytics.nativeEventEmitter.addListener('propertiesLoadedCallback', (loaded) => {
+      callback(loaded)
+    })
+    Taplytics._propertiesLoadedCallback()
+  } else {
+    Taplytics._propertiesLoadedCallback(callback)
+  }
 }
 
 if (Platform.OS == 'ios') {
