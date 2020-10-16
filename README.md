@@ -5,7 +5,7 @@ _Taplytics is a native mobile A/B testing and push notification platform that he
 
  [Commercial License / Terms](http://taplytics.com/terms)
  
-### **Current Version: [2.1.0](#changelog)**
+### **Current Version: [2.1.2](#changelog)**
 
 ## 1. Getting Started
 
