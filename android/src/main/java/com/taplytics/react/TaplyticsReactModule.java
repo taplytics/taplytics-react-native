@@ -252,7 +252,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
     }
 
     @ReactMethod
-    public void propertiesLoadedCallback(final Callback callback) {
+    public void _propertiesLoadedCallback(final Callback callback) {
         Taplytics.getRunningExperimentsAndVariations(new TaplyticsRunningExperimentsListener() {
             @Override
             public void runningExperimentsAndVariation(Map<String, String> map) {
