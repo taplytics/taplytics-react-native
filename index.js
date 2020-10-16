@@ -38,6 +38,9 @@ Taplytics.newSyncVariable = (name, defaultValue) => {
   })
 }
 
+const asyncVarCallbackDispatcher = new Map()
+let asyncVarCallbackId = 0
+
 Taplytics.newAsyncVariable = (name, defaultValue, callback) => {
   const cb = (err, value) => {
     if (err) {
@@ -53,7 +56,13 @@ Taplytics.newAsyncVariable = (name, defaultValue, callback) => {
 
   let args = [name, defaultValue]
   if (Platform.OS === 'ios') {
-    args.push(cb)
+    Taplytics.nativeEventEmitter.addListener('asyncVariable', ({id, value}) => {
+      const cb = asyncVarCallbackDispatcher.get(id)
+      if (cb) cb(null, value)
+    })
+    args.push(asyncVarCallbackId)
+    asyncVarCallbackDispatcher.set(asyncVarCallbackId, cb)
+    asyncVarCallbackId++
   }
 
   if (_.isBoolean(defaultValue)) {
