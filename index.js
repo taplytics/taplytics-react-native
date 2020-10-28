@@ -38,10 +38,20 @@ Taplytics.newSyncVariable = (name, defaultValue) => {
   })
 }
 
+const seenCallbacks = new Set()
 const asyncVarCallbackDispatcher = new Map()
 let asyncVarCallbackId = 0
 
+Taplytics.nativeEventEmitter.addListener('asyncVariable', ({id, value}) => {
+  const callback = asyncVarCallbackDispatcher.get(id)
+  callback(null, value)
+})
+
 Taplytics.newAsyncVariable = (name, defaultValue, callback) => {
+  if (seenCallbacks.has(callback)) return
+
+  seenCallbacks.add(callback)
+
   const cb = (err, value) => {
     if (err) {
       console.log('Error getting async variable ', err)
@@ -56,10 +66,6 @@ Taplytics.newAsyncVariable = (name, defaultValue, callback) => {
 
   let args = [name, defaultValue]
   if (Platform.OS === 'ios') {
-    Taplytics.nativeEventEmitter.addListener('asyncVariable', ({id, value}) => {
-      const cb = asyncVarCallbackDispatcher.get(id)
-      if (cb) cb(null, value)
-    })
     args.push(asyncVarCallbackId)
     asyncVarCallbackDispatcher.set(asyncVarCallbackId, cb)
     asyncVarCallbackId++
