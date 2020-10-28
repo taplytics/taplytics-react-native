@@ -19,7 +19,7 @@
 
 - (NSArray<NSString *> *)supportedEvents
 {
-    return @[@"propertiesLoadedCallback",@"pushOpened",@"pushReceived"];
+    return @[@"asyncVariable", @"propertiesLoadedCallback",@"pushOpened",@"pushReceived"];
 }
 
 - (void)sendEvent:(NSString *)name withValue:(id)value
