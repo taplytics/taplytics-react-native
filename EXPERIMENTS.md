@@ -174,6 +174,8 @@ Taplytics.newAsyncVariable(name, defaultValue, variableChangedCallback);
 
 The third parameter is a function which will be called any time the value of the variable is changed. It is passed the current value of the variable.  When the variable's value has been updated, the listener will be called with that updated value. You can specify what you want to do with the variable inside the callback.
 
+It's important to call this in the setup phase of your app as every invocation of this function will setup a new listener.
+
 ### Code Blocks
 
 Similar to Dynamic Variables, Taplytics has an option for 'Code Blocks'. Code blocks are linked to Experiments through the Taplytics website very much the same way that Dynamic Variables are, and will be executed based on the configuration of the experiment through the Taplytics website. A Code Block is a callback that can be enabled or disabled depending on the variation. If enabled, the code within the callback will be executed. If disabled, the variation will not get the callback.
