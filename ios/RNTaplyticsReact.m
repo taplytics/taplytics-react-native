@@ -19,7 +19,7 @@
 
 - (NSArray<NSString *> *)supportedEvents
 {
-    return @[@"propertiesLoadedCallback",@"pushOpened",@"pushReceived"];
+    return @[@"asyncVariable", @"propertiesLoadedCallback",@"pushOpened",@"pushReceived"];
 }
 
 - (void)sendEvent:(NSString *)name withValue:(id)value
@@ -78,28 +78,28 @@ RCT_REMAP_METHOD(_newSyncObject, name:(NSString *)name defaultValue:(NSString *)
 }
 
 
-RCT_EXPORT_METHOD(_newAsyncBool:(NSString *)name defaultValue:(BOOL)defaultValue callback:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(_newAsyncBool:(NSString *)name defaultValue:(BOOL)defaultValue callbackId:(nonnull NSNumber *)_id)
 {
     [TaplyticsVar taplyticsVarWithName:name defaultValue:@(defaultValue) updatedBlock:^(NSObject* value) {
-        callback(@[[NSNull null], value]);
+        [self sendEvent:@"asyncVariable" withValue:@{@"id": _id, @"value": value}];
     }];
 }
 
-RCT_EXPORT_METHOD(_newAsyncString:(NSString *)name defaultValue:(NSString *)defaultValue callback:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(_newAsyncString:(NSString *)name defaultValue:(NSString *)defaultValue callbackId:(nonnull NSNumber *)_id)
 {
     [TaplyticsVar taplyticsVarWithName:name defaultValue:defaultValue updatedBlock:^(NSObject* value) {
-        callback(@[[NSNull null], value]);
+        [self sendEvent:@"asyncVariable" withValue:@{@"id": _id, @"value": value}];
     }];
 }
 
-RCT_EXPORT_METHOD(_newAsyncNumber:(NSString *)name defaultValue:(nonnull NSNumber *)defaultValue callback:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(_newAsyncNumber:(NSString *)name defaultValue:(nonnull NSNumber *)defaultValue callbackId:(nonnull NSNumber *)_id)
 {
     [TaplyticsVar taplyticsVarWithName:name defaultValue:defaultValue updatedBlock:^(NSObject* value) {
-        callback(@[[NSNull null], value]);
+        [self sendEvent:@"asyncVariable" withValue:@{@"id": _id, @"value": value}];
     }];
 }
 
-RCT_EXPORT_METHOD(_newAsyncObject:(NSString *)name defaultValue:(NSString *)defaultValue callback:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(_newAsyncObject:(NSString *)name defaultValue:(NSString *)defaultValue callbackId:(nonnull NSNumber *)_id)
 {
     NSData* data = [defaultValue dataUsingEncoding:NSUTF8StringEncoding];
     NSError* err;
@@ -113,7 +113,7 @@ RCT_EXPORT_METHOD(_newAsyncObject:(NSString *)name defaultValue:(NSString *)defa
                     NSLog(@"%@", err.description);
                 }
                 NSString *stringifiedJSON = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-                callback(@[[NSNull null], stringifiedJSON]);
+                [self sendEvent:@"asyncVariable" withValue:@{@"id": _id, @"value": value}];
             }
         }];
     } @catch (NSException* e) {
