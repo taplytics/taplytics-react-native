@@ -5,7 +5,7 @@ _Taplytics is a native mobile A/B testing and push notification platform that he
 
  [Commercial License / Terms](http://taplytics.com/terms)
  
-### **Current Version: [2.1.2](#changelog)**
+### **Current Version: [2.1.3](#changelog)**
 
 ## 1. Getting Started
 
@@ -48,6 +48,10 @@ import Taplytics from 'taplytics-react-native';
 Then follow the [Experiment](/EXPERIMENTS.md) guide and the [Push Notification](/PUSH.md) guide to get started.
 
 ## Changelog
+
+**[2.1.3](https://github.com/taplytics/Taplytics-React-Native/releases/tag/2.1.3)**
+
+1. Fixed `newAsyncVariable` crashing the app when a new session is created on iOS
 
 **[2.1.2](https://github.com/taplytics/Taplytics-React-Native/releases/tag/2.1.2)**
 
