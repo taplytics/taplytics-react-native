@@ -5,6 +5,7 @@
 > [Commercial License / Terms](http://taplytics.com/terms)
 >
 > #### **Current Version: [2.1.3](#changelog)**
+
 ## 1. Getting Started
 
 Visit the [React Native docs](https://facebook.github.io/react-native/docs/getting-started) to get started with a React Native project.
@@ -39,7 +40,7 @@ react-native link taplytics-react-native
 
 ## 3. Android Setup
 
-1. Will require you to [configure Taplytics within the Android app as mentioned in the Android SDK docs.](https://github.com/taplytics/taplytics-android-sdk/blob/master/START.md#1-installation).
+1. We require you to [configure Taplytics within the Android app as mentioned in the Android SDK docs.](https://github.com/taplytics/taplytics-android-sdk/blob/master/START.md#1-installation).
 
 ## 4. Start making Experiments and sending Push Notifications to your users.
 
