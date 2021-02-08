@@ -5,9 +5,6 @@
 > [Commercial License / Terms](http://taplytics.com/terms)
 >
 > #### **Current Version: [2.1.3](#changelog)**
-
----
-
 ## 1. Getting Started
 
 Visit the [React Native docs](https://facebook.github.io/react-native/docs/getting-started) to get started with a React Native project.
@@ -32,8 +29,6 @@ yarn unlink taplytics-react-native
 react-native link taplytics-react-native
 ```
 
----
-
 ## 2. iOS Setup
 
 1. Once the `taplytics-react-native` package has been installed, navigate to your `/ios` folder and execute the command `pod install`.
@@ -42,13 +37,9 @@ react-native link taplytics-react-native
 
 **NOTE:** For react native version <0.6 or if your project is not utilizing Cocoapods a [manual installation of the Taplytics iOS SDK](https://github.com/taplytics/taplytics-ios-sdk/blob/master/START.md#1-install) will be required.
 
----
-
 ## 3. Android Setup
 
 1. Will require you to [configure Taplytics within the Android app as mentioned in the Android SDK docs.](https://github.com/taplytics/taplytics-android-sdk/blob/master/START.md#1-installation).
-
----
 
 ## 4. Start making Experiments and sending Push Notifications to your users.
 
@@ -61,8 +52,6 @@ import Taplytics from 'taplytics-react-native';
 ```
 
 Then follow the [Experiment](/EXPERIMENTS.md) guide and the [Push Notification](/PUSH.md) guide to get started.
-
----
 
 ## Changelog
 
