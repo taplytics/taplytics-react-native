@@ -34,7 +34,7 @@ react-native link taplytics-react-native
 
 1. Once the `taplytics-react-native` package has been installed, navigate to your `/ios` folder and execute the command `pod install`.
 
-2. We still require you to [configure Taplytics within the iOS app as mentioned in the iOS SDK docs.](https://github.com/taplytics/taplytics-ios-sdk/blob/master/START.md#1-install).
+2. We still require you to [configure Taplytics within the iOS app as mentioned in the iOS SDK docs](https://github.com/taplytics/taplytics-ios-sdk/blob/master/START.md#1-install).
 
 **NOTE:** For react native version <0.6 or if your project is not utilizing Cocoapods a [manual installation of the Taplytics iOS SDK](https://github.com/taplytics/taplytics-ios-sdk/blob/master/START.md#1-install) will be required.
 
