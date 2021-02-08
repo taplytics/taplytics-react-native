@@ -1,39 +1,46 @@
-
 # Taplytics React Native SDK
 
-_Taplytics is a native mobile A/B testing and push notification platform that helps you optimize your React Native app!_
-
- [Commercial License / Terms](http://taplytics.com/terms)
- 
-### **Current Version: [2.1.2](#changelog)**
+> _Taplytics is a native mobile A/B testing and push notification platform that helps you optimize your React Native app!_
+>
+> [Commercial License / Terms](http://taplytics.com/terms)
+>
+> #### **Current Version: [2.1.3](#changelog)**
 
 ## 1. Getting Started
 
-Visit https://facebook.github.io/react-native/docs/getting-started to get started with a React Native project.
+Visit the [React Native docs](https://facebook.github.io/react-native/docs/getting-started) to get started with a React Native project.
 
-**Install the taplytics-react-native package:**
+**Install the `taplytics-react-native` package:**
 
 As of 2.1.0, Taplytics now supports 0.60.0 React Native projects and above! To get started, just do:
 
-```
-# yarn add taplytics-react-native --save
+```bash
+yarn add taplytics-react-native --save
 ```
 
-If you previously have installed Taplytics, you may be shown a warning if you haven't unlinked your previously linked projects. To fix this, simply run the commmand:
+**NOTE:** If you previously have installed Taplytics, you may be shown a warning if you haven't unlinked your previously linked projects. To fix this, simply run the commmand:
 
-```
+```bash
 yarn unlink taplytics-react-native
+```
+
+**NOTE:** For react native versions <0.60, automatic linking is not supported and you will need to run the manual linking command which should link the package on both iOS and android.
+
+```bash
+react-native link taplytics-react-native
 ```
 
 ## 2. iOS Setup
 
-1. Navigate to your `/ios` folder and execute the command `pod install`. 
+1. Once the `taplytics-react-native` package has been installed, navigate to your `/ios` folder and execute the command `pod install`.
 
-2. Taplytics will install along with the React dependencies. We still require you to start Taplytics through the iOS app: (https://github.com/taplytics/taplytics-ios-sdk/blob/master/START.md#1-install).
+2. We still require you to [configure Taplytics within the iOS app as mentioned in the iOS SDK docs](https://github.com/taplytics/taplytics-ios-sdk/blob/master/START.md#1-install).
+
+**NOTE:** For react native version <0.6 or if your project is not utilizing Cocoapods a [manual installation of the Taplytics iOS SDK](https://github.com/taplytics/taplytics-ios-sdk/blob/master/START.md#1-install) will be required.
 
 ## 3. Android Setup
 
-With autolinking, everything should be taken care of! We still require you to start Taplytics in the Android app: (https://github.com/taplytics/taplytics-android-sdk/blob/master/START.md#1-installation)
+1. We require you to [configure Taplytics within the Android app as mentioned in the Android SDK docs.](https://github.com/taplytics/taplytics-android-sdk/blob/master/START.md#1-installation).
 
 ## 4. Start making Experiments and sending Push Notifications to your users.
 
@@ -48,6 +55,10 @@ import Taplytics from 'taplytics-react-native';
 Then follow the [Experiment](/EXPERIMENTS.md) guide and the [Push Notification](/PUSH.md) guide to get started.
 
 ## Changelog
+
+**[2.1.3](https://github.com/taplytics/Taplytics-React-Native/releases/tag/2.1.3)**
+
+1. Fixed `newAsyncVariable` crashing the app when a new session is created on iOS
 
 **[2.1.2](https://github.com/taplytics/Taplytics-React-Native/releases/tag/2.1.2)**
 
@@ -91,7 +102,7 @@ Then follow the [Experiment](/EXPERIMENTS.md) guide and the [Push Notification](
 
 **[1.1.7](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.1.7)**
 
-1. Fix registering for push on iOS 
+1. Fix registering for push on iOS
 
 **[1.1.5](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.1.5)**
 
@@ -105,11 +116,9 @@ Then follow the [Experiment](/EXPERIMENTS.md) guide and the [Push Notification](
 
 1. RN 0.47+ Support
 
-
 **[1.0.12](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.12)**
 
 1. Update reference to iOS push register method.
-
 
 **[1.0.11](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.11)**
 
@@ -126,7 +135,6 @@ Then follow the [Experiment](/EXPERIMENTS.md) guide and the [Push Notification](
 **[1.0.8](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.8)**
 
 1. Added push ID to value sent to BroadcastReceiver
-
 
 **[1.0.7](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.7)**
 
@@ -151,9 +159,8 @@ Then follow the [Experiment](/EXPERIMENTS.md) guide and the [Push Notification](
 
 **[1.0.1](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.1)**
 
-1. Fixed react native minimum version number. 
+1. Fixed react native minimum version number.
 
 **[1.0.0](https://github.com/taplytics/Taplytics-React-Native/releases/tag/1.0.0)**
 
-1. Initial version of React Native SDK. Please contact us with any questions or use git issues. 
-
+1. Initial version of React Native SDK. Please contact us with any questions or use git issues.
