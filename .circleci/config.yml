@@ -1,0 +1,17 @@
+version: 2.1
+
+jobs:
+  initial-job:
+    macos:
+      xcode: '11.7'
+    steps:
+      - run:
+          command: echo helloworld
+
+workflows:
+  initial-workflow:
+    jobs:
+      - initial-job:
+          filters:
+            branches:
+              only: main
