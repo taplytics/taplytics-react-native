@@ -1,11 +1,11 @@
 declare module 'taplytics-react-native' {
   namespace Taplytics {
     export interface TaplyticsUserAttributes extends Object {
-      email?: string;
-      name?: string;
-      age?: number;
-      gender?: string;
-      user_id: string;
+      email?: string
+      name?: string
+      age?: number
+      gender?: string
+      user_id: string
     }
 
     /**
@@ -14,23 +14,23 @@ declare module 'taplytics-react-native' {
      * startTaplytics is called will not be used for experiment segmentation until the
      * next session of your app.
      */
-    export function setUserAttributes(attributes: TaplyticsUserAttributes): void;
+    export function setUserAttributes(attributes: TaplyticsUserAttributes): void
 
     /**
      * Once a user logs out of your app, their User Attributes are no longer valid.
      * You can reset their data by calling resetAppUser, make sure you do not set
      * any new user attributes until you receive the callback.
      */
-    export function resetAppUser(): void;
+    export function resetAppUser(): void
 
     export interface TaplyticsSessionInfo {
-      appUser_id: string;
-      session_id: string;
+      appUser_id: string
+      session_id: string
     }
 
-    export function getSessionInfo(): Promise<TaplyticsSessionInfo>;
-    export function logEvent(eventName: string, value: number, customAttributes: object): void;
-    export function logRevenue(eventName: string, value: number, customAttributes: object): void;
+    export function getSessionInfo(): Promise<TaplyticsSessionInfo>
+    export function logEvent(eventName: string, value: number, customAttributes: object): void
+    export function logRevenue(eventName: string, value: number, customAttributes: object): void
 
     /**
      * Synchronous variables are guaranteed to have the same value for the
@@ -43,7 +43,7 @@ declare module 'taplytics-react-native' {
      * in as the default. This method returns a promise which resolves with the
      * value of the synchronous variable:
      */
-    export function newSyncVariable<T>(variableName: string, defaultValue: T): Promise<T>;
+    export function newSyncVariable<T>(variableName: string, defaultValue: T): Promise<T>
 
     /**
      * IMPORTANT: The value of these variables will be determined immediately,
@@ -53,7 +53,7 @@ declare module 'taplytics-react-native' {
      * properties have been loaded from the server. This module provides a callback to
      * achieve this:
      */
-    export function propertiesLoadedCallback(callback: (loaded: boolean) => void): void;
+    export function propertiesLoadedCallback(callback: (loaded: boolean) => void): void
 
     /**
      * Asynchronous variables take care of insuring that the experiments have been loaded
@@ -64,13 +64,13 @@ declare module 'taplytics-react-native' {
      * the experiments have finished loading. If the experiments fail to load, then you will
      * be given the default value, as specified in the variables constructor.
      */
-    export function newAsyncVariable<T>(name: string, defaultValue: T, variableChangedCallback: (v: T) => void): void;
+    export function newAsyncVariable<T>(name: string, defaultValue: T, variableChangedCallback: (v: T) => void): void
 
     /**
      * Synchronous feature flags are guaranteed to have the same value for the entire session
      * and will have that value immediately after construction.
      */
-    export function featureFlagEnabled(featureFlagKey: string): Promise<boolean>;
+    export function featureFlagEnabled(featureFlagKey: string): Promise<boolean>
 
     /**
      * IMPORTANT: The value of featureFlagEnabled will be determined immediately, ie. the SDK
@@ -85,37 +85,38 @@ declare module 'taplytics-react-native' {
      * there exists a getRunningFeatureFlags() function which provides a callback with the
      * current feature flags' names and their associated key. An example:
      */
-    export function getRunningFeatureFlags(): Promise<object>;
+    export function getRunningFeatureFlags(): Promise<object>
 
     /**
      * To make it easier to keep track of your variables, this module also provides a
      * method to retrieve an object map of their names and values:
      */
-    export interface TaplyticsVariableMap {[key: string]: string | number | boolean | object}
-    export function getVariables(): Promise<TaplyticsVariableMap>;
+    export interface TaplyticsVariableMap {
+      [key: string]: string | number | boolean | object
+    }
+    export function getVariables(): Promise<TaplyticsVariableMap>
 
     /**
      * You can also register a function to be called whenever this object changes:
      */
-    export function registerVariablesChangedListener(callback: (v: TaplyticsVariableMap) => void): void;
+    export function registerVariablesChangedListener(callback: (v: TaplyticsVariableMap) => void): void
 
     /**
      * If you would like to see which variations and experiments are running on a given device,
      * there exists a getRunningExperimentsAndVariations function which provides a callback with
      * a map of the current experiments and their running variation. An example:
      */
-    export function getRunningExperimentsAndVariations(): Promise<TaplyticsVariableMap>;
+    export function getRunningExperimentsAndVariations(): Promise<TaplyticsVariableMap>
 
     /**
      * To manually force a new user session (ex: A user has logged in / out), there exists
      */
-    export function startNewSession(): Promise<void>;
+    export function startNewSession(): Promise<void>
 
     /**
      * You can also register a callback to be run when Taplytics creates a new session:
      */
-    export function setTaplyticsNewSessionListener(callback: () => void): void;
-
+    export function setTaplyticsNewSessionListener(callback: () => void): void
   }
-  export = Taplytics;
+  export = Taplytics
 }

@@ -49,7 +49,7 @@ This module wraps most native SDK methods in Javascript, allowing you to access 
 Be sure to import Taplytics into your react application:
 
 ```javascript
-import Taplytics from 'taplytics-react-native';
+import Taplytics from 'taplytics-react-native'
 ```
 
 Then follow the [Experiment](/EXPERIMENTS.md) guide and the [Push Notification](/PUSH.md) guide to get started.

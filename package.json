@@ -26,5 +26,18 @@
   "bugs": {
     "url": "https://github.com/taplytics/Taplytics-React-Native/issues"
   },
-  "homepage": "https://github.com/taplytics/Taplytics-React-Native#readme"
+  "homepage": "https://github.com/taplytics/Taplytics-React-Native#readme",
+  "devDependencies": {
+    "husky": "=4",
+    "lint-staged": ">=10",
+    "prettier": "2.2.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,md}": "prettier --write"
+  }
 }
