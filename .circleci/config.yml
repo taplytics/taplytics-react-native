@@ -1,17 +1,26 @@
 version: 2.1
 
+orbs:
+  jq: circleci/jq@2.2.0
+
+aliases:
+  - &run_integration_repo_job
+    run:
+      name: Run Taplytics RN SDK Integration Repo
+      command: chmod +x .circleci/scripts/trigger-integration-tests.sh && .circleci/scripts/trigger-integration-tests.sh
+
 jobs:
-  initial-job:
-    macos:
-      xcode: '11.7'
+  run-integration-tests:
+    docker:
+      - image: spotify/alpine
+    description: Trigger iOS Integration Tests
     steps:
-      - run:
-          command: echo helloworld
+      - checkout
+      - jq/install
+      - *run_integration_repo_job
 
 workflows:
-  initial-workflow:
+  version: 2
+  pr-e2e-integration-tests:
     jobs:
-      - initial-job:
-          filters:
-            branches:
-              only: main
+      - run-integration-tests
