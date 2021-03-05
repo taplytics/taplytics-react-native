@@ -105,15 +105,15 @@ RCT_EXPORT_METHOD(_newAsyncObject:(NSString *)name defaultValue:(NSString *)defa
     NSError* err;
     @try {
         id object = [NSJSONSerialization JSONObjectWithData:data options:0 error:&err];
-        TaplyticsVar* variable = [TaplyticsVar taplyticsVarWithName:name defaultValue:object updatedBlock:^(NSObject* value) {
-            if ([NSJSONSerialization isValidJSONObject:variable.value]) {
+        [TaplyticsVar taplyticsVarWithName:name defaultValue:object updatedBlock:^(NSObject* value) {
+            if ([NSJSONSerialization isValidJSONObject:value]) {
                 NSError* err;
-                NSData* jsonData = [NSJSONSerialization dataWithJSONObject:variable.value options:0 error:&err];
+                NSData* jsonData = [NSJSONSerialization dataWithJSONObject:value options:0 error:&err];
                 if (err) {
                     NSLog(@"%@", err.description);
                 }
                 NSString *stringifiedJSON = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-                [self sendEvent:@"asyncVariable" withValue:@{@"id": _id, @"value": value}];
+                [self sendEvent:@"asyncVariable" withValue:@{@"id": _id, @"value": stringifiedJSON}];
             }
         }];
     } @catch (NSException* e) {
