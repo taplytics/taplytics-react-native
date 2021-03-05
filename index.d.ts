@@ -1,4 +1,6 @@
 declare module 'taplytics-react-native' {
+  import { EventSubscription } from 'react-native'
+
   namespace Taplytics {
     export interface TaplyticsUserAttributes extends Object {
       email?: string
@@ -51,9 +53,10 @@ declare module 'taplytics-react-native' {
      * Thus, if you want to ensure that the variables have their correct variables
      * based on your experiment segmentation, you must initialize them after the
      * properties have been loaded from the server. This module provides a callback to
-     * achieve this:
+     * achieve this. The callback returns back an event subscriber that can be used to
+     * cleanup the event listener using the `remove` function.
      */
-    export function propertiesLoadedCallback(callback: (loaded: boolean) => void): void
+    export function propertiesLoadedCallback(callback: (loaded: boolean) => void): EventSubscription
 
     /**
      * Asynchronous variables take care of insuring that the experiments have been loaded

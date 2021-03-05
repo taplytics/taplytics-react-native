@@ -148,12 +148,15 @@ Taplytics.newSyncVariable('My Variable', 'default').then((value) => {
 })
 ```
 
-IMPORTANT: The value of these variables will be determined immediately, ie. the SDK will not wait for properties to be loaded from the server. Thus, if you want to ensure that the variables have their correct variables based on your experiment segmentation, you must initialize them after the properties have been loaded from the server. This module provides a callback to achieve this:
+IMPORTANT: The value of these variables will be determined immediately, ie. the SDK will not wait for properties to be loaded from the server. Thus, if you want to ensure that the variables have their correct variables based on your experiment segmentation, you must initialize them after the properties have been loaded from the server. This module provides a callback to achieve this. The callback returns back an event subscriber that can be used to cleanup the event listener using the `remove` function.
 
 ```javascript
-Taplytics.propertiesLoadedCallback((loaded) => {
+const subscriber = Taplytics.propertiesLoadedCallback((loaded) => {
   // load variables here
 })
+
+// Clean up subscriber
+subscriber.remove()
 ```
 
 #### Asynchronous Dynamic Variables

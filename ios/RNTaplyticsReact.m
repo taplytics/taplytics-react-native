@@ -140,7 +140,7 @@ RCT_EXPORT_METHOD(runCodeBlock:(NSString *)name codeBlock:(RCTResponseSenderBloc
 RCT_EXPORT_METHOD(_propertiesLoadedCallback)
 {
     [Taplytics propertiesLoadedCallback:^(BOOL loaded) {
-        [self sendEvent:@"propertiesLoadedCallback" withValue:@(loaded)];
+        [self sendEvent:@"propertiesLoadedCallback" withValue:@{@"loaded": @(loaded)}];
     }];
 }
 
@@ -233,11 +233,11 @@ RCT_REMAP_METHOD(getRunningExperimentsAndVariations, experimentsAndVariationsRes
 
 RCT_REMAP_METHOD(getRunningFeatureFlags, featureFlagsResolver:(RCTPromiseResolveBlock)resolve rejectFeatureFlags:(RCTPromiseRejectBlock)reject)
 {
-  [Taplytics getRunningFeatureFlags:^(NSDictionary * _Nullable featureFlags) {
-    resolve(featureFlags);
-  }];
+    [Taplytics getRunningFeatureFlags:^(NSDictionary * _Nullable featureFlags) {
+        resolve(featureFlags);
+    }];
 }
-     
+
 RCT_REMAP_METHOD(startNewSession, startNewSessionResolver:(RCTPromiseResolveBlock)resolve rejectStartNewSession:(RCTPromiseRejectBlock)reject)
 {
     [Taplytics startNewSession:^(BOOL success) {
