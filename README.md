@@ -17,6 +17,13 @@ Please see the [SDK documentaiton](https://docs.taplytics.com/docs/react-native-
 
 ## Changelog
 
+**[2.1.4](https://github.com/taplytics/Taplytics-React-Native/releases/tag/2.1.4)**
+
+1. Fixed `newAsyncVariable` not returning a `number` variable on Android
+2. Fixed `newAsyncVariable` not returning a variable of `JSON` type on iOS.
+3. The callback function within `propertiesLoadedCallback` now provides a boolean type argument indicating if the properties were loaded on Android, similar to iOS
+4. `propertiesLoadedCallback` now returns a `subscriber` object. `subscriber.remove()` can be called to clean up the event listener when a component is unmounted.
+
 **[2.1.3](https://github.com/taplytics/Taplytics-React-Native/releases/tag/2.1.3)**
 
 1. Fixed `newAsyncVariable` crashing the app when a new session is created on iOS

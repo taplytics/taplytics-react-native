@@ -105,15 +105,15 @@ RCT_EXPORT_METHOD(_newAsyncObject:(NSString *)name defaultValue:(NSString *)defa
     NSError* err;
     @try {
         id object = [NSJSONSerialization JSONObjectWithData:data options:0 error:&err];
-        TaplyticsVar* variable = [TaplyticsVar taplyticsVarWithName:name defaultValue:object updatedBlock:^(NSObject* value) {
-            if ([NSJSONSerialization isValidJSONObject:variable.value]) {
+        [TaplyticsVar taplyticsVarWithName:name defaultValue:object updatedBlock:^(NSObject* value) {
+            if ([NSJSONSerialization isValidJSONObject:value]) {
                 NSError* err;
-                NSData* jsonData = [NSJSONSerialization dataWithJSONObject:variable.value options:0 error:&err];
+                NSData* jsonData = [NSJSONSerialization dataWithJSONObject:value options:0 error:&err];
                 if (err) {
                     NSLog(@"%@", err.description);
                 }
                 NSString *stringifiedJSON = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-                [self sendEvent:@"asyncVariable" withValue:@{@"id": _id, @"value": value}];
+                [self sendEvent:@"asyncVariable" withValue:@{@"id": _id, @"value": stringifiedJSON}];
             }
         }];
     } @catch (NSException* e) {
@@ -140,7 +140,7 @@ RCT_EXPORT_METHOD(runCodeBlock:(NSString *)name codeBlock:(RCTResponseSenderBloc
 RCT_EXPORT_METHOD(_propertiesLoadedCallback)
 {
     [Taplytics propertiesLoadedCallback:^(BOOL loaded) {
-        [self sendEvent:@"propertiesLoadedCallback" withValue:@(loaded)];
+        [self sendEvent:@"propertiesLoadedCallback" withValue:@{@"loaded": @(loaded)}];
     }];
 }
 
@@ -233,11 +233,11 @@ RCT_REMAP_METHOD(getRunningExperimentsAndVariations, experimentsAndVariationsRes
 
 RCT_REMAP_METHOD(getRunningFeatureFlags, featureFlagsResolver:(RCTPromiseResolveBlock)resolve rejectFeatureFlags:(RCTPromiseRejectBlock)reject)
 {
-  [Taplytics getRunningFeatureFlags:^(NSDictionary * _Nullable featureFlags) {
-    resolve(featureFlags);
-  }];
+    [Taplytics getRunningFeatureFlags:^(NSDictionary * _Nullable featureFlags) {
+        resolve(featureFlags);
+    }];
 }
-     
+
 RCT_REMAP_METHOD(startNewSession, startNewSessionResolver:(RCTPromiseResolveBlock)resolve rejectStartNewSession:(RCTPromiseRejectBlock)reject)
 {
     [Taplytics startNewSession:^(BOOL success) {

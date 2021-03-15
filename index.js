@@ -1,25 +1,24 @@
+import { NativeEventEmitter, NativeModules, DeviceEventEmitter, Platform } from 'react-native'
+import _ from 'lodash'
 
-import { NativeEventEmitter, NativeModules, DeviceEventEmitter, Platform } from 'react-native';
-import _ from 'lodash';
+const { Taplytics } = NativeModules
 
-const { Taplytics } = NativeModules;
-
-Taplytics.nativeEventEmitter = new NativeEventEmitter(Taplytics);
+Taplytics.nativeEventEmitter = new NativeEventEmitter(Taplytics)
 
 let variables = {}
 let variableChangedListener = () => {}
 
 Taplytics.registerVariablesChangedListener = (listener) => {
-  variableChangedListener = listener;
+  variableChangedListener = listener
 }
 
 function setVariable(name, value) {
-  variables[name] = value;
+  variables[name] = value
   variableChangedListener && variableChangedListener(Taplytics.getVariables())
 }
 
 Taplytics.newSyncVariable = (name, defaultValue) => {
-  let func = null;
+  let func = null
   if (_.isBoolean(defaultValue)) {
     func = Taplytics._newSyncBool(name, defaultValue)
   } else if (_.isString(defaultValue)) {
@@ -28,11 +27,11 @@ Taplytics.newSyncVariable = (name, defaultValue) => {
     func = Taplytics._newSyncNumber(name, defaultValue)
   } else if (_.isPlainObject(defaultValue)) {
     defaultValue = JSON.stringify(defaultValue)
-    func = Taplytics._newSyncObject(name, defaultValue).then(value => JSON.parse(value))
+    func = Taplytics._newSyncObject(name, defaultValue).then((value) => JSON.parse(value))
   } else {
-    return console.error("INVALID TYPE PASSED TO SYNC VARIABLE CONSTRUCTOR")
+    return console.error('INVALID TYPE PASSED TO SYNC VARIABLE CONSTRUCTOR')
   }
-  return func.then(value => {
+  return func.then((value) => {
     setVariable(name, value)
     return value
   })
@@ -42,7 +41,7 @@ const seenCallbacks = new Set()
 const asyncVarCallbackDispatcher = new Map()
 let asyncVarCallbackId = 0
 
-Taplytics.nativeEventEmitter.addListener('asyncVariable', ({id, value}) => {
+Taplytics.nativeEventEmitter.addListener('asyncVariable', ({ id, value }) => {
   const callback = asyncVarCallbackDispatcher.get(id)
   callback(null, value)
 })
@@ -82,7 +81,7 @@ Taplytics.newAsyncVariable = (name, defaultValue, callback) => {
     args[1] = value
     Taplytics._newAsyncObject(...args)
   } else {
-    return console.error("INVALID TYPE PASSED TO ASYNC VARIABLE CONSTRUCTOR")
+    return console.error('INVALID TYPE PASSED TO ASYNC VARIABLE CONSTRUCTOR')
   }
 
   DeviceEventEmitter.addListener(name, (event) => {
@@ -93,9 +92,9 @@ Taplytics.newAsyncVariable = (name, defaultValue, callback) => {
 
 Taplytics.featureFlagEnabled = (key) => {
   if (_.isString(key)) {
-    return Taplytics._featureFlagEnabled(key);
+    return Taplytics._featureFlagEnabled(key)
   } else {
-    return console.error("INVALID KEY. FEATURE FLAG KEY MUST BE A STRING")
+    return console.error('INVALID KEY. FEATURE FLAG KEY MUST BE A STRING')
   }
 }
 
@@ -106,7 +105,7 @@ Taplytics.setUserAttributes = (attributes) => {
 Taplytics.setTaplyticsExperimentsUpdatedListener = (listener) => {
   Taplytics._setTaplyticsExperimentsUpdatedListener()
 
-  DeviceEventEmitter.addListener("experimentsUpdated", (event) => {
+  DeviceEventEmitter.addListener('experimentsUpdated', (event) => {
     listener && listener(event.value)
   })
 }
@@ -114,7 +113,7 @@ Taplytics.setTaplyticsExperimentsUpdatedListener = (listener) => {
 Taplytics.setTaplyticsNewSessionListener = (listener) => {
   Taplytics._setTaplyticsNewSessionListener()
 
-  DeviceEventEmitter.addListener("newSession", (event) => {
+  DeviceEventEmitter.addListener('newSession', (event) => {
     listener && listener(event.value)
   })
 }
@@ -130,9 +129,9 @@ Taplytics.registerPushNotifications = () => {
 }
 
 Taplytics.registerPushOpenedListener = (listener) => {
-  console.log("Registering push open")
+  console.log('Registering push open')
   pushOpenedListeners.push(listener)
-  if(Platform.OS == 'ios'){
+  if (Platform.OS == 'ios') {
     Taplytics._registerPushOpenedListener()
   }
 }
@@ -143,76 +142,73 @@ Taplytics.registerPushDismissedListener = (listener) => {
 
 Taplytics.registerPushReceivedListener = (listener) => {
   pushReceivedListeners.push(listener)
-  if(Platform.OS == 'ios'){
+  if (Platform.OS == 'ios') {
     Taplytics._registerPushReceivedListener()
   }
 }
 
 Taplytics.propertiesLoadedCallback = (callback) => {
-  if (Platform.OS == 'ios') {
-    Taplytics.nativeEventEmitter.addListener('propertiesLoadedCallback', (loaded) => {
-      callback(loaded)
-    })
-    Taplytics._propertiesLoadedCallback()
-  } else {
-    Taplytics._propertiesLoadedCallback(callback)
-  }
-}
-
-if (Platform.OS == 'ios') {
-  try {
-    Taplytics.nativeEventEmitter.addListener("pushOpened", (event) => {
-      _.each(pushOpenedListeners, listener => _.isFunction(listener) && listener(event))
-    }) 
-  }
-  catch(err) {
-    //Fallback for old react native versions
-    DeviceEventEmitter.addListener("pushOpened", (event) => {
-      _.each(pushOpenedListeners, listener => _.isFunction(listener) && listener(event))
-    })
-  }
-} else {
-  DeviceEventEmitter.addListener("pushOpened", (event) => {
-    value = JSON.parse(event.value)
-    _.each(pushOpenedListeners, listener => _.isFunction(listener) && listener(value))
+  const eventSubscriber = Taplytics.nativeEventEmitter.addListener('propertiesLoadedCallback', ({ loaded }) => {
+    callback(loaded)
   })
+  Taplytics._propertiesLoadedCallback()
+
+  return eventSubscriber
 }
 
 if (Platform.OS == 'ios') {
   try {
-    Taplytics.nativeEventEmitter.addListener("pushReceived", (event) => {
-      _.each(pushReceivedListeners, listener => _.isFunction(listener) && listener(event))
-    }) 
+    Taplytics.nativeEventEmitter.addListener('pushOpened', (event) => {
+      _.each(pushOpenedListeners, (listener) => _.isFunction(listener) && listener(event))
+    })
   } catch (err) {
     //Fallback for old react native versions
-    DeviceEventEmitter.addListener("pushReceived", (event) => {
-        _.each(pushReceivedListeners, listener => _.isFunction(listener) && listener(event))
+    DeviceEventEmitter.addListener('pushOpened', (event) => {
+      _.each(pushOpenedListeners, (listener) => _.isFunction(listener) && listener(event))
     })
   }
 } else {
-  DeviceEventEmitter.addListener("pushReceived", (event) => {
+  DeviceEventEmitter.addListener('pushOpened', (event) => {
     value = JSON.parse(event.value)
-    _.each(pushReceivedListeners, listener => _.isFunction(listener) && listener(value))
+    _.each(pushOpenedListeners, (listener) => _.isFunction(listener) && listener(value))
   })
 }
 
-DeviceEventEmitter.addListener("pushDismissed", (event) => {
+if (Platform.OS == 'ios') {
+  try {
+    Taplytics.nativeEventEmitter.addListener('pushReceived', (event) => {
+      _.each(pushReceivedListeners, (listener) => _.isFunction(listener) && listener(event))
+    })
+  } catch (err) {
+    //Fallback for old react native versions
+    DeviceEventEmitter.addListener('pushReceived', (event) => {
+      _.each(pushReceivedListeners, (listener) => _.isFunction(listener) && listener(event))
+    })
+  }
+} else {
+  DeviceEventEmitter.addListener('pushReceived', (event) => {
+    value = JSON.parse(event.value)
+    _.each(pushReceivedListeners, (listener) => _.isFunction(listener) && listener(value))
+  })
+}
+
+DeviceEventEmitter.addListener('pushDismissed', (event) => {
   value = JSON.parse(event.value)
-  _.each(pushDismissedListeners, listener => _.isFunction(listener) && listener(value))
+  _.each(pushDismissedListeners, (listener) => _.isFunction(listener) && listener(value))
 })
 
 if (Platform.OS == 'android') {
   Taplytics.logEvent = (name, value, params) => {
-    if (_.isPlainObject(params)) params = JSON.stringify(params);
-    Taplytics._logEvent(name, value, params);
+    if (_.isPlainObject(params)) params = JSON.stringify(params)
+    Taplytics._logEvent(name, value, params)
   }
 
   Taplytics.logRevenue = (name, value, params) => {
-    if (_.isPlainObject(params)) params = JSON.stringify(params);
-    Taplytics._logRevenue(name, value, params);
+    if (_.isPlainObject(params)) params = JSON.stringify(params)
+    Taplytics._logRevenue(name, value, params)
   }
 }
 
-Taplytics.getVariables = () => _.cloneDeep(variables);
+Taplytics.getVariables = () => _.cloneDeep(variables)
 
-export default Taplytics;
+export default Taplytics

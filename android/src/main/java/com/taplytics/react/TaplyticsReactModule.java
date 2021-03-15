@@ -2,6 +2,7 @@
 package com.taplytics.react;
 
 import androidx.annotation.Nullable;
+
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
@@ -42,7 +43,8 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
 
     private final ReactApplicationContext reactContext;
     private static TaplyticsReactModule instance;
-    private final String tagName = "TaplyticsReact";
+    private final String LOG_TAG_NAME = "TaplyticsReact";
+    private final String EVENT_VALUE_NAME = "value";
 
     public TaplyticsReactModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -56,13 +58,13 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
             if (reactContext.getApplicationContext() instanceof ReactApplication) {
                 ((ReactApplication) reactContext.getApplicationContext()).getReactNativeHost().getReactInstanceManager().addReactInstanceEventListener(this);
             }
-        } catch (Throwable t){
+        } catch (Throwable t) {
             //For reasons unknown this is being used in a non-react app?
             Log.w("Taplytics", "Cannot access ReactNativeHost or ReactInstanceManager");
         }
     }
 
-    
+
     public WritableMap getWritableMap(Map<String, String> map) {
         WritableMap writeMap = Arguments.createMap();
         if (map.isEmpty()) {
@@ -113,7 +115,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
             TaplyticsVar var = new TaplyticsVar<>(name, object);
             callback.resolve(((JSONObject) var.get()).toString());
         } catch (JSONException e) {
-            callback.reject(tagName, e.getMessage());
+            callback.reject(LOG_TAG_NAME, e.getMessage());
         }
     }
 
@@ -129,7 +131,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
             @Override
             public void variableUpdated(Object o) {
                 WritableMap params = Arguments.createMap();
-                params.putString("value", (String) o);
+                params.putString(EVENT_VALUE_NAME, (String) o);
                 sendEvent(name, params);
             }
         });
@@ -141,7 +143,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
             @Override
             public void variableUpdated(Object o) {
                 WritableMap params = Arguments.createMap();
-                params.putBoolean("value", (Boolean) o);
+                params.putBoolean(EVENT_VALUE_NAME, (Boolean) o);
                 sendEvent(name, params);
             }
         });
@@ -152,9 +154,19 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
         TaplyticsVar var = new TaplyticsVar<>(name, defaultValue, new TaplyticsVarListener() {
             @Override
             public void variableUpdated(Object o) {
-                WritableMap params = Arguments.createMap();
-                params.putDouble("value", (Double) o);
-                sendEvent(name, params);
+                try {
+                    WritableMap params = Arguments.createMap();
+                    if (o instanceof Double) {
+                        params.putDouble(EVENT_VALUE_NAME, (Double) o);
+                    } else if (o instanceof Integer) {
+                        params.putInt(EVENT_VALUE_NAME, (Integer) o);
+                    } else {
+                        return;
+                    }
+                    sendEvent(name, params);
+                } catch (Exception e) {
+                    Log.e(LOG_TAG_NAME, e.getMessage());
+                }
             }
         });
     }
@@ -167,12 +179,12 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
                 @Override
                 public void variableUpdated(Object o) {
                     WritableMap params = Arguments.createMap();
-                    params.putString("value", ((JSONObject) o).toString());
+                    params.putString(EVENT_VALUE_NAME, ((JSONObject) o).toString());
                     sendEvent(name, params);
                 }
             });
         } catch (JSONException e) {
-            Log.e(tagName, e.getMessage());
+            Log.e(LOG_TAG_NAME, e.getMessage());
         }
     }
 
@@ -252,11 +264,13 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
     }
 
     @ReactMethod
-    public void _propertiesLoadedCallback(final Callback callback) {
+    public void _propertiesLoadedCallback() {
         Taplytics.getRunningExperimentsAndVariations(new TaplyticsRunningExperimentsListener() {
             @Override
             public void runningExperimentsAndVariation(Map<String, String> map) {
-                callback.invoke();
+                WritableMap params = Arguments.createMap();
+                params.putBoolean("loaded", true);
+                sendEvent("propertiesLoadedCallback", params);
             }
         });
     }
@@ -290,9 +304,10 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
             public void onNewSession() {
                 callback.resolve(null);
             }
+
             @Override
             public void onError() {
-                callback.reject(tagName,"Starting New Session");
+                callback.reject(LOG_TAG_NAME, "Starting New Session");
             }
         });
     }
@@ -303,11 +318,13 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
             @Override
             public void onNewSession() {
                 WritableMap params = Arguments.createMap();
-                params.putBoolean("value", true);
+                params.putBoolean(EVENT_VALUE_NAME, true);
                 sendEvent("newSession", params);
             }
+
             @Override
-            public void onError() { }
+            public void onError() {
+            }
         });
     }
 
@@ -317,7 +334,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
             @Override
             public void onExperimentUpdate() {
                 WritableMap params = Arguments.createMap();
-                params.putBoolean("value", true);
+                params.putBoolean(EVENT_VALUE_NAME, true);
                 sendEvent("experimentsUpdated", params);
             }
         });
@@ -329,7 +346,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
             JSONObject jsonAttributes = new JSONObject(attributes);
             Taplytics.setUserAttributes(jsonAttributes);
         } catch (JSONException e) {
-            Log.e(tagName, e.getMessage());
+            Log.e(LOG_TAG_NAME, e.getMessage());
         }
     }
 
@@ -344,7 +361,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
                 }
             });
         } catch (JSONException e) {
-            Log.e(tagName, e.getMessage());
+            Log.e(LOG_TAG_NAME, e.getMessage());
         }
     }
 
@@ -354,18 +371,19 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
             @Override
             public void sessionInfoRetrieved(HashMap hashMap) {
                 WritableMap resultData = new WritableNativeMap();
-                if(hashMap.containsKey("session_id")){
+                if (hashMap.containsKey("session_id")) {
                     resultData.putString("session_id", (String) hashMap.get("session_id"));
                 }
-                if(hashMap.containsKey("appUser_id")){
+                if (hashMap.containsKey("appUser_id")) {
                     resultData.putString("appUser_id", (String) hashMap.get("appUser_id"));
                 }
 
                 callback.resolve(resultData);
             }
+
             @Override
             public void onError(HashMap hashMap) {
-                callback.reject(tagName,"Getting Session Info");
+                callback.reject(LOG_TAG_NAME, "Getting Session Info");
             }
         });
     }
@@ -390,7 +408,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
 
             @Override
             public void failure() {
-                callback.reject(tagName, "Failed to set push subscription enabled status");
+                callback.reject(LOG_TAG_NAME, "Failed to set push subscription enabled status");
             }
         });
     }
