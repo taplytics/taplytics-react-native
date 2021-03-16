@@ -209,16 +209,19 @@ Taplytics featureFlagEnabled("featureFlagKey").then(isEnabled => {
   });
 ```
 
-IMPORTANT: The value of featureFlagEnabled will be determined immediately, ie. the SDK will not wait for properties to be loaded from the server. Thus, if you want to ensure that the variables have their correct variables based on your experiment segmentation, you must initialize them after the properties have been loaded from the server. This module provides a callback to achieve this:
+IMPORTANT: The value of featureFlagEnabled will be determined immediately, ie. the SDK will not wait for properties to be loaded from the server. Thus, if you want to ensure that the feature flags have their correct values based on your experiment segmentation, you must initialize them after the properties have been loaded from the server. This module provides a callback to achieve this. The callback returns back an event subscriber that can be used to cleanup the event listener using the `remove` function.
 
 ```javascript
-Taplytics.propertiesLoadedCallback(() => {
+const subscriber = Taplytics.propertiesLoadedCallback(() => {
   Taplytics featureFlagEnabled("featureFlagKey").then(isEnabled => {
       if (isEnabled) {
         // Put feature code here, or launch feature from here
       }
     });
-});
+})
+
+// Clean up subscriber
+subscriber.remove()
 ```
 
 ## Running Feature Flags
@@ -278,11 +281,14 @@ NOTE: This function runs asynchronously, as it waits for the updated properties 
 If you want to see when the experiments have been loaded by Taplytics, you can wrap this in a `propertiesLoadedCallback`
 
 ```javascript
-Taplytics.propertiesLoadedCallback(() => {
+const subscriber = Taplytics.propertiesLoadedCallback(() => {
   Taplytics.getRunningExperimentsAndVariations().then((results) => {
     // use results map
   })
 })
+
+// Clean up subscriber
+subscriber.remove()
 ```
 
 ## 6. Sessions

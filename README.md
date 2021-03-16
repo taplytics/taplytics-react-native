@@ -4,7 +4,7 @@
 >
 > [Commercial License / Terms](http://taplytics.com/terms)
 >
-> #### **Current Version: [2.1.3](#changelog)**
+> #### **Current Version: [2.1.4](#changelog)**
 
 ## 1. Getting Started
 
@@ -55,6 +55,13 @@ import Taplytics from 'taplytics-react-native'
 Then follow the [Experiment](/EXPERIMENTS.md) guide and the [Push Notification](/PUSH.md) guide to get started.
 
 ## Changelog
+
+**[2.1.4](https://github.com/taplytics/Taplytics-React-Native/releases/tag/2.1.4)**
+
+1. Fixed `newAsyncVariable` not returning a `number` variable on Android
+2. Fixed `newAsyncVariable` not returning a variable of `JSON` type on iOS.
+3. The callback function within `propertiesLoadedCallback` now provides a boolean type argument indicating if the properties were loaded on Android, similar to iOS
+4. `propertiesLoadedCallback` now returns a `subscriber` object. `subscriber.remove()` can be called to clean up the event listener when a component is unmounted.
 
 **[2.1.3](https://github.com/taplytics/Taplytics-React-Native/releases/tag/2.1.3)**
 
