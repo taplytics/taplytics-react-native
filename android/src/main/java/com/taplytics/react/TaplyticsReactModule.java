@@ -14,6 +14,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableNativeMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
@@ -36,15 +37,20 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Iterator;
+
+import static com.taplytics.react.TaplyticsReactHelper.convertJsonToMap;
+import static com.taplytics.react.TaplyticsReactHelper.convertMapToJson;
+import static com.taplytics.react.TaplyticsReactHelper.getWritableMap;
 
 
 public class TaplyticsReactModule extends ReactContextBaseJavaModule implements ReactInstanceManager.ReactInstanceEventListener {
 
     private final ReactApplicationContext reactContext;
     private static TaplyticsReactModule instance;
-    private final String LOG_TAG_NAME = "TaplyticsReact";
-    private final String EVENT_VALUE_NAME = "value";
+    private static final String LOG_TAG_NAME = "TaplyticsReact";
+    private static final String EVENT_VALUE_NAME = "value";
+    private static final String ASYNC_VARIABLE_EVENT_VALUE_ID = "id";
+    private static final String ASYNC_VARIABLE_EVENT_NAME = "asyncVariable";
 
     public TaplyticsReactModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -64,24 +70,6 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
         }
     }
 
-
-    public WritableMap getWritableMap(Map<String, String> map) {
-        WritableMap writeMap = Arguments.createMap();
-        if (map.isEmpty()) {
-            return writeMap;
-        }
-        try {
-            Iterator it = map.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry) it.next();
-                writeMap.putString((String) pair.getKey(), (String) pair.getValue());
-                it.remove(); // avoids a ConcurrentModificationException
-            }
-        } catch (Throwable e) {
-            writeMap = Arguments.createMap();
-        }
-        return writeMap;
-    }
 
     @Override
     public String getName() {
@@ -109,11 +97,10 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
     }
 
     @ReactMethod
-    public void _newSyncObject(String name, String defaultValue, Promise callback) {
+    public void _newSyncObject(String name, ReadableMap defaultValue, Promise callback) {
         try {
-            JSONObject object = new JSONObject(defaultValue);
-            TaplyticsVar var = new TaplyticsVar<>(name, object);
-            callback.resolve(((JSONObject) var.get()).toString());
+            TaplyticsVar var = new TaplyticsVar<>(name, convertMapToJson(defaultValue));
+            callback.resolve(var.get());
         } catch (JSONException e) {
             callback.reject(LOG_TAG_NAME, e.getMessage());
         }
@@ -126,32 +113,34 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
     }
 
     @ReactMethod
-    public void _newAsyncString(final String name, String defaultValue) {
-        TaplyticsVar var = new TaplyticsVar<>(name, defaultValue, new TaplyticsVarListener() {
+    public void _newAsyncString(final String name, String defaultValue, final Integer callbackID) {
+        new TaplyticsVar<>(name, defaultValue, new TaplyticsVarListener() {
             @Override
             public void variableUpdated(Object o) {
                 WritableMap params = Arguments.createMap();
                 params.putString(EVENT_VALUE_NAME, (String) o);
-                sendEvent(name, params);
+                params.putInt(ASYNC_VARIABLE_EVENT_VALUE_ID, callbackID);
+                sendEvent(ASYNC_VARIABLE_EVENT_NAME, params);
             }
         });
     }
 
     @ReactMethod
-    public void _newAsyncBool(final String name, Boolean defaultValue) {
-        TaplyticsVar var = new TaplyticsVar<>(name, defaultValue, new TaplyticsVarListener() {
+    public void _newAsyncBool(final String name, Boolean defaultValue, final Integer callbackID) {
+        new TaplyticsVar<>(name, defaultValue, new TaplyticsVarListener() {
             @Override
             public void variableUpdated(Object o) {
                 WritableMap params = Arguments.createMap();
                 params.putBoolean(EVENT_VALUE_NAME, (Boolean) o);
-                sendEvent(name, params);
+                params.putInt(ASYNC_VARIABLE_EVENT_VALUE_ID, callbackID);
+                sendEvent(ASYNC_VARIABLE_EVENT_NAME, params);
             }
         });
     }
 
     @ReactMethod
-    public void _newAsyncNumber(final String name, Double defaultValue) {
-        TaplyticsVar var = new TaplyticsVar<>(name, defaultValue, new TaplyticsVarListener() {
+    public void _newAsyncNumber(final String name, Double defaultValue, final Integer callbackID) {
+        new TaplyticsVar<>(name, defaultValue, new TaplyticsVarListener() {
             @Override
             public void variableUpdated(Object o) {
                 try {
@@ -163,7 +152,8 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
                     } else {
                         return;
                     }
-                    sendEvent(name, params);
+                    params.putInt(ASYNC_VARIABLE_EVENT_VALUE_ID, callbackID);
+                    sendEvent(ASYNC_VARIABLE_EVENT_NAME, params);
                 } catch (Exception e) {
                     Log.e(LOG_TAG_NAME, e.getMessage());
                 }
@@ -172,15 +162,19 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
     }
 
     @ReactMethod
-    public void _newAsyncObject(final String name, String defaultValue) {
+    public void _newAsyncObject(final String name, ReadableMap defaultValue, final Integer callbackID) {
         try {
-            JSONObject object = new JSONObject(defaultValue);
-            TaplyticsVar var = new TaplyticsVar<>(name, object, new TaplyticsVarListener() {
+            new TaplyticsVar<>(name, convertMapToJson(defaultValue), new TaplyticsVarListener() {
                 @Override
                 public void variableUpdated(Object o) {
                     WritableMap params = Arguments.createMap();
-                    params.putString(EVENT_VALUE_NAME, ((JSONObject) o).toString());
-                    sendEvent(name, params);
+                    try {
+                        params.putMap(EVENT_VALUE_NAME,  convertJsonToMap((JSONObject) o));
+                    } catch (JSONException e) {
+                        Log.e(LOG_TAG_NAME, e.getMessage());
+                    }
+                    params.putInt(ASYNC_VARIABLE_EVENT_VALUE_ID, callbackID);
+                    sendEvent(ASYNC_VARIABLE_EVENT_NAME, params);
                 }
             });
         } catch (JSONException e) {
@@ -189,20 +183,18 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
     }
 
     @ReactMethod
-    public void _logEvent(String name, Float number, String object) {
+    public void _logEvent(String name, Float number, ReadableMap object) {
         try {
-            JSONObject data = new JSONObject(object);
-            Taplytics.logEvent(name, number, data);
+            Taplytics.logEvent(name, number, convertMapToJson(object));
         } catch (JSONException e) {
             Log.e("Taplytics", e.getMessage());
         }
     }
 
     @ReactMethod
-    public void _logRevenue(String name, Float number, String object) {
+    public void _logRevenue(String name, Float number, ReadableMap object) {
         try {
-            JSONObject data = new JSONObject(object);
-            Taplytics.logRevenue(name, number, data);
+            Taplytics.logRevenue(name, number, convertMapToJson((object)));
         } catch (JSONException e) {
             Log.e("Taplytics", e.getMessage());
         }
@@ -215,9 +207,8 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
         callback.resolve(isEnabled);
     }
 
-
     @ReactMethod
-    public void codeBlock(String name, final Callback callback) {
+    public void _runCodeBlock(String name, final Callback callback) {
         Taplytics.runCodeBlock(name, new CodeBlockListener() {
             @Override
             public void run() {
@@ -227,22 +218,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
     }
 
     @ReactMethod
-    public void runCodeBlock(String name, final Callback callback) {
-        codeBlock(name, callback);
-    }
-
-    @ReactMethod
-    public void runCodeBlockSync(String name, final Callback callback) {
-        Taplytics.runCodeBlockSync(name, new CodeBlockListener() {
-            @Override
-            public void run() {
-                callback.invoke();
-            }
-        });
-    }
-
-    @ReactMethod
-    public void resetAppUser(final Promise callback) {
+    public void _resetAppUser(final Promise callback) {
         TaplyticsResetUserListener listener = new TaplyticsResetUserListener() {
             @Override
             public void finishedResettingUser() {
@@ -251,16 +227,6 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
         };
 
         Taplytics.resetAppUser(listener);
-    }
-
-    @ReactMethod
-    public void setTaplyticsPushTokenListener(final Callback callback) {
-        Taplytics.setTaplyticsPushTokenListener(new TaplyticsPushTokenListener() {
-            @Override
-            public void pushTokenReceived(String s) {
-                callback.invoke(s);
-            }
-        });
     }
 
     @ReactMethod
@@ -276,7 +242,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
     }
 
     @ReactMethod
-    public void getRunningExperimentsAndVariations(final Promise callback) {
+    public void _getRunningExperimentsAndVariations(final Promise callback) {
         Taplytics.getRunningExperimentsAndVariations(new TaplyticsRunningExperimentsListener() {
             @Override
             public void runningExperimentsAndVariation(Map<String, String> map) {
@@ -287,7 +253,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
     }
 
     @ReactMethod
-    public void getRunningFeatureFlags(final Promise callback) {
+    public void _getRunningFeatureFlags(final Promise callback) {
         Taplytics.getRunningFeatureFlags(new TaplyticsRunningFeatureFlagsListener() {
             @Override
             public void runningFeatureFlags(Map<String, String> map) {
@@ -298,7 +264,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
     }
 
     @ReactMethod
-    public void startNewSession(final Promise callback) {
+    public void _startNewSession(final Promise callback) {
         Taplytics.startNewSession(new TaplyticsNewSessionListener() {
             @Override
             public void onNewSession() {
@@ -318,7 +284,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
             @Override
             public void onNewSession() {
                 WritableMap params = Arguments.createMap();
-                params.putBoolean(EVENT_VALUE_NAME, true);
+                params.putBoolean("loaded", true);
                 sendEvent("newSession", params);
             }
 
@@ -326,28 +292,6 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
             public void onError() {
             }
         });
-    }
-
-    @ReactMethod
-    public void _setTaplyticsExperimentsUpdatedListener() {
-        Taplytics.setTaplyticsExperimentsUpdatedListener(new TaplyticsExperimentsUpdatedListener() {
-            @Override
-            public void onExperimentUpdate() {
-                WritableMap params = Arguments.createMap();
-                params.putBoolean(EVENT_VALUE_NAME, true);
-                sendEvent("experimentsUpdated", params);
-            }
-        });
-    }
-
-    @ReactMethod
-    public void _setUserAttributes(final String attributes) {
-        try {
-            JSONObject jsonAttributes = new JSONObject(attributes);
-            Taplytics.setUserAttributes(jsonAttributes);
-        } catch (JSONException e) {
-            Log.e(LOG_TAG_NAME, e.getMessage());
-        }
     }
 
     @ReactMethod
@@ -366,7 +310,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
     }
 
     @ReactMethod
-    public void getSessionInfo(final Promise callback) {
+    public void _getSessionInfo(final Promise callback) {
         Taplytics.getSessionInfo(new SessionInfoRetrievedListener() {
             @Override
             public void sessionInfoRetrieved(HashMap hashMap) {
@@ -384,31 +328,6 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
             @Override
             public void onError(HashMap hashMap) {
                 callback.reject(LOG_TAG_NAME, "Getting Session Info");
-            }
-        });
-    }
-
-    @ReactMethod
-    public void deviceLink(final String link) {
-        Taplytics.deviceLink(link);
-    }
-
-    @ReactMethod
-    public void showMenu() {
-        Taplytics.showMenu();
-    }
-
-    @ReactMethod
-    public void setPushSubscriptionEnabled(final boolean enabled, final Promise callback) {
-        Taplytics.setPushSubscriptionEnabled(enabled, new TaplyticsPushSubscriptionChangedListener() {
-            @Override
-            public void success() {
-                callback.resolve(null);
-            }
-
-            @Override
-            public void failure() {
-                callback.reject(LOG_TAG_NAME, "Failed to set push subscription enabled status");
             }
         });
     }

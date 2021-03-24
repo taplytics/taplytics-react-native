@@ -3,3 +3,4 @@ ios
 android
 node_modules
 .circleci
+lib

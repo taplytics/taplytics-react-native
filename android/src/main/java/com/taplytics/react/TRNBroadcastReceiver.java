@@ -2,18 +2,24 @@ package com.taplytics.react;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.taplytics.sdk.TLGcmBroadcastReceiver;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import static com.taplytics.react.TaplyticsReactHelper.convertJsonToMap;
 
 /**
  * Created by Adam Wootton on 2017-01-30.
  */
 
 public class TRNBroadcastReceiver extends TLGcmBroadcastReceiver {
+    private static final String LOG_TAG_NAME = "TaplyticsBR";
+
     @Override
     public void pushOpened(Context context, Intent intent) {
         if (TaplyticsReactModule.getInstance() != null) {
@@ -52,7 +58,11 @@ public class TRNBroadcastReceiver extends TLGcmBroadcastReceiver {
         } catch (Throwable ignored) {
             //Ignore the bad JSON for now. Log here as you please.
         }
-        data.putString("value", dataObject.toString());
+        try {
+            data.putMap("value", convertJsonToMap(dataObject));
+        } catch (JSONException e) {
+            Log.e(LOG_TAG_NAME, e.getMessage());
+        }
         return data;
     }
 }

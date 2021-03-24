@@ -1,0 +1,17 @@
+{
+  "extends": ["tslint:recommended", "tslint-config-airbnb", "tslint-config-prettier"],
+  "defaultSeverity": "error",
+  "rules": {
+    "import-name": false,
+    "one-variable-per-declaration": [true, "ignore-for-loop"],
+    "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case", "allow-leading-underscore"],
+    "no-console": [false, "log", "error"],
+    "no-empty-interface": false,
+    "no-unused-expression": false,
+    "no-increment-decrement": false
+  },
+  "linterOptions": {
+    "exclude": ["lib"]
+  },
+  "rulesDirectory": []
+}
