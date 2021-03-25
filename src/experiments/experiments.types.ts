@@ -10,6 +10,8 @@ export type TaplyticsFeatureFlags = {
   [key: string]: string
 }
 
-export type TaplyticsVariables = {
-  [key: string]: boolean | string | object | number
+export type TaplyticsVariable = boolean | string | object | number
+
+export type TaplyticsVariableMap = {
+  [key: string]: TaplyticsVariable
 }

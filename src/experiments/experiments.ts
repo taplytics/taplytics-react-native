@@ -1,7 +1,7 @@
 import { EventSubscription, NativeEventEmitter, NativeModules } from 'react-native'
 import cloneDeep from 'lodash.clonedeep'
 
-import { CodeBlockCallback, PropertiesLoadedCallback, TaplyticsFeatureFlags, TaplyticsExperiments, TaplyticsVariables } from './experiments.types'
+import { CodeBlockCallback, PropertiesLoadedCallback, TaplyticsFeatureFlags, TaplyticsExperiments, TaplyticsVariableMap } from './experiments.types'
 
 const { Taplytics } = NativeModules
 const TaplyticsEventEmitter = new NativeEventEmitter(Taplytics)
@@ -80,14 +80,14 @@ export const getRunningExperimentsAndVariations = (): Promise<TaplyticsExperimen
  * The method that gets invoked whenever a experiment variables' value is updated.
  *
  */
-let variablesChangedListener: (variables: TaplyticsVariables) => void | Promise<void>
+let variablesChangedListener: (variables: TaplyticsVariableMap) => void | Promise<void>
 
 /**
  * Use this function to register a listener for whenever an experiments' variable value is changed.
  *
  * @param listener The method that is invoked whenever an experiments' variable is updated.
  */
-export const registerVariablesChangedListener = (listener: (variables: TaplyticsVariables) => void | Promise<void>) => {
+export const registerVariablesChangedListener = (listener: (variables: TaplyticsVariableMap) => void | Promise<void>) => {
   variablesChangedListener = listener
 }
 
@@ -96,7 +96,7 @@ export const registerVariablesChangedListener = (listener: (variables: Taplytics
  * and `newAsyncVariable`. It is then utilized by the listener passed into `registerVariablesChangedListener`
  * and by `getVariables`.
  */
-const dynamicVariables: TaplyticsVariables = {}
+const dynamicVariables: TaplyticsVariableMap = {}
 
 /**
  * This method updates the `dynamicVariable` object, as well as invokes the method passed into
@@ -112,7 +112,7 @@ const updateDynamicVariables = (name: string, value: string | boolean | object |
   dynamicVariables[name] = value
 
   // Trigger listener
-  variablesChangedListener && variablesChangedListener(cloneDeep<TaplyticsVariables>(dynamicVariables))
+  variablesChangedListener && variablesChangedListener(cloneDeep<TaplyticsVariableMap>(dynamicVariables))
 }
 
 /**
@@ -121,7 +121,7 @@ const updateDynamicVariables = (name: string, value: string | boolean | object |
  *
  * @returns An object that holds the key's and values of the experiment variables.
  */
-export const getVariables = (): TaplyticsVariables => cloneDeep<TaplyticsVariables>(dynamicVariables)
+export const getVariables = (): TaplyticsVariableMap => cloneDeep<TaplyticsVariableMap>(dynamicVariables)
 
 /**
  * A Map of callbacks used by the `newAsyncVariable` funciton to keep track of
@@ -132,7 +132,9 @@ export const getVariables = (): TaplyticsVariables => cloneDeep<TaplyticsVariabl
 const asyncVariableCallbackMap = new Map<number, (variable: any) => void>()
 
 /**
- * A ID that is used as the key to the `asyncVariableCallbackMap` Map.
+ * A ID that is used to track each invokation of the `newAsyncVariable` method.
+ * This ID is passed to the native layer, and eventually passed back whenever the
+ * `asyncVariable` event is triggered.
  */
 let asyncVariableCallbackID = 0
 
@@ -149,11 +151,28 @@ let asyncVariableCallbackID = 0
  *
  * @returns An event subscriber object is returned. Use the `remove` function to clean up the event listener.
  */
-export const newAsyncVariable = <T>(name: string, defaultValue: T, callback: (variable: T) => void): EventSubscription => {
-  const nativeModuleArgs = [name, defaultValue, asyncVariableCallbackID]
-
-  asyncVariableCallbackMap.set(asyncVariableCallbackID, callback)
+export const newAsyncVariable = <T>(name: string, defaultValue: T, callback: (variable: T) => void) => {
+  // Increment the ID
   asyncVariableCallbackID++
+
+  /**
+   * Store a locally scoped reference to the ID that the listener
+   * utilizes to check against it's argument's ID. This is done to ensure
+   * that only the intended callback is triggered.
+   */
+  const localScopeID = asyncVariableCallbackID
+
+  const subscriber = TaplyticsEventEmitter.addListener('asyncVariable', ({ id, value }) => {
+    if (localScopeID !== id) return
+
+    // Trigger the callback
+    callback(value)
+
+    // Update the dynamic variables used by `getVariables`
+    updateDynamicVariables(name, value)
+  })
+
+  const nativeModuleArgs = [name, defaultValue, asyncVariableCallbackID]
 
   switch (typeof defaultValue) {
     case 'boolean':
@@ -172,15 +191,6 @@ export const newAsyncVariable = <T>(name: string, defaultValue: T, callback: (va
       console.error('INVALID TYPE PASSED TO ASYNC VARIABLE CONSTRUCTOR')
       break
   }
-
-  const subscriber = TaplyticsEventEmitter.addListener('asyncVariable', ({ id, value }) => {
-    // Trigger the callback
-    const variableCallback = asyncVariableCallbackMap.get(id)
-    variableCallback && variableCallback(value)
-
-    // Update the dynamic variables used by `getVariables`
-    updateDynamicVariables(name, value)
-  })
 
   return subscriber
 }

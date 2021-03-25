@@ -1,9 +1,8 @@
-
 package com.taplytics.react;
 
-import androidx.annotation.Nullable;
-
 import android.util.Log;
+
+import androidx.annotation.Nullable;
 
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactInstanceManager;
@@ -21,16 +20,13 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.taplytics.sdk.CodeBlockListener;
 import com.taplytics.sdk.SessionInfoRetrievedListener;
 import com.taplytics.sdk.Taplytics;
-import com.taplytics.sdk.TaplyticsExperimentsUpdatedListener;
 import com.taplytics.sdk.TaplyticsNewSessionListener;
-import com.taplytics.sdk.TaplyticsPushSubscriptionChangedListener;
-import com.taplytics.sdk.TaplyticsPushTokenListener;
 import com.taplytics.sdk.TaplyticsResetUserListener;
 import com.taplytics.sdk.TaplyticsRunningExperimentsListener;
 import com.taplytics.sdk.TaplyticsRunningFeatureFlagsListener;
+import com.taplytics.sdk.TaplyticsSetUserAttributesListener;
 import com.taplytics.sdk.TaplyticsVar;
 import com.taplytics.sdk.TaplyticsVarListener;
-import com.taplytics.sdk.TaplyticsSetUserAttributesListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,18 +41,22 @@ import static com.taplytics.react.TaplyticsReactHelper.getWritableMap;
 
 public class TaplyticsReactModule extends ReactContextBaseJavaModule implements ReactInstanceManager.ReactInstanceEventListener {
 
-    private final ReactApplicationContext reactContext;
-    private static TaplyticsReactModule instance;
     private static final String LOG_TAG_NAME = "TaplyticsReact";
     private static final String EVENT_VALUE_NAME = "value";
     private static final String ASYNC_VARIABLE_EVENT_VALUE_ID = "id";
     private static final String ASYNC_VARIABLE_EVENT_NAME = "asyncVariable";
+    private static TaplyticsReactModule instance;
+    private final ReactApplicationContext reactContext;
 
     public TaplyticsReactModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
         TaplyticsReactModule.instance = this;
         setupReactListener(reactContext);
+    }
+
+    static TaplyticsReactModule getInstance() {
+        return TaplyticsReactModule.instance;
     }
 
     private void setupReactListener(ReactApplicationContext reactContext) {
@@ -70,7 +70,6 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
         }
     }
 
-
     @Override
     public String getName() {
         return "Taplytics";
@@ -78,10 +77,6 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
 
     void sendEvent(String eventName, @Nullable WritableMap params) {
         this.reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
-    }
-
-    static TaplyticsReactModule getInstance() {
-        return TaplyticsReactModule.instance;
     }
 
     @ReactMethod
@@ -100,7 +95,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
     public void _newSyncObject(String name, ReadableMap defaultValue, Promise callback) {
         try {
             TaplyticsVar var = new TaplyticsVar<>(name, convertMapToJson(defaultValue));
-            callback.resolve(var.get());
+            callback.resolve(convertJsonToMap((JSONObject) var.get()));
         } catch (JSONException e) {
             callback.reject(LOG_TAG_NAME, e.getMessage());
         }
@@ -169,7 +164,7 @@ public class TaplyticsReactModule extends ReactContextBaseJavaModule implements 
                 public void variableUpdated(Object o) {
                     WritableMap params = Arguments.createMap();
                     try {
-                        params.putMap(EVENT_VALUE_NAME,  convertJsonToMap((JSONObject) o));
+                        params.putMap(EVENT_VALUE_NAME, convertJsonToMap((JSONObject) o));
                     } catch (JSONException e) {
                         Log.e(LOG_TAG_NAME, e.getMessage());
                     }

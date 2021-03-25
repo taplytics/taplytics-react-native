@@ -24,10 +24,6 @@ export const registerPushNotifications = () => {
  * @returns An event subscriber object is returned. Use the `remove` function to clean up the event listener.
  */
 export const registerPushReceivedListener = (listener: TaplyticsNotificationListener): EventSubscription => {
-  if (Platform.OS === 'ios') {
-    Taplytics._registerPushReceivedListener()
-  }
-
   const subscriber = TaplyticsEventEmitter.addListener('pushReceived', (notification) => {
     if (Platform.OS === 'android') {
       listener(notification?.value as TaplyticsAndroidNotification)
@@ -37,6 +33,10 @@ export const registerPushReceivedListener = (listener: TaplyticsNotificationList
       listener(notification as TaplyticsiOSNotification)
     }
   })
+
+  if (Platform.OS === 'ios') {
+    Taplytics._registerPushReceivedListener()
+  }
 
   return subscriber
 }
@@ -51,10 +51,6 @@ export const registerPushReceivedListener = (listener: TaplyticsNotificationList
  * @returns An event subscriber object is returned. Use the `remove` function to clean up the event listener.
  */
 export const registerPushOpenedListener = (listener: TaplyticsNotificationListener): EventSubscription => {
-  if (Platform.OS === 'ios') {
-    Taplytics._registerPushOpenedListener()
-  }
-
   const subscriber = TaplyticsEventEmitter.addListener('pushOpened', (notification) => {
     if (Platform.OS === 'android') {
       listener(notification?.value as TaplyticsAndroidNotification)
@@ -64,6 +60,10 @@ export const registerPushOpenedListener = (listener: TaplyticsNotificationListen
       listener(notification as TaplyticsiOSNotification)
     }
   })
+
+  if (Platform.OS === 'ios') {
+    Taplytics._registerPushOpenedListener()
+  }
 
   return subscriber
 }
