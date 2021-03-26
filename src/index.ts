@@ -22,6 +22,8 @@ import {
   registerPushOpenedListener,
   registerPushReceivedListener,
 } from './push'
+import { useFeatureFlag } from './hooks'
+import TaplyticsProvider from './TaplyticsProvider'
 
 export {
   TaplyticsAndroidNotification,
@@ -31,6 +33,7 @@ export {
   TaplyticsUserAttributes,
   TaplyticsVariable,
   TaplyticsVariableMap,
+  TaplyticsProvider,
   featureFlagEnabled,
   getRunningExperimentsAndVariations,
   getRunningFeatureFlags,
@@ -49,4 +52,5 @@ export {
   setTaplyticsNewSessionListener,
   setUserAttributes,
   startNewSession,
+  useFeatureFlag,
 }

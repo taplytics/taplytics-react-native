@@ -20,8 +20,7 @@ const TaplyticsEventEmitter = new NativeEventEmitter(Taplytics)
 export const runCodeBlock = (name: string, codeBlock: CodeBlockCallback): void => Taplytics._runCodeBlock(name, codeBlock)
 
 /**
- * @deprecated Use the `setTaplyticsNewSessionListner` instead for a more consistent behaviour
- * across `android` and `ios` devices.
+ * @deprecated Use the `setTaplyticsNewSessionListner` instead.
  *
  * Use this method to ensure that all the feature flag and experiment variables
  * have been loaded from the server prior to utlizing them. The callback
@@ -122,14 +121,6 @@ const updateDynamicVariables = (name: string, value: string | boolean | object |
  * @returns An object that holds the key's and values of the experiment variables.
  */
 export const getVariables = (): TaplyticsVariableMap => cloneDeep<TaplyticsVariableMap>(dynamicVariables)
-
-/**
- * A Map of callbacks used by the `newAsyncVariable` funciton to keep track of
- * which callback to trigger when the `asyncVariable` event is called.
- * The Map key is an ID that is incremented dependant on the number of `newAsyncVariable`
- * function invokations.
- */
-const asyncVariableCallbackMap = new Map<number, (variable: any) => void>()
 
 /**
  * A ID that is used to track each invokation of the `newAsyncVariable` method.
