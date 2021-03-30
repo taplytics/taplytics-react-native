@@ -8,6 +8,7 @@ import {
   propertiesLoadedCallback,
   registerVariablesChangedListener,
   runCodeBlock,
+  CodeBlockCallback,
   TaplyticsExperiments,
   TaplyticsFeatureFlags,
   TaplyticsVariable,
@@ -22,10 +23,11 @@ import {
   registerPushOpenedListener,
   registerPushReceivedListener,
 } from './push'
-import { useFeatureFlag } from './hooks'
+import { useCodeBlock, useFeatureFlag, useRunningExperiments, useVariable } from './hooks'
 import TaplyticsProvider from './TaplyticsProvider'
 
 export {
+  CodeBlockCallback,
   TaplyticsAndroidNotification,
   TaplyticsExperiments,
   TaplyticsFeatureFlags,
@@ -52,5 +54,8 @@ export {
   setTaplyticsNewSessionListener,
   setUserAttributes,
   startNewSession,
+  useCodeBlock,
   useFeatureFlag,
+  useRunningExperiments,
+  useVariable,
 }
