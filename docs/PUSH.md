@@ -1,6 +1,8 @@
+# Push Notifications
+
 | #   | Platform                                    |
-| --- | ------------------------------------------- | --- |
-| 1   | [iOS Push Notification Setup](#ios)         |     |
+| --- | ------------------------------------------- |
+| 1   | [iOS Push Notification Setup](#ios)         |
 | 2   | [Android Push Notification Setup](#android) |
 
 ## Setting up Push Notifications

@@ -28,7 +28,6 @@ if [[ $TRIGGER_PIPELINE_RESPONSE =~ 2[0-9]{2} ]]; then
 
   # Extract Pipeline build ID and number
   BUILD_ID=$(jq -r ".id" trigger-response.json)
-  BUILD_NUMBER=$(jq -r ".number" trigger-response.json)
 
   # Extract Pipeline state
   PIPELINE_STATE=$(jq -r ".state" trigger-response.json)
@@ -73,7 +72,6 @@ if [[ $TRIGGER_PIPELINE_RESPONSE =~ 2[0-9]{2} ]]; then
 
     # Extract workflow status and ID
     WORKFLOW_STATUS=$(jq -r ".items[0].status" pipeline-response.json)
-    WORKFLOW_ID=$(jq -r ".items[0].id" pipeline-response.json)
 
     # While the workflow is still running, keep fetching the status
     while [[ $WORKFLOW_STATUS == 'running' ]]; do
@@ -99,8 +97,6 @@ if [[ $TRIGGER_PIPELINE_RESPONSE =~ 2[0-9]{2} ]]; then
 
     done
 
-    TEST_CIRCLE_URL="https://app.circleci.com/pipelines/github/${CIRCLE_PROJECT_USERNAME}/taplytics-react-native-integration-tests/${BUILD_NUMBER}/workflows/${WORKFLOW_ID}"
-
     # Print status of the workflow
     case $WORKFLOW_STATUS in
     'success')
@@ -108,17 +104,14 @@ if [[ $TRIGGER_PIPELINE_RESPONSE =~ 2[0-9]{2} ]]; then
       ;;
     'failing')
       printf "\n\nTests %s ❌" "${WORKFLOW_STATUS}"
-      printf "\n%s" "${TEST_CIRCLE_URL}"
       exit 1
       ;;
     'cancelled')
       printf "\n\nTests %s 🚫" "${WORKFLOW_STATUS}"
-      printf "\n%s" "${TEST_CIRCLE_URL}"
       exit 1
       ;;
     *)
       printf "\n\nTest status: %s" "${WORKFLOW_STATUS}"
-      printf "\n%s" "${TEST_CIRCLE_URL}"
       exit 1
       ;;
     esac

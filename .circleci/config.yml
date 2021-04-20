@@ -8,6 +8,87 @@ aliases:
     run:
       name: Run Taplytics RN SDK Integration Repo
       command: chmod +x .circleci/scripts/trigger-integration-tests.sh && .circleci/scripts/trigger-integration-tests.sh
+  - &install_global_node_dependencies
+    run:
+      name: Install Global Node Dependencies
+      command: npm install --prefix=$HOME/.local --global yarn
+  - &restore_node_modules_cache
+    restore_cache:
+      name: Restore Yarn Cache
+      key: node-v1-{{ checksum "yarn.lock" }}-{{ arch }}
+  - &save_node_modules_cache
+    save_cache:
+      name: Save Yarn Cache
+      key: node-v1-{{ checksum "yarn.lock" }}-{{ arch }}
+      paths:
+        - node_modules
+  - &install_node_modules
+    run:
+      name: Install node modules
+      command: yarn
+  - &build_project
+    run:
+      name: Build Project
+      command: yarn build
+  - &edit_package_json
+    run:
+      name: Replace main property 
+      command: |
+        echo $(cat package.json | jq '.main="lib/index.js"') > package.json
+        echo $(cat package.json | jq '.types="lib/index.d.ts"') > package.json
+        node_modules/.bin/prettier --write package.json
+  - &persist_workspace
+    persist_to_workspace:
+      root: ~/
+      paths: project
+  - &attach_workspace
+    attach_workspace:
+      at: ~/built-project
+  - &push_to_public_repo
+    run:
+      name: Switch the remote to public repo and push master branch and tags
+      command: |
+        # Fetch all current tags
+        git fetch --tags
+
+        # Remove current origin and add public origin
+        git remote rm origin
+        git remote add origin "${SDK_REPOSITORY_URL}.git"
+
+        # Push changes and tags
+        git merge master --allow-unrelated-histories
+        git push -f origin master
+        git push --tags
+  - &authenticate_npm
+    run:
+      name: Authenticate NPM
+      command: cd ~/built-project/project && pwd && echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+  - &publish_npm
+    run:
+      name: Publish npm package
+      command: |
+        cd ~/built-project/project
+        if [[ $CIRCLE_TAG == *"-rc"* ]]; then
+          npm publish --tag next
+        else
+          npm publish
+        fi
+  - &track_deployment_codeclimate
+    run:
+      name: Track deployment on CodeClimate
+      command: |
+        curl https://velocity.codeclimate.com/deploys 
+        -d "token=${VELOCITY_DEPLOYMENT_TOKEN}"
+        -d "revision=${CIRCLE_SHA1}" 
+        -d "repository_url=${SDK_REPOSITORY_URL}" 
+        -d "branch=master" 
+        -d "environment=production" 
+        -d "version=${CIRCLE_TAG}"
+  - &tags_only_filter
+    branches:
+      ignore: /.*/
+    tags:
+      only: /.*/
 
 jobs:
   run-integration-tests:
@@ -18,9 +99,48 @@ jobs:
       - checkout
       - jq/install
       - *run_integration_repo_job
+  build:
+    docker:
+      - image: cimg/node:14.16.1
+    description: Build project
+    steps:
+      - checkout
+      - jq/install
+      - *install_global_node_dependencies
+      - *restore_node_modules_cache
+      - *install_node_modules
+      - *save_node_modules_cache
+      - *build_project
+      - *edit_package_json
+      - *persist_workspace
+  deploy:
+    docker:
+      - image: cimg/node:14.16.1
+    description: Deploying taplytics-react-native to github and NPM
+    steps:
+      - checkout
+      - *attach_workspace
+      - *push_to_public_repo
+      - *authenticate_npm
+      - *publish_npm
+      - *track_deployment_codeclimate
+
 
 workflows:
   version: 2
+  release:
+    jobs:
+      - build:
+          filters: *tags_only_filter
+      - approve-deploy:
+          type: approval
+          requires:
+            - build
+          filters: *tags_only_filter
+      - deploy:
+          requires:
+            - approve-deploy
+          filters: *tags_only_filter
   pr-e2e-integration-tests:
     jobs:
       - run-integration-tests

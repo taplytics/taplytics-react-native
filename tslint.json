@@ -11,7 +11,7 @@
     "no-increment-decrement": false
   },
   "linterOptions": {
-    "exclude": ["lib"]
+    "exclude": ["lib", "commitlint.config.js"]
   },
   "rulesDirectory": []
 }
