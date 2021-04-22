@@ -44,4 +44,4 @@ Be sure to import Taplytics into your react application:
 import Taplytics from 'taplytics-react-native'
 ```
 
-Then follow the [Experiment](./EXPERIMENTS.md) guide and the [Push Notification](./PUSH.md) guide to get started.
+Then follow the [Experiment](./Experiments.md) guide and the [Push Notification](./Push.md) guide to get started.
