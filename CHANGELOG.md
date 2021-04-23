@@ -1,5 +1,7 @@
 # Changelog
 
+## [3.0.0-rc.0](https://github.com/taplytics/taplytics-react-native/compare/2.1.3...3.0.0-rc.0) (2021-04-23)
+
 ## [2.1.4](https://github.com/taplytics/taplytics-react-native/compare/2.1.3...2.1.4)
 
 - Fixed `newAsyncVariable` not returning a `number` variable on Android
