@@ -1,6 +1,16 @@
 # Changelog
 
-## [3.0.0-rc.0](https://github.com/taplytics/taplytics-react-native/compare/2.1.3...3.0.0-rc.0) (2021-04-23)
+## [3.0.0-rc.0](https://github.com/taplytics/taplytics-react-native/compare/2.1.4...3.0.0-rc.0) (2021-04-23)
+
+### Breaking Changes
+
+- We've switched away from default exports and now export each method/hook individually for improved discoverability and autocompletion. Read more about migrating from `v2.x` to `v3.x` [here](https://docs.taplytics.com/docs/react-native-sdk#migrating-from-v2x-to-v3x).
+
+### Features
+
+- We've introduced hooks that can be utilized for easier usage of the core Taplytics React Native SDK. Check out the docs [here](https://docs.taplytics.com/docs/react-native-sdk#hooks).
+- The core SDK methods were also completely re-written from the ground up natively in TypeScript.
+- Added more comprehensive JSDocs.
 
 ## [2.1.4](https://github.com/taplytics/taplytics-react-native/compare/2.1.3...2.1.4)
 
