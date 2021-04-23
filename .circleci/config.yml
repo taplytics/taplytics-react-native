@@ -59,6 +59,10 @@ aliases:
         git merge master --allow-unrelated-histories
         git push -f origin master
         git push --tags
+  - &publish_github_release
+    run:
+      name: Publish Github Release
+      command: chmod +x .circleci/scripts/publish-github-release.sh && .circleci/scripts/publish-github-release.sh
   - &authenticate_npm
     run:
       name: Authenticate NPM
@@ -121,6 +125,7 @@ jobs:
       - checkout
       - *attach_workspace
       - *push_to_public_repo
+      - *publish_github_release
       - *authenticate_npm
       - *publish_npm
       - *track_deployment_codeclimate
