@@ -48,6 +48,9 @@ aliases:
     run:
       name: Switch the remote to public repo and push master branch and tags
       command: |
+        # Reset to master branch
+        git reset --hard origin/master
+        
         # Fetch all current tags
         git fetch --tags
 
@@ -85,7 +88,7 @@ aliases:
       name: Track deployment on CodeClimate
       command: |
         curl https://velocity.codeclimate.com/deploys 
-        -d "token=${VELOCITY_DEPLOYMENT_TOKEN}"
+        -d "token=${VELOCITY_DEPLOYMENT_TOKEN}" 
         -d "revision=${CIRCLE_SHA1}" 
         -d "repository_url=${SDK_REPOSITORY_URL}" 
         -d "branch=master" 
