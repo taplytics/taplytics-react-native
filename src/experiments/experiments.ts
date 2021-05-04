@@ -20,10 +20,10 @@ const TaplyticsEventEmitter = new NativeEventEmitter(Taplytics)
 export const runCodeBlock = (name: string, codeBlock: CodeBlockCallback): void => Taplytics._runCodeBlock(name, codeBlock)
 
 /**
- * @deprecated Use the `setTaplyticsNewSessionListner` instead.
+ * @deprecated Use the `setTaplyticsNewSessionListener` instead.
  *
  * Use this method to ensure that all the feature flag and experiment variables
- * have been loaded from the server prior to utlizing them. The callback
+ * have been loaded from the server prior to utilizing them. The callback
  * returns back an event subscriber that can be used to cleanup the event
  * listener using the `remove` function.
  *
@@ -60,7 +60,7 @@ export const getRunningFeatureFlags = (): Promise<TaplyticsFeatureFlags> => Tapl
  * you must initialize them after the properties have been loaded from the server through
  * the `propertiesLoadedCallback` method.
  *
- * @param key The key of the feature flag
+ * @param key The key of the feature flag.
  *
  * @returns A promise that resolves to a boolean.
  */
@@ -84,14 +84,14 @@ let variablesChangedListener: (variables: TaplyticsVariableMap) => void | Promis
 /**
  * Use this function to register a listener for whenever an experiments' variable value is changed.
  *
- * @param listener The method that is invoked whenever an experiments' variable is updated.
+ * @param listener A function that is invoked whenever an experiments' variable is updated.
  */
 export const registerVariablesChangedListener = (listener: (variables: TaplyticsVariableMap) => void | Promise<void>) => {
   variablesChangedListener = listener
 }
 
 /**
- * An object that holds the keys and values of dynamic varibales fetched by `newSyncVariable`
+ * An object that holds the keys and values of dynamic variables fetched by `newSyncVariable`
  * and `newAsyncVariable`. It is then utilized by the listener passed into `registerVariablesChangedListener`
  * and by `getVariables`.
  */
@@ -123,7 +123,7 @@ const updateDynamicVariables = (name: string, value: string | boolean | object |
 export const getVariables = (): TaplyticsVariableMap => cloneDeep<TaplyticsVariableMap>(dynamicVariables)
 
 /**
- * A ID that is used to track each invokation of the `newAsyncVariable` method.
+ * A ID that is used to track each invocation of the `newAsyncVariable` method.
  * This ID is passed to the native layer, and eventually passed back whenever the
  * `asyncVariable` event is triggered.
  */
@@ -137,12 +137,12 @@ let asyncVariableCallbackID = 0
  *
  * @param name The name of the dynamic variable.
  * @param defaultValue Default value to be utilized for the dynamic variable.
- * @param callback A function that runs when the dynamic variable has been evaluated,
- * it recieves the dyanimc variable value as the argument.
+ * @param callback A function that runs when the dynamic variable has been evaluated or updated,
+ * it receives the dynamic variable value as the argument.
  *
  * @returns An event subscriber object is returned. Use the `remove` function to clean up the event listener.
  */
-export const newAsyncVariable = <T>(name: string, defaultValue: T, callback: (variable: T) => void) => {
+export const newAsyncVariable = <T>(name: string, defaultValue: T, callback: (variable: T) => void): EventSubscription => {
   // Increment the ID
   asyncVariableCallbackID++
 
@@ -190,7 +190,7 @@ export const newAsyncVariable = <T>(name: string, defaultValue: T, callback: (va
  * This function is a synchronous means of retrieving a dynamic variables' value.
  * It guarantees to have the same value for the entire session and will have that
  * value immediately after construction. Ensure that the experiments have been loaded
- * in before utilizing this method via the `propertiesLoadedCallback` or `setTaplyticsNewSessionListner`
+ * in before utilizing this method via the `propertiesLoadedCallback` or `setTaplyticsNewSessionListener`
  * method, otherwise it will return the default value.
  *
  * @param name The name of the dynamic variable.

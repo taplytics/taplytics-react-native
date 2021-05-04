@@ -2,37 +2,43 @@
 
 You can get started with using Taplytics React-Native in minutes. Just follow the steps below:
 
-| #   |                                                                                          |
-| --- | ---------------------------------------------------------------------------------------- |
-| 1   | [Setting User Attributes](#1-setting-user-attributes)                                    |
-| 2   | [Tracking Events](#2-track-events)                                                       |
-| 3   | [Dynamic Variables & Code Blocks](#3-dynamic-variables--code-blocks)                     |
-| 4   | [Currently Running Experiments and Vars](#4-currently-running-experiments-and-variables) |
-| 5   | [Sessions](#5-sessions)                                                                  |
-| 6   | [Push](#5-Push)                                                                          |
+| #   |                                                                                               |
+| --- | --------------------------------------------------------------------------------------------- |
+| 1   | [User Attributes](#1-user-attributes)                                                         |
+| 2   | [Tracking Events](#2-track-events)                                                            |
+| 3   | [Dynamic Variables & Code Blocks](#3-dynamic-variables--code-blocks)                          |
+| 4   | [Feature Flags](#4-feature-flags)                                                             |
+| 5   | [Currently Running Experiments and Variables](#5-currently-running-experiments-and-variables) |
+| 6   | [Sessions](#6-sessions)                                                                       |
+| 7   | [Push](#7-push)                                                                               |
 
-## 1. Setting User Attributes
+## 1. User Attributes
 
-It's possible to send custom user attributes to Taplytics using a JSONObject of user info.
-
-The possible fields are:
-
-| Parameter | Type   |
-| --------- | ------ |
-| email     | String |
-| user_id   | String |
-| firstname | String |
-| lastname  | String |
-| name      | String |
-| age       | Number |
-| gender    | String |
-
-You can also add anything else you would like to this JSONObject and it will also be passed to Taplytics.
-
-An example with custom data:
+### Set User Attributes
 
 ```javascript
-Taplytics.setUserAttributes({
+Taplytics.setUserAttributes(customUserAttributes)
+```
+
+Use the `setUserAttributes` method to send Taplytics a JSON Object of user info. The possible fields for `customUserAttributes` are listed below. You can also add anything else you would like to this JSON Object and it will also be passed to Taplytics.
+
+#### `customAttributes` Type
+
+| PARAMETER    | TYPE     |
+| ------------ | -------- |
+| `email`      | `string` |
+| `user_id`    | `string` |
+| `firstname`  | `string` |
+| `lastname`   | `string` |
+| `name`       | `string` |
+| `age`        | `number` |
+| `gender`     | `string` |
+| `customData` | `object` |
+
+#### Example
+
+```javascript
+await Taplytics.setUserAttributes({
   email: 'johnDoe@taplytics.com',
   name: 'John Doe',
   age: 25,
@@ -46,31 +52,17 @@ Taplytics.setUserAttributes({
 })
 ```
 
-#### User Attributes on First Launch
-
-User Attributes set before `startTaplytics` is called will be used for experiment segmentation on the first session of your app. Any attributes that are set after `startTaplytics` is called will not be used for experiment segmentation until the next session of your app.
-
 ### Resetting user attributes or Logging out a user
-
-Once a user logs out of your app, their User Attributes are no longer valid. You can reset their data by calling `resetAppUser`, make sure you do not set any new user attributes until you receive the callback.
 
 ```javascript
 Taplytics.resetAppUser()
 ```
 
-### Retrieving Session Info
-
-Taplytics also offers a method to retrieve select information of what you know about a session at a given time. This method returns the user's Taplytics identifier (`appUser_id`) and current session id (`session_id`)
-
-```javascript
-Taplytics.getSessionInfo().then((results) => {
-  // use results map
-})
-```
+Once a user logs out of your app, their user attributes are no longer valid. Use the `resetAppUser` method to reset their attributes.
 
 ## 2. Track Events
 
-#### Automatic Events
+### Automatic Events
 
 Some events are automatically tracked by Taplytics and will appear on your dashboard. These events are:
 
@@ -79,147 +71,195 @@ Some events are automatically tracked by Taplytics and will appear on your dashb
 
 No changes are needed in your code for this event tracking to occur.
 
-Currently the react SDK does **not** support automatic tracking of page changes. _This is in the works_.
-
-#### Custom Events
-
-To log your own events, simply call `Taplytics.logEvent`.
-
-Due to the nature of React Native, you must supply all three parameters of Name, value, and custom attributes.
-
-If you do not wish to pass these in, simply do the following:
+### Custom Events
 
 ```javascript
-Taplytics.logEvent('event name', 0, {})
+Taplytics.logEvents(eventName, value, customAttributes)
 ```
 
-Otherwise
+Log custom event's using the `logEvent` method.
+
+#### Parameters
+
+| NAME               | TYPE     | REQUIRED                | DESCRIPTION                                                                                                                                              |
+| ------------------ | -------- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `eventName`        | `string` | `v2.x`: Yes `v3.x`: Yes | The name of the event.                                                                                                                                   |
+| `value`            | `number` | `v2.x`: Yes `v3.x`: No  | A numerical value associated with the event. `v3.x`: This is an optional parameter, if no value is passed it is initialized to 0.                        |
+| `customAttributes` | `object` | `v2.x`: Yes `v3.x`: No  | A custom object that gets associated with the event. `v3.x`: This is an optional parameter, if no value is passed it is initialized with an empty object. |
+
+#### Examples
 
 ```javascript
-Taplytics.logEvent('eventName', 5, { 'custom attribute': 'something' })
+// For v2.x and v3.x with value and customAttributes params
+Taplytics.logEvent('eventName', 5, {
+  'custom attribute': 'custom attribute value',
+})
+
+// For v2.x without value and customAttributes params
+Taplytics.logEvent('eventName', 0, {})
+
+// For v3.x without value and customAttributes params
+Taplytics.logEvent('eventName')
 ```
 
-#### Revenue Logging
-
-It's also possible to log revenue.
-
-Revenue logging is the same as event logging, only call `logRevenue`:
+### Revenue Logging
 
 ```javascript
-var someRevenue = 10000000
-Taplytics.logRevenue('Revenue Name', someRevenue, {})
+Taplytics.logRevenue(eventName, value, customAttributes)
 ```
 
-And similarly, with custom object data:
+It's also possible to log revenue. Revenue logging works the same way as event logging, except you will need to utilize the `logRevenue` method.
+
+#### Parameters
+
+| NAME               | TYPE     | REQUIRED                | DESCRIPTION                                                                                                                                                      |
+| ------------------ | -------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `eventName`        | `string` | `v2.x`: Yes `v3.x`: Yes | The name of the revenue event.                                                                                                                                   |
+| `value`            | `number` | `v2.x`: Yes `v3.x`: No  | A numerical value associated with the revenue event. `v3.x`: This is an optional parameter, if no value is passed it is initialized to 0.                        |
+| `customAttributes` | `object` | `v2.x`: Yes `v3.x`: No  | A custom object that gets associated with the revenue event. `v3.x`: This is an optional parameter, if no value is passed it is initialized with an empty object. |
+
+#### Examples
 
 ```javascript
-var someRevenue = 10000000
-var customInfo = { 'custom attribute': 'something' }
-Taplytics.logRevenue('Revenue Name', someRevenue, customInfo)
+// For v2.x and v3.x with value and customAttributes params
+Taplytics.logRevenue('Revenue Name', 100, {
+  'custom attribute': 'custom attribute value',
+})
+
+// For v2.x without value and customAttributes params
+Taplytics.logRevenue('Revenue Name', 0, {})
+
+// For v3.x without value and customAttributes params
+Taplytics.logRevenue('Revenue Name')
 ```
 
 ## 3. Dynamic Variables & Code Blocks
 
-**To see and modify these variables or blocks on the dashboard, the app must be launched and this code containing the variable or block must be navigated to at least once.**
+Taplytics variables are values in your app that are controlled by experiments. Changing the values can update the content or functionality of your app. Variables are reusable between experiments and operate in one of two modes: synchronous or asynchronous. You can use both sync and async variables from within your app.
 
-The code below is used to send the information of the variable or block to Taplytics, so it will appear on the dashboard.
-
-### Dynamic Variables
-
-Taplytics variables are values in your app that are controlled by experiments. Changing the values can update the content or functionality of your app. Variables are reusable between experiments and operate in one of two modes: synchronous or asynchronous.
-
-You can use both sync and async variables from within Javascript.
-
-**However, because React Native uses an asynchronous communication link to native code, both these types of variables require a callback to retrieve their value.**
-
-#### Synchronous Dynamic Variables
-
-Synchronous variables are guaranteed to have the same value for the entire session and will have that value immediately after construction.
-
-Synchronous variables take two parameters in its constructor:
-
-1. Variable name
-2. Default Value
-3. Promise
-
-The type of the variable will be inferred from the type of value passed in as the default. This method returns a promise which resolves with the value of the synchronous variable:
+### Synchronous Dynamic Variables
 
 ```javascript
-Taplytics.newSyncVariable('My Variable', 'default').then((value) => {
-  // do something
-})
+Taplytics.newSyncVariable(name, defaultValue)
 ```
 
-IMPORTANT: The value of these variables will be determined immediately, ie. the SDK will not wait for properties to be loaded from the server. Thus, if you want to ensure that the variables have their correct variables based on your experiment segmentation, you must initialize them after the properties have been loaded from the server. This module provides a callback to achieve this. The callback returns back an event subscriber that can be used to cleanup the event listener using the `remove` function.
+> Loading properties prior to retrieving variable value
+> The value of these variables will be determined immediately, ie. the SDK will not wait for properties to be loaded from the server. Thus, if you want to ensure that the variables have their correct variables based on your experiment segmentation, you must initialize them after the properties have been loaded from the server.
+>
+> This module provides the `propertiesLoadedCallback` method to achieve this. The method returns back an event subscriber that can be used to cleanup the event listener using the `remove` function.
+
+Synchronous variables are guaranteed to have the same value for the entire session and will have that value immediately after construction. The type of the variable will be inferred from the type of value passed in as the default. This method returns a promise which resolves with the value of the synchronous variable.
+
+#### Parameters
+
+| NAME           | TYPE                                    | REQUIRED | DESCRIPTION                                            |
+| -------------- | --------------------------------------- | -------- | ------------------------------------------------------ |
+| `name`         | `string`                                | Yes      | The name of the dynamic variable.                      |
+| `defaultValue` | `string`, `boolean`, `number`, `object` | Yes      | Default value to be utilized for the dynamic variable. |
+
+#### Examples
 
 ```javascript
-const subscriber = Taplytics.propertiesLoadedCallback((loaded) => {
-  // load variables here
+const subscriber = Taplytics.propertiesLoadedCallback(async (loaded) => {
+  const variableValue = await Taplytics.newSyncVariable('My Variable', 'default')
 })
 
 // Clean up subscriber
 subscriber.remove()
 ```
 
-#### Asynchronous Dynamic Variables
-
-Asynchronous variables take care of insuring that the experiments have been loaded before returning a value. This removes any danger of tainting the results of your experiment with bad data. What comes with the insurance of using the correct value is the possibility that the value will not be set immediately. If the variable is constructed _before_ the experiments are loaded, you won't have the correct value until the experiments have finished loading. If the experiments fail to load, then you will be given the default value, as specified in the variables constructor.
-
-Asynchronous variables take three parameters in its constructor:
-
-1. Variable name
-2. Default Value
-3. Variable Callback
-
-To create an async variable:
+### Asynchronous Dynamic Variables
 
 ```javascript
-Taplytics.newAsyncVariable(name, defaultValue, variableChangedCallback)
+Taplytics.newAsyncVariable(name, defaultValue, callback)
 ```
 
-The third parameter is a function which will be called any time the value of the variable is changed. It is passed the current value of the variable. When the variable's value has been updated, the listener will be called with that updated value. You can specify what you want to do with the variable inside the callback.
+> newAsyncVariable Usage
+> **v3.x**: The `newAsyncVariable` method returns an event subscriber that can be used to cleanup the event listener using the `remove` function. This should be done to ensure that there is no memory leaks within your app.
 
-It's important to call this in the setup phase of your app as every invocation of this function will setup a new listener.
+Asynchronous variables take care of insuring that the experiments have been loaded before returning a value. This removes any danger of tainting the results of your experiment with bad data. What comes with the insurance of using the correct value is the possibility that the value will not be set immediately. If the variable is used _before_ the experiments are loaded, you won't have the correct value until the experiments have finished loading. If the experiments fail to load, then you will be given the default value, as specified in the methods constructor.
+
+#### Parameters
+
+| NAME           | TYPE                                    | REQUIRED | DESCRIPTION                                                                                                                           |
+| -------------- | --------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`         | `string`                                | Yes      | The name of the dynamic variable.                                                                                                     |
+| `defaultValue` | `string`, `boolean`, `number`, `object` | Yes      | Default value to be utilized for the dynamic variable.                                                                                |
+| `callback`     | `(variableValue) => void`               | Yes      | A function that runs when the dynamic variable has been evaluated or updated, it receives the dynamic variable value as the argument. |
+
+#### Examples
+
+```javascript
+// For v2.x
+Taplytics.newAsyncVariable('My Variable', 'default value', (variableValue) => {
+  // Use variableValue
+})
+
+// For v3.x
+const subscriber = Taplytics.newAsyncVariable('My Variable', 'default value', (variableValue) => {
+  // Use variableValue
+})
+
+subscriber.remove()
+```
 
 ### Code Blocks
 
-Similar to Dynamic Variables, Taplytics has an option for 'Code Blocks'. Code blocks are linked to Experiments through the Taplytics website very much the same way that Dynamic Variables are, and will be executed based on the configuration of the experiment through the Taplytics website. A Code Block is a callback that can be enabled or disabled depending on the variation. If enabled, the code within the callback will be executed. If disabled, the variation will not get the callback.
-
-A Code Block can be used alongside as many other Code Blocks as you would like to determine a combination that yields the best results. Perhaps there are three different Code Blocks on one activity. This means there could be 8 different combinations of Code Blocks being enabled / disabled on that activity if you'd like.
-
-You can register Javascript functions as code blocks to be run or not depending on your experiment variation:
-
 ```javascript
-Taplytics.runCodeBlock(name, someFunction)
+Taplytics.runCodeBlock(name, codeBlock)
 ```
 
-By default, a code block will _not_ run unless enabled on the Taplytics Dashboard. It must be enabled for a Variation before it will run.
+Similar to Dynamic Variables, Taplytics has an option for 'Code Blocks'. Code blocks are linked to Experiments through the Taplytics website very much the same way that Dynamic Variables are, and will be executed based on the configuration of the experiment through the Taplytics website. A Code Block is a callback that can be enabled or disabled depending on the variation. If enabled, the code within the callback will be executed. If disabled, the variation will not get the callback.
+
+A Code Block can be used alongside as many other Code Blocks as you would like to determine a combination that yields the best results. You can register functions as code blocks to be run or not depending on your experiment variation. By default, a code block will _not_ run unless enabled on the Taplytics Dashboard. It must be enabled for a Variation before it will run.
+
+#### Parameters
+
+| NAME        | TYPE         | REQUIRED | DESCRIPTION                                                       |
+| ----------- | ------------ | -------- | ----------------------------------------------------------------- |
+| `name`      | `string`     | Yes      | The name of the code block variable.                              |
+| `codeBlock` | `() => void` | Yes      | A function that will run if the code block variable is activated. |
+
+#### Example
+
+```javascript
+Taplytics.runCodeBlock('Code Block Variable name', () => {
+  // Code block function
+})
+```
 
 ## 4. Feature Flags
 
 Taplytics feature flags operate in synchronous mode.
 
-### Synchronous
-
-Synchronous feature flags are guaranteed to have the same value for the entire session and will have that value immediately after construction.
+### Feature Flag Enabled
 
 ```javascript
-Taplytics featureFlagEnabled("featureFlagKey").then(isEnabled => {
-    if (isEnabled) {
-      // Put feature code here, or launch feature from here
-    }
-  });
+Taplytics.featureFlagEnabled(key)
 ```
 
-IMPORTANT: The value of featureFlagEnabled will be determined immediately, ie. the SDK will not wait for properties to be loaded from the server. Thus, if you want to ensure that the feature flags have their correct values based on your experiment segmentation, you must initialize them after the properties have been loaded from the server. This module provides a callback to achieve this. The callback returns back an event subscriber that can be used to cleanup the event listener using the `remove` function.
+> Loading properties prior to determining feature flag value
+> The value of `featureFlagEnabled` will be determined immediately, ie. the SDK will not wait for properties to be loaded from the server. Thus, if you want to ensure that the feature flags have their correct values based on your experiment segmentation, you must initialize them after the properties have been loaded from the server.
+>
+> This module provides the `propertiesLoadedCallback` method to achieve this. The method returns back an event subscriber that can be used to cleanup the event listener using the `remove` function.
+
+Use this method to determine if a particular feature flag is enabled.
+
+#### Parameters
+
+| NAME  | TYPE     | REQUIRED | DESCRIPTION                  |
+| ----- | -------- | -------- | ---------------------------- |
+| `key` | `string` | Yes      | The key of the feature flag. |
+
+#### Example
 
 ```javascript
-const subscriber = Taplytics.propertiesLoadedCallback(() => {
-  Taplytics featureFlagEnabled("featureFlagKey").then(isEnabled => {
-      if (isEnabled) {
-        // Put feature code here, or launch feature from here
-      }
-    });
+const subscriber = Taplytics.propertiesLoadedCallback(async () => {
+  const isEnabled = await Taplytics.featureFlagEnabled('featureFlagKey')
+
+  if (isEnabled) {
+    // Put feature code here, or launch feature from here
+  }
 })
 
 // Clean up subscriber
@@ -228,65 +268,60 @@ subscriber.remove()
 
 ## Running Feature Flags
 
-If you would like to see which feature flags are running on a given device, there exists a `getRunningFeatureFlags()` function which provides a callback with the current feature flags' names and their associated key. An example:
-
 ```javascript
-Taplytics.getRunningFeatureFlags().then((results) => {
-  // use results map
-})
+Taplytics.getRunningFeatureFlags()
 ```
 
-NOTE: The block can return asynchronously once Taplytics properties have loaded. The block will return a `WritableMap` with feature flag name as the key value, and feature flag key as the value.
+This method is used to determine which feature flags that are running on a given device.
+
+#### Example
+
+```javascript
+const runningFeatureFlags = await Taplytics.getRunningFeatureFlags()
+```
 
 ## 5. Currently Running Experiments and Variables
 
-### Variables
-
-To make it easier to keep track of your variables, this module also provides a method to retrieve an object map of their names and values:
+### Get Variables
 
 ```javascript
 Taplytics.getVariables()
 ```
 
-which returns the variables in the format:
+This method returns an object with experiment variables' keys and values. **It only keeps track of variables that have been fetched by either `newAsyncVariable` or `newSyncVariable`.**
 
-```javascript
-{
-  "name1": value1,
-  "name2": value2
-  ...
-}
-```
-
-This object will always contain the latest value of every Taplytics variable that has been initialized from Javascript
-
-You can also register a function to be called whenever this object changes:
+### Variables Changed Listener
 
 ```javascript
 Taplytics.registerVariablesChangedListener(callback)
 ```
 
-The callback will be passed the same object map as above. Only one callback function can be registered at a time. Calling this method again will overwrite the old callback.
+You can also register a function to be called whenever the variables from `getVariables` changes. Only one callback function can be registered at a time. Calling this method again will overwrite the previous callback.
+
+#### Parameters
+
+| NAME       | TYPE                  | REQUIRED | DESCRIPTION                                                              |
+| ---------- | --------------------- | -------- | ------------------------------------------------------------------------ |
+| `callback` | `(variables) => void` | Yes      | A function that is invoked whenever an experiments' variable is updated. |
 
 ### Running experiments and variations
 
-If you would like to see which variations and experiments are running on a given device, there exists a `getRunningExperimentsAndVariations` function which provides a callback with a map of the current experiments and their running variation. An example:
-
 ```javascript
-Taplytics.getRunningExperimentsAndVariations().then((results) => {
-  // use results map
-})
+Taplytics.getRunningExperimentsAndVariations()
 ```
 
-NOTE: This function runs asynchronously, as it waits for the updated properties to load from Taplytics' servers before returning the running experiments.
+> Loading properties prior to retrieving experiments
+> This function runs asynchronously, as it waits for the updated properties to load from Taplytics' servers before returning the running experiments.
+>
+> If you want to see when the experiments have been loaded by Taplytics, you can wrap this in the `propertiesLoadedCallback` method.
 
-If you want to see when the experiments have been loaded by Taplytics, you can wrap this in a `propertiesLoadedCallback`
+Use the `getRunningExperimentsAndVariations` method to determine which variations and experiments are running on a given device.
+
+#### Example
 
 ```javascript
-const subscriber = Taplytics.propertiesLoadedCallback(() => {
-  Taplytics.getRunningExperimentsAndVariations().then((results) => {
-    // use results map
-  })
+const subscriber = Taplytics.propertiesLoadedCallback(async () => {
+  const runningExperiments = await Taplytics.getRunningExperimentsAndVariations()
 })
 
 // Clean up subscriber
@@ -295,30 +330,40 @@ subscriber.remove()
 
 ## 6. Sessions
 
-### StartNewSession
-
-To manually force a new user session (ex: A user has logged in / out), there exists
+### Start New Session
 
 ```javascript
 Taplytics.startNewSession()
 ```
 
-This method returns a promise that resolves when the session has been created
+To manually force a new user session (ex: A user has logged in / out), there exists
 
-You can also register a callback to be run when Taplytics creates a new session:
+#### New Session Listener
 
 ```javascript
 Taplytics.setTaplyticsNewSessionListener(callback)
 ```
 
+This listener can be used to register a callback for when a new session is created.
+
+#### Parameters
+
+| NAME       | TYPE                  | REQUIRED | DESCRIPTION                                                  |
+| ---------- | --------------------- | -------- | ------------------------------------------------------------ |
+| `callback` | `(variables) => void` | Yes      | A function that gets executed when a new session is created. |
+
 ### Retrieving Session Info
 
-Taplytics also offers a method to retrieve select information of what you know about a session at a given time. This method returns the user's Taplytics identifier (`appUser_id`) and current session id (`session_id`)
+```javascript
+Taplytics.getSessionInfo(callback)
+```
+
+This method can be used to retrieve select information about a session at a given time. This method returns the user's Taplytics identifier; `appUser_id`, and current session ID; `session_id`.
+
+#### Example
 
 ```javascript
-Taplytics.getSessionInfo().then((results) => {
-  // use results map
-})
+const { appUser_id, session_id } = await Taplytics.getSessionInfo()
 ```
 
 ## 7. Push

@@ -20,7 +20,7 @@ export const getSessionInfo = (): Promise<TaplyticsSessionInfo> => Taplytics._ge
 
 /**
  * Use this listener to ensure that all the properties have been loaded from the server
- * prior to utlizing feature flags and experiment variable values. The listener returns
+ * prior to utilizing feature flags and experiment variable values. The listener returns
  * back an event subscriber that can be used to cleanup the event listener using the `remove` function.
  *
  * On iOS this listener is triggered in the following situations:
@@ -80,14 +80,18 @@ export const setUserAttributes = (attributes: TaplyticsUserAttributes): Promise<
  */
 export const resetAppUser = (): Promise<void> => Taplytics._resetAppUser()
 
+Taplytics.logEvent('eventName', 5, {
+  'custom attribute': 'something',
+})
+
 /**
  * Use this function to log custom events.
  *
  * @param eventName The name of the event.
  * @param value A numerical value associated with the event. This is an optional parameter,
- * if no value is passed it is initalized to 0.
- * @param customAttributes An custom object that gets associated with the event. This is an
- * optional paramter, if no value is passed it is initalized with an empty object.
+ * if no value is passed it is initialized to 0.
+ * @param customAttributes A custom object that gets associated with the event. This is an
+ * optional parameter, if no value is passed it is initialized with an empty object.
  */
 export const logEvent = (eventName: string, value: number = 0, customAttributes: object = {}): void =>
   Taplytics._logEvent(eventName, value, customAttributes)
@@ -97,9 +101,9 @@ export const logEvent = (eventName: string, value: number = 0, customAttributes:
  *
  * @param eventName The name of the revenue event.
  * @param value A numerical value associated with the revenue event. This is an optional parameter,
- * if no value is passed it is initalized to 0.
- * @param customAttributes An custom object that gets associated with the revenue event. This is an
- * optional paramter, if no value is passed it is initalized with an empty object.
+ * if no value is passed it is initialized to 0.
+ * @param customAttributes A custom object that gets associated with the revenue event. This is an
+ * optional parameter, if no value is passed it is initialized with an empty object.
  */
 export const logRevenue = (eventName: string, value: number = 0, customAttributes: object = {}): void =>
   Taplytics._logRevenue(eventName, value, customAttributes)

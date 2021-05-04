@@ -15,10 +15,10 @@ export const registerPushNotifications = () => {
 }
 
 /**
- * Use this method to subscriber to when Taplytics' push notifications are recieved.
+ * Use this method to subscriber to when Taplytics' push notifications are received.
  *
- * @param listener A method that gets triggered whenever a push notification is recieved.
- * The method recieves an argument which is a notification object with a `tl_id` property,
+ * @param listener A method that gets triggered whenever a push notification is received.
+ * The method receives an argument which is a notification object with a `tl_id` property,
  * and a `custom_data` object.
  *
  * @returns An event subscriber object is returned. Use the `remove` function to clean up the event listener.
@@ -45,7 +45,7 @@ export const registerPushReceivedListener = (listener: TaplyticsNotificationList
  * Use this method to subscriber to when Taplytics' push notifications are opened.
  *
  * @param listener A method that gets triggered whenever a push notification is opened.
- * The method recieves an argument which is a notification object with a `tl_id` property,
+ * The method receives an argument which is a notification object with a `tl_id` property,
  * and a `custom_data` object.
  *
  * @returns An event subscriber object is returned. Use the `remove` function to clean up the event listener.
@@ -73,7 +73,7 @@ export const registerPushOpenedListener = (listener: TaplyticsNotificationListen
  * This method is only available on `android` devices.
  *
  * @param listener A method that gets triggered whenever a push notification is dismissed.
- * The method recieves an argument which is a notification object with a `tl_id` property,
+ * The method receives an argument which is a notification object with a `tl_id` property,
  * and a `custom_data` object.
  *
  * @returns An event subscriber object is returned. Use the `remove` function to clean up the event listener.
