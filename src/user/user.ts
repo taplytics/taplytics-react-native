@@ -80,10 +80,6 @@ export const setUserAttributes = (attributes: TaplyticsUserAttributes): Promise<
  */
 export const resetAppUser = (): Promise<void> => Taplytics._resetAppUser()
 
-Taplytics.logEvent('eventName', 5, {
-  'custom attribute': 'something',
-})
-
 /**
  * Use this function to log custom events.
  *

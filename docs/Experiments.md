@@ -81,10 +81,10 @@ Log custom event's using the `logEvent` method.
 
 #### Parameters
 
-| NAME               | TYPE     | REQUIRED                | DESCRIPTION                                                                                                                                              |
-| ------------------ | -------- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `eventName`        | `string` | `v2.x`: Yes `v3.x`: Yes | The name of the event.                                                                                                                                   |
-| `value`            | `number` | `v2.x`: Yes `v3.x`: No  | A numerical value associated with the event. `v3.x`: This is an optional parameter, if no value is passed it is initialized to 0.                        |
+| NAME               | TYPE     | REQUIRED                | DESCRIPTION                                                                                                                                               |
+| ------------------ | -------- | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `eventName`        | `string` | `v2.x`: Yes `v3.x`: Yes | The name of the event.                                                                                                                                    |
+| `value`            | `number` | `v2.x`: Yes `v3.x`: No  | A numerical value associated with the event. `v3.x`: This is an optional parameter, if no value is passed it is initialized to 0.                         |
 | `customAttributes` | `object` | `v2.x`: Yes `v3.x`: No  | A custom object that gets associated with the event. `v3.x`: This is an optional parameter, if no value is passed it is initialized with an empty object. |
 
 #### Examples
@@ -112,10 +112,10 @@ It's also possible to log revenue. Revenue logging works the same way as event l
 
 #### Parameters
 
-| NAME               | TYPE     | REQUIRED                | DESCRIPTION                                                                                                                                                      |
-| ------------------ | -------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `eventName`        | `string` | `v2.x`: Yes `v3.x`: Yes | The name of the revenue event.                                                                                                                                   |
-| `value`            | `number` | `v2.x`: Yes `v3.x`: No  | A numerical value associated with the revenue event. `v3.x`: This is an optional parameter, if no value is passed it is initialized to 0.                        |
+| NAME               | TYPE     | REQUIRED                | DESCRIPTION                                                                                                                                                       |
+| ------------------ | -------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `eventName`        | `string` | `v2.x`: Yes `v3.x`: Yes | The name of the revenue event.                                                                                                                                    |
+| `value`            | `number` | `v2.x`: Yes `v3.x`: No  | A numerical value associated with the revenue event. `v3.x`: This is an optional parameter, if no value is passed it is initialized to 0.                         |
 | `customAttributes` | `object` | `v2.x`: Yes `v3.x`: No  | A custom object that gets associated with the revenue event. `v3.x`: This is an optional parameter, if no value is passed it is initialized with an empty object. |
 
 #### Examples
