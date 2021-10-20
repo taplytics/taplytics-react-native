@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.0.0-rc.1](https://github.com/taplytics/taplytics-react-native/compare/2.1.4...3.0.0-rc.1) (2021-10-20)
+
+- updated android version to use version that calls new session listener on set user attribute 
+
 ## [3.0.0-rc.0](https://github.com/taplytics/taplytics-react-native/compare/2.1.4...3.0.0-rc.0) (2021-04-23)
 
 ### Breaking Changes
