@@ -64,7 +64,7 @@ aliases:
         # Push changes and tags
         git merge master --allow-unrelated-histories
         git push -f origin master
-        git push --tags
+        git push :refs/tags/$CIRCLE_TAG
   - &publish_github_release
     run:
       name: Publish Github Release
