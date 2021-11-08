@@ -1,8 +1,8 @@
 {
   "name": "taplytics-react-native",
-  "version": "3.0.0-rc.0",
+  "version": "3.0.0-rc.6",
   "description": "Taplytics is a native mobile A/B testing and push notification platform that helps you optimize your React Native app!",
-  "main": "src/index.ts",
+  "main": "lib/index.js",
   "files": [
     "lib/",
     "taplytics-react-native.podspec",
@@ -88,5 +88,6 @@
       "tslint --fix --project .",
       "git add -u"
     ]
-  }
+  },
+  "types": "lib/index.d.ts"
 }

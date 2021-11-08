@@ -31,7 +31,7 @@ android {
 
 dependencies {
     implementation 'com.facebook.react:react-native:+'
-    api 'com.taplytics.sdk:taplytics:2.11.0@aar'
+    api 'com.taplytics.sdk:taplytics:2.11.+@aar'
     implementation 'com.android.volley:volley:+'
 }
 
