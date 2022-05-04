@@ -2,8 +2,10 @@ apply plugin: 'com.android.library'
 
 buildscript {
     repositories {
+        // https://blog.gradle.org/jcenter-shutdown
         mavenCentral()
         google()
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.2'
@@ -38,4 +40,5 @@ dependencies {
 repositories {
     maven { url "https://github.com/taplytics/Taplytics-Android-SDK/raw/master/AndroidStudio/" }
     mavenCentral()
+    jcenter()
 }
