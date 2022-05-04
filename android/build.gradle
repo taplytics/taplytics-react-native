@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
         google()
     }
     dependencies {
@@ -38,5 +38,4 @@ dependencies {
 repositories {
     maven { url "https://github.com/taplytics/Taplytics-Android-SDK/raw/master/AndroidStudio/" }
     mavenCentral()
-    jcenter()
 }
