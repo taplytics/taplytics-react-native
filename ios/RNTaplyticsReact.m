@@ -148,11 +148,6 @@ RCT_EXPORT_METHOD(_registerPushNotifications)
 }
 
 
-RCT_EXPORT_METHOD(_registerLocationAccess)
-{
-    [Taplytics registerLocationAccess];
-}
-
 RCT_REMAP_METHOD(_resetAppUser, resetAppUserResolver:(RCTPromiseResolveBlock)resolve resetAppUserRejecter:(RCTPromiseRejectBlock)reject)
 {
     [Taplytics resetUser:^{
