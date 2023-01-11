@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.1.0](https://github.com/taplytics/taplytics-react-native/compare/3.0.0-rc.5...3.1.0) (2023-01-11)
+
+- Removed location tracking code
+
 ## [3.0.0-rc.0](https://github.com/taplytics/taplytics-react-native/compare/2.1.4...3.0.0-rc.0) (2021-04-23)
 
 ### Breaking Changes
