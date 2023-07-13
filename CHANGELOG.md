@@ -1,5 +1,12 @@
 # Changelog
 
+### [3.1.2](https://github.com/taplytics/taplytics-react-native/compare/3.0.0-rc.5...3.1.2) (2023-07-13)
+
+
+### Bug Fixes
+
+* stop using deprecated removeEventListener method on provider ([#59](https://github.com/taplytics/Taplytics-React-Native/issues/59)) ([65b5678](https://github.com/taplytics/taplytics-react-native/commits/65b5678c0e6ce26189642632490f29acb2ed3b31))
+
 ### [3.1.1](https://github.com/taplytics/taplytics-react-native/compare/3.0.0-rc.5...3.1.1) (2023-01-11)
 
 ## [3.1.0](https://github.com/taplytics/taplytics-react-native/compare/3.0.0-rc.5...3.1.0) (2023-01-11)
